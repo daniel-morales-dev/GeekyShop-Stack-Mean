@@ -1,0 +1,55 @@
+<nav class="navbar navbar-expand-lg navbar-light ">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/home" routerLinkActive="active">
+      <img src="../assets/imgs/favicon.png" width="30" height="30" class="d-inline-block align-top" alt="">
+      GeekyShop
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/games" routerLinkActive="active">Juegos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/consolas" routerLinkActive="active">Consolas</a>
+        </li>
+        <ng-container *ngIf="authService.loggedIn();">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/private-games" routerLinkActive="active">Juegos no publicados</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/employees" routerLinkActive="active">Empleados</a>
+          </li>
+        </ng-container>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <ng-container *ngIf="!authService.loggedIn(); else loggedIn">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/signin" routerLinkActive="active">Iniciar Sesion</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/signup" routerLinkActive="active">Registrarse</a>
+          </li>
+        </ng-container>
+        <ng-template #loggedIn>
+          <li class="nav-item" >
+            <a class="nav-link" routerLink="/profile" routerLinkActive="active">{{user.nombre_usuario}}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link">Rol: {{user.rol}}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="authService.logOut()">Cerrar Sesion</a>
+          </li>
+        </ng-template>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container p-5">
+  <router-outlet></router-outlet>
+</div>

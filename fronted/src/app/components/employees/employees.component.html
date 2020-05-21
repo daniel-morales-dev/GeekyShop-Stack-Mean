@@ -1,0 +1,65 @@
+  <div class="row">
+    <div class="container col-5">
+      <div class="card">
+        <div class="card-header">
+          Gestion de empleados
+        </div>
+        <div class="card-body">
+          <form #employeeForm="ngForm" (ngSubmit)="addEmployee(employeeForm)">
+            <div class="form-group">
+              <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="employeeService.selectedEmployee._id">
+              <div class="form-group">
+                <label for="nombre">Nombre del empleado</label>
+                <input type="text" class="form-control" name="name" #name="ngModel"
+                  [(ngModel)]="employeeService.selectedEmployee.name" placeholder="Enter your name">
+              </div>
+              <div class="form-group">
+                <label for="puesto">Puesto del empleado</label>
+                <input type="text" name="position" class="form-control" #position="ngModel"
+                  [(ngModel)]="employeeService.selectedEmployee.position" placeholder="Enter your position">
+              </div>
+              <div class="form-group">
+                <label for="oficina">Oficina del empleado</label>
+                <input type="text" name="officine" class="form-control" #officine="ngModel"
+                  [(ngModel)]="employeeService.selectedEmployee.officine" placeholder="Enter your officine">
+              </div>
+              <div class="form-group">
+                <label for="puesto">Salario del empleado</label>
+                <input type="text" name="salary" class="form-control" #salary="ngModel"
+                  [(ngModel)]="employeeService.selectedEmployee.salary" placeholder="Enter your salary">
+              </div>
+              <button type="submit" class="btn btn-primary" style="margin-left: 2px">Guardar</button>
+              <button type="submit" class="btn btn-primary" (click)="resetForm(employeeForm)">Limpiar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="container table-employee col-6">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Officine</th>
+            <th>Operations</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employee of employeeService.employees">
+            <td>{{employee.name}}</td>
+            <td>{{employee.position}}</td>
+            <td>{{employee.officine}}</td>
+            <td>
+              <a (click)="editEmployee(employee)">
+                <i class="material-icons">edit</i>
+              </a>
+              <a (click)="deleteEmployee(employee._id,employeeForm)">
+                <i class="material-icons" style="margin-left: 40px;">delete</i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
