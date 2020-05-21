@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
 })
 export class EmployeesComponent implements OnInit {
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(public employeeService: EmployeeService) { }
 
   ngOnInit() {
     this.getEmployees();
