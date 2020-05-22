@@ -3,6 +3,7 @@ import { AuthService } from "../../services/auth.service";
 import { Router } from "@angular/router";
 import Swal from "sweetalert2";
 import { AppComponent } from "src/app/app.component";
+import { User } from 'src/app/models/users';
 
 @Component({
   selector: "app-signin",
@@ -10,7 +11,7 @@ import { AppComponent } from "src/app/app.component";
   styleUrls: ["./signin.component.css"],
 })
 export class SigninComponent implements OnInit {
-  user = {};
+  user={email:'',password:''};
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {}

@@ -1,40 +1,34 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service'
-import { Router } from '@angular/router'
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
 import Swal from 'sweetalert2';
-
+import { User } from 'src/app/models/users';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+  styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent implements OnInit {
-
-  user = {
-  }
-
+  user = { name:'',email: '', password: '' };
   constructor(
     private authService: AuthService,
-    private router: Router) { }
+    private router: Router,
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   signUp(form: NgForm) {
-
-    this.authService.signUp(this.user)
-      .subscribe(
-        res => {
-          localStorage.setItem('token', res.token)
-          this.router.navigate(['/private-games'])
-        },
-        err => {
-          console.log(err.message);
-        }
-      );
+    this.authService.signUp(this.user).subscribe(
+      (res) => {
+        localStorage.setItem('token', res.token);
+        this.router.navigate(['/private-games']);
+      },
+      (err) => {
+        console.log(err.message);
+      }
+    );
   }
 }
-
