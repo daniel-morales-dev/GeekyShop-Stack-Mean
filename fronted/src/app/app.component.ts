@@ -20,7 +20,7 @@ export class AppComponent {
     this.traerDatos();
   }
 
-  traerDatos(){
+  traerDatos(){ //CREO UNA FUNCION QUE ME VA GUARDAR LOS DATOS DEL USUARIO DECODIFICANDO EL TOKEN
     this.user = {
       id:this.authService.decodeToken().id,
       email:this.authService.decodeToken().email,

@@ -8,7 +8,12 @@ const user_controller = require("../controllers/user_controller");
 router.get("/", (req, res) => res.send("Hello World"));
 
 //RUTAS EMPLEADOS//
-router.get("/employees", verificarToken, employee_controller.getEmployees);
+router.get(
+  "/employees",
+  verificarToken,
+  verifyRoleAdmin,
+  employee_controller.getEmployees
+);
 router.post("/employees", verificarToken, employee_controller.createEmployee);
 router.get("/employees/:id", verificarToken, employee_controller.getEmployee);
 router.put("/employees/:id", verificarToken, employee_controller.editEmployee);
@@ -84,6 +89,21 @@ async function verificarToken(req, res, next) {
     }
     req.userId = payload._id;
     next();
+  } catch (e) {
+    return res.status(401).send("Peticion no autorizada");
+  }
+}
+
+async function verifyRoleAdmin(req, res, next) {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const payload = await jwt.verify(token, secretKey, function (err, decoded) {
+      if (decoded.rol != "admin") {
+        return res.status(401).json({ err: "Peticion no autorizada" });
+      } else {
+        next();
+      }
+    });
   } catch (e) {
     return res.status(401).send("Peticion no autorizada");
   }

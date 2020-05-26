@@ -22,7 +22,7 @@ export class SigninComponent implements OnInit {
     this.authService.signIn(this.user).subscribe(
       (res) => {
         this.authService.setToken(res.token);
-        this.authService.decodeToken();
+        this.authService.decodeToken(); //USO EL DECODE TOKEN 
         AppComponent.updateUserStatus.next(true);
         this.router.navigate(['/home']);
         Swal.fire(

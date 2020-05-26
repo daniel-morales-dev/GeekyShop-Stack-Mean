@@ -33,7 +33,6 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-
   logOut() {
     localStorage.removeItem('token');
     localStorage.removeItem('datos');
@@ -44,10 +43,11 @@ export class AuthService {
     localStorage.setItem('token', token);
   }
 
+  //DECODIFICO EL TOKEN PARA SACAR LOS DATOS QUE ENVIO DESDE EL BACKEND
   decodeToken() {
-    let token = localStorage.getItem('token');
-    let decode = jwt_decode(token);
-    return decode;
+    let token = this.getToken(); //TRAIGO EL TOKEN
+    let decode = jwt_decode(token); //LO DE CODIFICO
+    return decode; // LO RETORNO, LO USO EN SIGNIN-SIGNUP, ETC.
   }
 
 }
