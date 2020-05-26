@@ -1,53 +1,53 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpInterceptor } from "@angular/common/http";
-import { Router } from "@angular/router";
-import { Observable } from "rxjs/internal/Observable";
-import { map } from "rxjs/operators";
-
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpInterceptor } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs/internal/Observable';
+import { map } from 'rxjs/operators';
+import * as jwt_decode from "jwt-decode";
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class AuthService {
-  private URL = "http://localhost:3000";
+  private URL = 'http://localhost:3000';
   constructor(private http: HttpClient, private router: Router) {}
 
   signUp(user) {
     return this.http
-      .post<any>(this.URL + "/signup", user)
+      .post<any>(this.URL + '/signup', user)
       .pipe(map((res) => res));
   }
 
   signIn(user): Observable<any> {
     return this.http
-      .post<any>(this.URL + "/signin", user)
+      .post<any>(this.URL + '/signin', user)
       .pipe(map((res) => res));
   }
 
   loggedIn() {
-    if (localStorage.getItem("token")) {
+    if (localStorage.getItem('token')) {
       return true;
     }
   }
 
   getToken() {
-    return localStorage.getItem("token");
+    return localStorage.getItem('token');
   }
 
-  getUser(){
-    return JSON.parse(localStorage.getItem("datos"));
-  }
 
   logOut() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("datos");
-    this.router.navigate(["/home"]);
+    localStorage.removeItem('token');
+    localStorage.removeItem('datos');
+    this.router.navigate(['/home']);
   }
 
   setToken(token) {
-    localStorage.setItem("token", token);
+    localStorage.setItem('token', token);
   }
 
-  setUser(user) {
-    localStorage.setItem("datos", JSON.stringify(user));
+  decodeToken() {
+    let token = localStorage.getItem('token');
+    let decode = jwt_decode(token);
+    return decode;
   }
+
 }

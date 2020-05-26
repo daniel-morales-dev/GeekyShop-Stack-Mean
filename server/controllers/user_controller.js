@@ -2,7 +2,6 @@ const model_user = require("../models/model_user");
 const jwt = require("jsonwebtoken");
 const secretKey = "secretKey";
 const bcrypt = require("bcryptjs");
-const passport = require("passport");
 
 const userController = {};
 
@@ -42,7 +41,7 @@ userController.createUser = async (req, res) => {
   const token = jwt.sign({ _id: newUser._id }, secretKey, {
     expiresIn: 60 * 60 * 24, // expires in 24 hours
   });
-  res.status(200).json({ token });
+  res.status(200).json({token });
 };
 
 userController.logInUser = async (req, res) => {
@@ -54,13 +53,12 @@ userController.logInUser = async (req, res) => {
     const match = await bcrypt.compare(req.body.password, user.password);
     if (match) {
       const datos = {
+        id:user._id,
         email: user.email,
         nombre_usuario: user.name,
         rol: user.rol,
       };
-      const token = jwt.sign({ _id: user._id }, secretKey, {
-        expiresIn: 60 * 60 * 24, // expires in 24 hours
-      });
+      const token = jwt.sign(datos, secretKey);
       return res.status(200).json({ datos, token });
     } else {
       return res.status(409).send("Contraseña erronea");
