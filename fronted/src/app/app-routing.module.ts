@@ -12,6 +12,7 @@ import { PrivateGamesComponent } from './components/private-games/private-games.
 import {UsersComponent} from './components/users/users.component';
 import {AuthRoleAdminGuard} from "./guards/auth-role-admin.guard"
 import { AuthGuard } from "./guards/auth.guard";
+import { AuthBackToLoginGuard } from './guards/auth-back-to-login.guard';
 
 const routes: Routes = [
   {
@@ -30,11 +31,13 @@ const routes: Routes = [
   },
   {
     path: 'signin',
-    component: SigninComponent
+    component: SigninComponent,
+    canActivate:[AuthBackToLoginGuard]
   },
   {
     path: 'signup',
-    component: SignupComponent
+    component: SignupComponent,
+    canActivate:[AuthBackToLoginGuard]
   },
   {
     path: 'profile',

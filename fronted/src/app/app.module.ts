@@ -17,6 +17,7 @@ import { PrivateGamesComponent } from './components/private-games/private-games.
 import { UsersComponent } from './components/users/users.component';
 
 import { AuthGuard } from "./guards/auth.guard";
+import {AuthBackToLoginGuard} from "./guards/auth-back-to-login.guard"
 import {AuthRoleAdminGuard} from "./guards/auth-role-admin.guard"
 import { TokenInterceptorService } from "./services/token-interceptor.service";
 
@@ -42,6 +43,7 @@ import { TokenInterceptorService } from "./services/token-interceptor.service";
   providers: [
     AuthGuard,
     AuthRoleAdminGuard,
+    AuthBackToLoginGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass:TokenInterceptorService,
