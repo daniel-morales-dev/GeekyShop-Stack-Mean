@@ -13,6 +13,8 @@ import { AppComponent } from 'src/app/app.component';
 })
 export class SignupComponent implements OnInit {
   user = { name: '', email: '', password: '' };
+  emailPattern =
+    "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$";
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {}
@@ -31,12 +33,38 @@ export class SignupComponent implements OnInit {
         );
       },
       (err) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text:
-            'No se ha podido iniciar sesion, verifique su correo y contraseña',
-        });
+        switch (err.error.code_error) {
+          case 'password_invalid':
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text:
+                'Contraseña invalida, por favor, ingrese mas de 4 caracteres',
+            });
+            break;
+          case 'email_existent':
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Ese correo ya esta registrado, ingresa uno nuevo',
+            });
+            break;
+          case 'email_invalid':
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Este email es invalido, por favor ingrese otro',
+            });
+            break;
+          default:
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text:
+                'Hubo un error en el registro, ingresa de nuevo tus credenciales',
+            });
+            break;
+        }
       }
     );
   }

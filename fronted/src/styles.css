@@ -1,9 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
-*{
-    font-family: 'Open Sans', sans-serif;
+* {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
 }
 
-nav{
-    background: #dfe6e9;
-    font-weight: bold;
+nav {
+  font-weight: bold;
+  background: #6c5ce7; /* fallback for old browsers */
 }
+
+.btn-primary{
+  background: #6c5ce7;
+  border-color: #6c5ce7;
+}
+
+.btn-primary:hover{
+  background: #6c5ce7;
+  border-color: #6c5ce7;
+}
+
+a{
+  color: #6c5ce7;
+  font-weight: bold;
+}
+
+
+

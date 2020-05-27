@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const bcrypt = require("bcryptjs");
-
+//CREACION DEL MODELO DE USUARIOS
 const userSchema = new Schema(
   {
     name: {

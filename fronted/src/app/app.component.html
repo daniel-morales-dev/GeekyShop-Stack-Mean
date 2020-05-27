@@ -17,38 +17,51 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/consolas" routerLinkActive="active">Consolas</a>
         </li>
-        <ng-container *ngIf="authService.loggedIn();">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/private-games" routerLinkActive="active">Juegos no publicados</a>
-          </li>
-          <li class="nav-item">
-            <div *ngIf="authService.isAdmin()"> <a class="nav-link" routerLink="/employees"
-                routerLinkActive="active">Empleados</a></div>
-          </li>
+        <li class="nav-item">
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2  nav-link" type="search" placeholder="Search" aria-label="Search">
+          </form>
+        </li>
+        <li class="nav-item dropdown " *ngIf="authService.loggedIn();">
+          <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button"
+            aria-haspopup="true" aria-expanded="false">Herramientas</a>
+          <div class="dropdown-menu">
+            <ng-container *ngIf="authService.loggedIn();">
+        <li class="nav-item">
+          <a class="nav-link dropdown-item" routerLink="/private-games" routerLinkActive="active">Juegos no
+            publicados</a>
+        </li>
+        <li class="nav-item">
+          <div *ngIf="authService.isAdmin()">
+            <a class="nav-link dropdown-item" routerLink="/employees" routerLinkActive="active">Empleados</a>
+          </div>
+        </li>
         </ng-container>
-      </ul>
-      <ul class="navbar-nav ml-auto">
-        <ng-container *ngIf="!authService.loggedIn(); else loggedIn">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/signin" routerLinkActive="active">Iniciar Sesion</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/signup" routerLinkActive="active">Registrarse</a>
-          </li>
-        </ng-container>
-        <ng-template #loggedIn>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/profile" routerLinkActive="active">{{user.nombre_usuario}}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link">Rol: {{user.rol}}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" (click)="authService.logOut()">Cerrar Sesion</a>
-          </li>
-        </ng-template>
-      </ul>
     </div>
+    </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      <ng-container *ngIf="!authService.loggedIn(); else loggedIn">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/signin" routerLinkActive="active">Iniciar Sesion</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/signup" routerLinkActive="active">Registrarse</a>
+        </li>
+      </ng-container>
+      <ng-template #loggedIn>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/profile" routerLinkActive="active">{{user.nombre_usuario}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link">Rol: {{user.rol}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="authService.logOut()">Cerrar Sesion</a>
+        </li>
+      </ng-template>
+    </ul>
+  </div>
   </div>
 </nav>
 <div class="container p-5">
