@@ -1,34 +1,59 @@
 const express = require("express");
 const router = express.Router();
-const jwt = require("jsonwebtoken");
-const secretKey = "secretKey";
 const employee_controller = require("../controllers/employee_controller");
 const user_controller = require("../controllers/user_controller");
+const auth = require("../middlewares/auth");
 
 router.get("/", (req, res) => res.send("Hello World"));
 
 //RUTAS EMPLEADOS//
 router.get(
   "/employees",
-  verificarToken,
-  verifyRoleAdmin,
+  auth.verifyToken,
+  auth.verifyRole,
   employee_controller.getEmployees
 );
-router.post("/employees", verificarToken, employee_controller.createEmployee);
-router.get("/employees/:id", verificarToken, employee_controller.getEmployee);
-router.put("/employees/:id", verificarToken, employee_controller.editEmployee);
+router.post(
+  "/employees",
+  auth.verifyToken,
+  auth.verifyRole,
+  employee_controller.createEmployee
+);
+router.get(
+  "/employees/:id",
+  auth.verifyToken,
+  auth.verifyRole,
+  employee_controller.getEmployee
+);
+router.put(
+  "/employees/:id",
+  auth.verifyToken,
+  auth.verifyRole,
+  employee_controller.editEmployee
+);
 router.delete(
   "/employees/:id",
-  verificarToken,
+  auth.verifyToken,
+  auth.verifyRole,
   employee_controller.deleteEmployee
 );
 
 //RUTAS USUARIOS//
-router.get("/users", verificarToken, user_controller.getUsers);
-router.get("/user/:id", verificarToken, user_controller.getUser);
+router.get(
+  "/users",
+  auth.verifyToken,
+  auth.verifyRole,
+  user_controller.getUsers
+);
+router.get(
+  "/user/:id",
+  auth.verifyToken,
+  auth.verifyRole,
+  user_controller.getUser
+);
 router.post("/signup", user_controller.createUser);
 router.post("/signin", user_controller.logInUser);
-router.get("/profile", verificarToken, user_controller.logInUser);
+router.get("/profile", auth.verifyToken, user_controller.logInUser);
 
 //RUTAS JUEGOS//
 router.get("/juegos", (req, res) => {
@@ -54,7 +79,7 @@ router.get("/juegos", (req, res) => {
   ]);
 });
 
-router.get("/private-games", verificarToken, (req, res) => {
+router.get("/private-games", auth.verifyToken, (req, res) => {
   res.json([
     {
       _id: 1,
@@ -72,41 +97,5 @@ router.get("/private-games", verificarToken, (req, res) => {
     },
   ]);
 });
-
-async function verificarToken(req, res, next) {
-  try {
-    if (!req.headers.authorization) {
-      return res.status(401).json({ err: "Peticion no autorizada" });
-    }
-
-    const token = req.headers.authorization.split(" ")[1];
-    if (token == "" || null) {
-      return res.status(401).json({ err: "Peticion no autorizada" });
-    }
-    const payload = await jwt.verify(token, secretKey);
-    if (!payload) {
-      return res.status(401).json({ err: "Peticion no autorizada" });
-    }
-    req.userId = payload._id;
-    next();
-  } catch (e) {
-    return res.status(401).send("Peticion no autorizada");
-  }
-}
-
-async function verifyRoleAdmin(req, res, next) {
-  try {
-    const token = req.headers.authorization.split(" ")[1];
-    const payload = await jwt.verify(token, secretKey, function (err, decoded) {
-      if (decoded.rol != "admin") {
-        return res.status(401).json({ err: "Peticion no autorizada" });
-      } else {
-        next();
-      }
-    });
-  } catch (e) {
-    return res.status(401).send("Peticion no autorizada");
-  }
-}
 
 module.exports = router;

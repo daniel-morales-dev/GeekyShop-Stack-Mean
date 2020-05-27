@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
 import Swal from 'sweetalert2';
-import { User } from 'src/app/models/users';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-signup',
@@ -12,22 +12,31 @@ import { User } from 'src/app/models/users';
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent implements OnInit {
-  user = { name:'',email: '', password: '' };
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-  ) {}
+  user = { name: '', email: '', password: '' };
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {}
 
   signUp(form: NgForm) {
     this.authService.signUp(this.user).subscribe(
       (res) => {
-        localStorage.setItem('token', res.token);
-        this.router.navigate(['/private-games']);
+        this.authService.setToken(res.token);
+        this.authService.decodeToken();
+        AppComponent.updateUserStatus.next(true);
+        this.router.navigate(['/home']);
+        Swal.fire(
+          'Registro Exitoso ' + res.datos.nombre_usuario,
+          'Tu Rol es: ' + res.datos.rol,
+          'success'
+        );
       },
       (err) => {
-        console.log(err.message);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text:
+            'No se ha podido iniciar sesion, verifique su correo y contraseña',
+        });
       }
     );
   }

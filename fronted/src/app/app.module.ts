@@ -16,7 +16,8 @@ import { ConsolasComponent } from './components/consolas/consolas.component';
 import { PrivateGamesComponent } from './components/private-games/private-games.component';
 import { UsersComponent } from './components/users/users.component';
 
-import { AuthGuard } from "./auth.guard";
+import { AuthGuard } from "./guards/auth.guard";
+import {AuthRoleAdminGuard} from "./guards/auth-role-admin.guard"
 import { TokenInterceptorService } from "./services/token-interceptor.service";
 
 @NgModule({
@@ -40,6 +41,7 @@ import { TokenInterceptorService } from "./services/token-interceptor.service";
   ],
   providers: [
     AuthGuard,
+    AuthRoleAdminGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass:TokenInterceptorService,

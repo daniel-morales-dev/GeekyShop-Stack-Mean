@@ -10,8 +10,8 @@ import { HomeComponent } from './components/home/home.component';
 import { ConsolasComponent } from './components/consolas/consolas.component';
 import { PrivateGamesComponent } from './components/private-games/private-games.component';
 import {UsersComponent} from './components/users/users.component';
-
-import { AuthGuard } from "./auth.guard";
+import {AuthRoleAdminGuard} from "./guards/auth-role-admin.guard"
+import { AuthGuard } from "./guards/auth.guard";
 
 const routes: Routes = [
   {
@@ -22,7 +22,7 @@ const routes: Routes = [
   {
     path: 'employees',
     component: EmployeesComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard,AuthRoleAdminGuard]
   },
   {
     path: 'games',

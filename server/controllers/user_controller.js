@@ -25,23 +25,24 @@ userController.createUser = async (req, res) => {
 
   const busqueda = await model_user.findOne({ email });
   if (busqueda) {
-    res.status(409);
-    if (res.status(409)) {
-      res.send("El correo ya existe");
-    }
+    return res.status(409).send("El correo ya existe");
   }
   if (req.body.password.length < 4) {
     const error_clave_corta = res
       .status(409)
       .send("Lo sentimos, su clave debe tener mas de 4 caracteres");
-    error_clave_corta;
+    return error_clave_corta;
   }
   newUser.password = await newUser.encryptPassword(password);
   await newUser.save();
-  const token = jwt.sign({ _id: newUser._id }, secretKey, {
-    expiresIn: 60 * 60 * 24, // expires in 24 hours
-  });
-  res.status(200).json({token });
+  const datos = {
+    id: newUser._id,
+    email: newUser.email,
+    nombre_usuario: newUser.name,
+    rol: newUser.rol,
+  };
+  const token = jwt.sign(datos, secretKey);
+  return res.status(200).json({ datos, token });
 };
 
 userController.logInUser = async (req, res) => {
@@ -53,7 +54,7 @@ userController.logInUser = async (req, res) => {
     const match = await bcrypt.compare(req.body.password, user.password);
     if (match) {
       const datos = {
-        id:user._id,
+        id: user._id,
         email: user.email,
         nombre_usuario: user.name,
         rol: user.rol,

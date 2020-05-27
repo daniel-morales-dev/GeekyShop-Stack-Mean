@@ -33,6 +33,14 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
+  isAdmin(){
+    const rol = this.decodeToken().rol;
+    if (rol != 'admin') {
+      return false
+    }
+    return true;
+  }
+
   logOut() {
     localStorage.removeItem('token');
     localStorage.removeItem('datos');
