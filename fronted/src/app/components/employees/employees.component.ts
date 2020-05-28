@@ -21,7 +21,7 @@ export class EmployeesComponent implements OnInit {
 
   resetForm(form?: NgForm) {
     if (form) {
-      form.reset();
+      form.resetForm()
       this.employeeService.selectedEmployee = new Employee();
     }
   }
@@ -56,6 +56,7 @@ export class EmployeesComponent implements OnInit {
           });
         },
         (err) => {
+          console.log(err)
           Swal.fire({
             icon: 'error',
             title: 'Oops...',

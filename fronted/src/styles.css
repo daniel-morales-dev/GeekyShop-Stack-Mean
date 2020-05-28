@@ -61,6 +61,14 @@ input:hover{
 }
 /*==========================*/
 
+/*============DROPDOWN==============*/
+.dropdown-item.active, .dropdown-item:active {
+  color: #fff;
+  text-decoration: none;
+  background-color: #6c5ce7;
+}
+/*==========================*/
+
 .form-control:focus {
   color: #495057;
   background-color: #fff;

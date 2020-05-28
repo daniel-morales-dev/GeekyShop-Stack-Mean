@@ -11,25 +11,25 @@
               <div class="form-group">
                 <label for="nombre">Nombre del empleado</label>
                 <input type="text" class="form-control" name="name" #name="ngModel"
-                  [(ngModel)]="employeeService.selectedEmployee.name" placeholder="Enter your name">
+                  [(ngModel)]="employeeService.selectedEmployee.name" placeholder="Enter your name" required>
               </div>
               <div class="form-group">
                 <label for="puesto">Puesto del empleado</label>
                 <input type="text" name="position" class="form-control" #position="ngModel"
-                  [(ngModel)]="employeeService.selectedEmployee.position" placeholder="Enter your position">
+                  [(ngModel)]="employeeService.selectedEmployee.position" placeholder="Enter your position" required>
               </div>
               <div class="form-group">
                 <label for="oficina">Oficina del empleado</label>
                 <input type="text" name="officine" class="form-control" #officine="ngModel"
-                  [(ngModel)]="employeeService.selectedEmployee.officine" placeholder="Enter your officine">
+                  [(ngModel)]="employeeService.selectedEmployee.officine" placeholder="Enter your officine" required>
               </div>
               <div class="form-group">
                 <label for="puesto">Salario del empleado</label>
                 <input type="text" name="salary" class="form-control" #salary="ngModel"
-                  [(ngModel)]="employeeService.selectedEmployee.salary" placeholder="Enter your salary">
+                  [(ngModel)]="employeeService.selectedEmployee.salary" placeholder="Enter your salary" required>
               </div>
               <button type="submit" class="btn btn-primary" style="margin-left: 2px">Guardar</button>
-              <button type="submit" class="btn btn-primary" (click)="resetForm(employeeForm)">Limpiar</button>
+              <button type="button" class="btn btn-primary" (click)="resetForm(employeeForm)">Limpiar</button>
             </div>
           </form>
         </div>
