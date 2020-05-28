@@ -24,11 +24,12 @@ export class SigninComponent implements OnInit {
         this.authService.decodeToken(); //USO EL DECODE TOKEN
         AppComponent.updateUserStatus.next(true);
         this.router.navigate(['/home']);
-        Swal.fire(
-          'Bienvenido ' + res.datos.nombre_usuario,
-          'Tu Rol es: ' + res.datos.rol,
-          'success'
-        );
+        Swal.fire({
+          icon: 'success',
+          title: 'Bienvenido ' + res.datos.nombre_usuario,
+          text: 'Tu Rol es: ' + res.datos.rol,
+          confirmButtonColor: '#6c5ce7',
+        });
       },
       (err) => {
         switch (err.error.code_error) {
@@ -37,6 +38,7 @@ export class SigninComponent implements OnInit {
               icon: 'error',
               title: 'Error',
               text: 'Esta cuenta no existe, registrate primero',
+              confirmButtonColor: '#6c5ce7',
             });
             this.router.navigate(['/signup']);
             break;
@@ -45,14 +47,15 @@ export class SigninComponent implements OnInit {
               icon: 'error',
               title: 'Error',
               text: 'Contraseña incorrecta, intentelo de nuevo',
+              confirmButtonColor: '#6c5ce7',
             });
             break;
           default:
             Swal.fire({
               icon: 'error',
               title: 'Error',
-              text:
-                'Hubo un error en el inicio de sesion, intentelo de nuevo',
+              text: 'Hubo un error en el inicio de sesion, intentelo de nuevo',
+              confirmButtonColor: '#6c5ce7',
             });
             break;
         }

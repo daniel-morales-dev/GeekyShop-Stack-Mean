@@ -26,11 +26,12 @@ export class SignupComponent implements OnInit {
         this.authService.decodeToken();
         AppComponent.updateUserStatus.next(true);
         this.router.navigate(['/home']);
-        Swal.fire(
-          'Registro Exitoso ' + res.datos.nombre_usuario,
-          'Tu Rol es: ' + res.datos.rol,
-          'success'
-        );
+        Swal.fire({
+          icon: 'success',
+          title: 'Registro Exitoso ' + res.datos.nombre_usuario,
+          text: 'Tu Rol es: ' + res.datos.rol,
+          confirmButtonColor: "#6c5ce7", 
+        });
       },
       (err) => {
         switch (err.error.code_error) {
@@ -47,6 +48,7 @@ export class SignupComponent implements OnInit {
               icon: 'error',
               title: 'Error',
               text: 'Ese correo ya esta registrado, ingresa uno nuevo',
+              confirmButtonColor: '#6c5ce7',
             });
             break;
           case 'email_invalid':

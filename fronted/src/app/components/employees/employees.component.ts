@@ -32,11 +32,12 @@ export class EmployeesComponent implements OnInit {
         (res) => {
           this.resetForm(form);
           this.getEmployees();
-          Swal.fire(
-            'Actualizacion exitosa!',
-            'Empleado actualizado correctamente',
-            'success'
-          );
+          Swal.fire({
+            title: 'Actualizacion exitosa!',
+            text: 'Empleado actualizado correctamente',
+            icon: 'success',
+            confirmButtonColor: '#6c5ce7',
+          });
         },
         (err) => {
           console.log(err);
@@ -47,11 +48,12 @@ export class EmployeesComponent implements OnInit {
         (res) => {
           this.resetForm(form);
           this.getEmployees();
-          Swal.fire(
-            'Registro exitoso',
-            'Empleado registrado exitosamente',
-            'success'
-          );
+          Swal.fire({
+            title: 'Registro exitoso',
+            text: 'Empleado registrado exitosamente',
+            icon: 'success',
+            confirmButtonColor: '#6c5ce7',
+          });
         },
         (err) => {
           Swal.fire({
@@ -79,16 +81,17 @@ export class EmployeesComponent implements OnInit {
       text: 'No podras revertir esto!',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
+      confirmButtonColor: '#6c5ce7',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Si, Borralo',
     }).then((result) => {
       if (result.value) {
-        Swal.fire(
-          'Eliminado',
-          'Tu registro se ha eliminado con exito.',
-          'success'
-        );
+        Swal.fire({
+          title: 'Eliminado',
+          text: 'Tu registro se ha eliminado con exito.',
+          icon: 'success',
+          confirmButtonColor: '#6c5ce7',
+        });
         this.employeeService.deleteEmployee(_id).subscribe((res) => {
           this.getEmployees();
         });
@@ -97,6 +100,7 @@ export class EmployeesComponent implements OnInit {
           icon: 'error',
           title: 'Algo salio mal',
           text: 'No pudimos eliminar tu registro',
+          confirmButtonColor: "#6c5ce7", 
         });
       }
     });

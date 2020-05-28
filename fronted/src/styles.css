@@ -9,20 +9,67 @@ nav {
   background: #6c5ce7; /* fallback for old browsers */
 }
 
-.btn-primary{
+.btn-primary {
   background: #6c5ce7;
   border-color: #6c5ce7;
 }
 
-.btn-primary:hover{
+input:hover{
+  border-color: #6c5ce7;
+}
+
+.card-header{
+  background: #6c5ce7;
+  color:white;
+  font-size: 18px;
+}
+
+.btn-primary:hover {
   background: #6c5ce7;
   border-color: #6c5ce7;
 }
 
-a{
+.btn:focus, .btn.focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(129, 68, 228, 0.25);
+}
+
+/*============Aca estan los efectos de color para los botones==============*/
+.btn-primary:focus, .btn-primary.focus {
+  color: #fff;
+  background-color: #6c5ce7;
+  border-color: #6c5ce7;
+  box-shadow: 0 0 0 0.2rem rgba(129, 68, 228, 0.5);
+}
+
+.btn-primary.disabled, .btn-primary:disabled {
+  color: #fff;
+  background-color: #6c5ce7;
+  border-color: #6c5ce7;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
+.show > .btn-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #5542e4;
+  border-color: #6c5ce7;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
+.show > .btn-primary.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(129, 68, 228, 0.5);
+}
+/*==========================*/
+
+.form-control:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #6c5ce7;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(129, 68, 228, 0.25);
+}
+
+a {
   color: #6c5ce7;
   font-weight: bold;
 }
-
-
-
