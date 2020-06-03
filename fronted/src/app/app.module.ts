@@ -21,7 +21,8 @@ import { AuthBackToLoginGuard } from './guards/auth-back-to-login.guard';
 import { AuthRoleAdminGuard } from './guards/auth-role-admin.guard';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { GestionProductsComponent } from './components/gestionProductos/gestion-products.component';
-import { UploadIMageProductService } from './services/upload-image-product.service';
+import { PreviewProductsComponent } from './components/preview-products/preview-products.component';
+import { ShopcartComponent } from './components/shopcart/shopcart.component';
 
 @NgModule({
   declarations: [
@@ -36,10 +37,11 @@ import { UploadIMageProductService } from './services/upload-image-product.servi
     PrivateGamesComponent,
     UsersComponent,
     GestionProductsComponent,
+    PreviewProductsComponent,
+    ShopcartComponent,
   ],
   imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule],
   providers: [
-    UploadIMageProductService,
     AuthGuard,
     AuthRoleAdminGuard,
     AuthBackToLoginGuard,

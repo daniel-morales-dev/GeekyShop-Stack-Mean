@@ -14,6 +14,7 @@ import { AuthRoleAdminGuard } from './guards/auth-role-admin.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { AuthBackToLoginGuard } from './guards/auth-back-to-login.guard';
 import { GestionProductsComponent } from './components/gestionProductos/gestion-products.component';
+import { PreviewProductsComponent } from './components/preview-products/preview-products.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,10 @@ const routes: Routes = [
   {
     path: 'games',
     component: GamesComponent,
+  },
+  {
+    path: 'preview-products/:id',
+    component: PreviewProductsComponent,
   },
   {
     path: 'signin',

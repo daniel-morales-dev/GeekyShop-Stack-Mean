@@ -5,6 +5,33 @@
       <div class="card-body">
         <form>
           <div class="form-group">
+            <label for="nombreJuego">Nombre del producto</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nombreJuego"
+              placeholder="Juego"
+            />
+          </div>
+          <div class="form-group">
+            <label for="descripcionJuego">Descripcion</label>
+            <textarea
+              class="form-control"
+              id="descripcionJuego"
+              rows="3"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="precioProducto">Precio del producto</label>
+            <input
+              type="number"
+              pattern="[0-9]"
+              class="form-control"
+              id="precioProducto"
+              placeholder="Precio"
+            />
+          </div>
+          <div class="form-group">
             <label for="exampleFormControlFile1">Example file input</label>
             <input
               type="file"
