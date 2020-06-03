@@ -1,5 +1,4 @@
-const model_employee = require("../models/model_employee");
-const jwt = require("jsonwebtoken");
+const model_employee = require('../models/model_employee');
 const employeController = {};
 
 employeController.getEmployees = async (req, res, next) => {
@@ -23,7 +22,7 @@ employeController.createEmployee = async (req, res, next) => {
     const resultado = await Employee.save();
     res.json({
       resultado: resultado,
-      status: "Employee save",
+      status: 'Employee save',
     });
   } catch (error) {
     next(error);
@@ -46,7 +45,7 @@ employeController.editEmployee = async (req, res, next) => {
     );
     res.json({
       resultado: resultado,
-      status: "Employee update",
+      status: 'Employee update',
     });
   } catch (error) {
     next(error);
@@ -56,7 +55,7 @@ employeController.deleteEmployee = async (req, res, next) => {
   try {
     await model_employee.findByIdAndRemove(req.params.id);
     res.json({
-      status: "Employee delete",
+      status: 'Employee delete',
     });
   } catch (error) {
     next(error);

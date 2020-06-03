@@ -1,6 +1,7 @@
-const mongoose = require("mongoose");//Libreria de JS que me permite unir Node con MongoDb y crear los esquemas
+const mongoose = require('mongoose'); //Libreria de JS que me permite unir Node con MongoDb y crear los esquemas
+const { db } = require('./config');
 
-const URI = `mongodb://localhost:27017/mean-crud`; //Ruta de conexion a la BD 
+const URI = `mongodb://${db.host}:${db.port}/${db.dbName}`; //Ruta de conexion a la BD
 mongoose
   .connect(URI, {
     useNewUrlParser: true,
@@ -8,7 +9,7 @@ mongoose
     useFindAndModify: false,
     useCreateIndex: true,
   })
-  .then((db) => console.log("== DataBase Connect Succesfull =="))
-  .catch((err) => console.log(err + "Error en la conexion a la BD"));
+  .then((db) => console.log('== DataBase Connect Succesfull =='))
+  .catch((err) => console.log(err + 'Error en la conexion a la BD'));
 
 module.exports = mongoose;

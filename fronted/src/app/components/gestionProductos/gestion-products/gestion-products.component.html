@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="container col-5">
+    <div class="card">
+      <div class="card-header">Gestion de productos</div>
+      <div class="card-body">
+        <form>
+          <div class="form-group">
+            <label for="exampleFormControlFile1">Example file input</label>
+            <input
+              type="file"
+              class="form-control-file"
+              id="uploadImage"
+              nmae="uploadImage"
+              (change)="onChange($event)"
+              enctype="multipart/form-data"
+              #fileInput
+            />
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            style="margin-left: 2px;"
+            (click)="onUpload()"
+          >
+            Guardar
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

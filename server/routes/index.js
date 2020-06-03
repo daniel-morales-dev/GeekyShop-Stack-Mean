@@ -1,38 +1,47 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const employee_controller = require("../controllers/employee_controller");
-const user_controller = require("../controllers/user_controller");
-const auth = require("../middlewares/auth");
+const employee_controller = require('../controllers/employee_controller');
+const user_controller = require('../controllers/user_controller');
+const product_controller = require('../controllers/product_controller');
+const auth = require('../middlewares/auth');
+const uploadIMages = require('../middlewares/storage');
 
-router.get("/", (req, res) => res.send("Hello World"));
+router.get('/', (req, res) => res.send('Hello World'));
+
+//RUTAS IMAGENES productos
+router.post(
+  '/uploadImageProduct',
+  uploadIMages.any('uploadImage'),
+  product_controller.createProduct
+);
 
 //RUTAS EMPLEADOS//
 router.get(
-  "/employees",
+  '/employees',
   auth.verifyToken,
   auth.verifyRole,
   employee_controller.getEmployees
 );
 router.post(
-  "/employees",
+  '/employees',
   auth.verifyToken,
   auth.verifyRole,
   employee_controller.createEmployee
 );
 router.get(
-  "/employees/:id",
+  '/employees/:id',
   auth.verifyToken,
   auth.verifyRole,
   employee_controller.getEmployee
 );
 router.put(
-  "/employees/:id",
+  '/employees/:id',
   auth.verifyToken,
   auth.verifyRole,
   employee_controller.editEmployee
 );
 router.delete(
-  "/employees/:id",
+  '/employees/:id',
   auth.verifyToken,
   auth.verifyRole,
   employee_controller.deleteEmployee
@@ -40,60 +49,60 @@ router.delete(
 
 //RUTAS USUARIOS//
 router.get(
-  "/users",
+  '/users',
   auth.verifyToken,
   auth.verifyRole,
   user_controller.getUsers
 );
 router.get(
-  "/user/:id",
+  '/user/:id',
   auth.verifyToken,
   auth.verifyRole,
   user_controller.getUser
 );
-router.post("/signup", user_controller.createUser);
-router.post("/signin", user_controller.logInUser);
-router.get("/profile", auth.verifyToken, user_controller.logInUser);
+router.post('/signup', user_controller.createUser);
+router.post('/signin', user_controller.logInUser);
+router.get('/profile', auth.verifyToken, user_controller.logInUser);
 
 //RUTAS JUEGOS//
-router.get("/juegos", (req, res) => {
+router.get('/juegos', (req, res) => {
   res.json([
     {
       _id: 1,
-      name: "The last of us",
-      description: "Juego de accion",
-      category: "accion, aventura, suspenso",
+      name: 'The last of us',
+      description: 'Juego de accion',
+      category: 'accion, aventura, suspenso',
     },
     {
       _id: 2,
-      name: "Call of duty",
-      description: "Juego de accion",
-      category: "accion, shooter, fps",
+      name: 'Call of duty',
+      description: 'Juego de accion',
+      category: 'accion, shooter, fps',
     },
     {
       _id: 3,
-      name: "Forza Horizon 4",
-      description: "Juego de carreras",
-      category: "autos, deportes",
+      name: 'Forza Horizon 4',
+      description: 'Juego de carreras',
+      category: 'autos, deportes',
     },
   ]);
 });
 
-router.get("/private-games", auth.verifyToken, (req, res) => {
+router.get('/private-games', auth.verifyToken, (req, res) => {
   res.json([
     {
       _id: 1,
-      name: "The last of us 2",
+      name: 'The last of us 2',
       description:
-        "Juego de accion y continuacion del aclamado juego The Last Of Us",
-      category: "accion, aventura, suspenso",
+        'Juego de accion y continuacion del aclamado juego The Last Of Us',
+      category: 'accion, aventura, suspenso',
     },
     {
       _id: 2,
-      name: "Minecraft Dungeons",
+      name: 'Minecraft Dungeons',
       description:
-        "Juego de accion accion/aventura rpg basado en el best seller Minecraft",
-      category: "RPG, Accion",
+        'Juego de accion accion/aventura rpg basado en el best seller Minecraft',
+      category: 'RPG, Accion',
     },
   ]);
 });
