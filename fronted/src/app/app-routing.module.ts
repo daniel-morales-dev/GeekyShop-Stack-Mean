@@ -13,7 +13,7 @@ import { UsersComponent } from './components/users/users.component';
 import { AuthRoleAdminGuard } from './guards/auth-role-admin.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { AuthBackToLoginGuard } from './guards/auth-back-to-login.guard';
-import { GestionProductsComponent } from './components/gestionProductos/gestion-products/gestion-products.component';
+import { GestionProductsComponent } from './components/gestionProductos/gestion-products.component';
 
 const routes: Routes = [
   {

@@ -10,9 +10,9 @@ export class UploadIMageProductService {
   private URL = 'http://localhost:3000';
   constructor(private http: HttpClient, private router: Router) {}
 
-  uploadImage(formData) {
+  uploadImage(image) {
     return this.http
-      .post<any>(this.URL + '/uploadImageProduct', formData)
+      .post<any>(this.URL + '/createProduct', image)
       .pipe(map((res) => res));
   }
 }

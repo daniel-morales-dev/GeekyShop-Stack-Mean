@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UploadIMageProductService } from '../../../services/upload-image-product.service';
+import { UploadIMageProductService } from '../../services/upload-image-product.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
@@ -20,7 +20,7 @@ export class GestionProductsComponent implements OnInit {
     let formData = new FormData();
     for (let i = 0; i < this.uploadedFiles.length; i++) {
       formData.append(
-        'uploadImage[]',
+        'image[]',
         this.uploadedFiles[i],
         this.uploadedFiles[i].name
       );

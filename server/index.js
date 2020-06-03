@@ -16,6 +16,7 @@ app.use(morgan('dev'));
 app.use(express.json()); //Ser capaz de convertir los datos que recibe el servidor a JSON
 app.use(express.urlencoded({ extended: false })); //https://expressjs.com/es/api.html#express.urlencoded
 app.use(cors({ origin: 'http://localhost:4200' })); //Uno el backend con el fronted
+app.use('/public', express.static(`${__dirname}/public/uploads/img`));
 //Routes
 app.use(require('./routes/index')); //Importo las rutas que manejara el servidor
 

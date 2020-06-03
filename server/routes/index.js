@@ -4,16 +4,24 @@ const employee_controller = require('../controllers/employee_controller');
 const user_controller = require('../controllers/user_controller');
 const product_controller = require('../controllers/product_controller');
 const auth = require('../middlewares/auth');
-const uploadIMages = require('../middlewares/storage');
+const multer = require('../middlewares/storage');
 
 router.get('/', (req, res) => res.send('Hello World'));
 
 //RUTAS IMAGENES productos
 router.post(
-  '/uploadImageProduct',
-  uploadIMages.any('uploadImage'),
+  '/createProduct',
+  multer.single('image'),
   product_controller.createProduct
 );
+router.get('/products', product_controller.getAllProducts);
+router.get('/products/:id', product_controller.getProduct);
+router.put(
+  '/updateProduct/:id',
+  multer.single('image'),
+  product_controller.updateProduct
+);
+router.delete('/deleteProduct/:id', product_controller.deleteProduct);
 
 //RUTAS EMPLEADOS//
 router.get(

@@ -1,10 +1,12 @@
 const multer = require('multer');
+const { v4: uuidv4 } = require('uuid'); //GENERA UN ID ALEATORIO
+const path = require('path');
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './public/uploads/imgs');
+    cb(null, './server/public/uploads/img');
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now());
+    cb(null, uuidv4() + path.extname(file.originalname));
   },
 });
 

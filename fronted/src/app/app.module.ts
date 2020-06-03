@@ -20,7 +20,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { AuthBackToLoginGuard } from './guards/auth-back-to-login.guard';
 import { AuthRoleAdminGuard } from './guards/auth-role-admin.guard';
 import { TokenInterceptorService } from './services/token-interceptor.service';
-import { GestionProductsComponent } from './components/gestionProductos/gestion-products/gestion-products.component';
+import { GestionProductsComponent } from './components/gestionProductos/gestion-products.component';
 import { UploadIMageProductService } from './services/upload-image-product.service';
 
 @NgModule({
