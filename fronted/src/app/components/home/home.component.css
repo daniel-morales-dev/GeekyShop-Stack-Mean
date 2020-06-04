@@ -1,4 +1,8 @@
-.img-card {
-    max-width: 350px;
-    max-height: 350px;
+.card-photo {
+    cursor: pointer;
+}
+
+.card-photo:hover {
+    box-shadow: 0 0 0 0.2rem rgba(97, 1, 253, 0.25);
+    border: 1px solid #6c5ce7;
 }

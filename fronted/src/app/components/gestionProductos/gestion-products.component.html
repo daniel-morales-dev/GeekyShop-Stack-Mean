@@ -3,38 +3,85 @@
     <div class="card">
       <div class="card-header">Gestion de productos</div>
       <div class="card-body">
-        <form (ngSubmit)="createProduct(productForm)" #productForm="ngForm">
+        <form
+          class="container"
+          [formGroup]="createProductForm"
+          (ngSubmit)="createProduct()"
+        >
           <div class="form-group">
             <input
               type="text"
               class="form-control"
-              [(ngModel)]="product.name"
+              formControlName="name"
               placeholder="Juego"
               required
               autofocus
               name="name"
             />
           </div>
+          <div
+            *ngIf="
+              createProductForm.get('name').errors &&
+              createProductForm.get('name').dirty
+            "
+          >
+            <p *ngIf="createProductForm.get('name').hasError('required')">
+              Campo requerido
+            </p>
+          </div>
           <div class="form-group">
             <textarea
               class="form-control"
-              [(ngModel)]="product.description"
+              formControlName="description"
               placeholder="Ingrese la descripcion del juego"
               rows="3"
               required
               name="description"
             ></textarea>
           </div>
+          <div
+            *ngIf="
+              createProductForm.get('description').errors &&
+              createProductForm.get('description').dirty
+            "
+          >
+            <p
+              *ngIf="createProductForm.get('description').hasError('required')"
+            >
+              Campo requerido
+            </p>
+          </div>
           <div class="form-group">
             <input
               type="text"
-              pattern="/([0-9])/"
               class="form-control"
-              [(ngModel)]="product.price"
-              placeholder="Precio"
-              required
-              name="price"
+              placeholder="Precio del juego: 4000, 50000"
+              [value]="product.price"
+              minlength="2"
+              maxlength="7"
+              formControlName="price"
+              [pattern]="pricePattern"
+              (keypress)="onPriceIntroduced($event)"
             />
+          </div>
+          <div
+            *ngIf="
+              createProductForm.get('price').errors &&
+              createProductForm.get('price').dirty
+            "
+          >
+            <p *ngIf="createProductForm.get('price').hasError('pattern')">
+              Ingrese un precio correcto: 4000, 44, 44.44
+            </p>
+            <p *ngIf="createProductForm.get('price').hasError('required')">
+              Campo requerido
+            </p>
+            <p *ngIf="createProductForm.get('price').hasError('minlength')">
+              El minimo de caracteres es de 2
+            </p>
+            <p *ngIf="createProductForm.get('price').errors?.maxlength">
+              El maximo de caracteres es de 7
+            </p>
           </div>
           <div class="form-group inputFile">
             <input
@@ -42,6 +89,7 @@
               class="form-control-file d-none position-static"
               id="uploadImage"
               name="image"
+              formControlName="inputImage"
               (change)="onPhotoSelected($event)"
               enctype="multipart/form-data"
               #photoInput
@@ -54,10 +102,22 @@
             />
             <label for="uploadImage" class="inputFile">Subir Foto</label>
           </div>
+          <div
+            *ngIf="
+              createProductForm.get('inputImage').errors &&
+              createProductForm.get('inputImage').dirty
+            "
+          >
+            <p
+              *ngIf="createProductForm.get('inputImage').hasError('inputImage')"
+            >
+              Campo requerido
+            </p>
+          </div>
           <button
             type="submit"
             class="btn btn-primary btn-block"
-            [disabled]="productForm.invalid"
+            [disabled]="createProductForm.invalid"
           >
             Guardar
           </button>

@@ -4,13 +4,15 @@ export class Product {
     name = '',
     description = '',
     price = 0,
-    imagePath = ''
+    imagePath = '',
+    imageName = ''
   ) {
     this._id = _id;
     this.name = name;
     this.description = description;
     this.price = price;
     this.imagePath = imagePath;
+    this.imageName = imageName;
   }
 
   _id: string;
@@ -18,4 +20,5 @@ export class Product {
   description: string;
   price: number;
   imagePath: string;
+  imageName: string;
 }

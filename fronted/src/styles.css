@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+
 * {
   font-family: "Open Sans", sans-serif;
   font-size: 16px;
@@ -6,7 +7,8 @@
 
 nav {
   font-weight: bold;
-  background: #6c5ce7; /* fallback for old browsers */
+  background: #6c5ce7;
+  /* fallback for old browsers */
 }
 
 .btn-primary {
@@ -14,13 +16,13 @@ nav {
   border-color: #6c5ce7;
 }
 
-input:hover{
+input:hover {
   border-color: #6c5ce7;
 }
 
-.card-header{
+.card-header {
   background: #6c5ce7;
-  color:white;
+  color: white;
   font-size: 18px;
 }
 
@@ -35,6 +37,7 @@ input:hover{
 }
 
 /*============Aca estan los efectos de color para los botones==============*/
+
 .btn-primary:focus, .btn-primary.focus {
   color: #fff;
   background-color: #6c5ce7;
@@ -48,25 +51,26 @@ input:hover{
   border-color: #6c5ce7;
 }
 
-.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
-.show > .btn-primary.dropdown-toggle {
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show>.btn-primary.dropdown-toggle {
   color: #fff;
   background-color: #5542e4;
   border-color: #6c5ce7;
 }
 
-.btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
-.show > .btn-primary.dropdown-toggle:focus {
+.btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .show>.btn-primary.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(129, 68, 228, 0.5);
 }
+
 /*==========================*/
 
 /*============DROPDOWN==============*/
+
 .dropdown-item.active, .dropdown-item:active {
   color: #fff;
   text-decoration: none;
   background-color: #6c5ce7;
 }
+
 /*==========================*/
 
 .form-control:focus {
@@ -80,4 +84,10 @@ input:hover{
 a {
   color: #6c5ce7;
   font-weight: bold;
+}
+
+input[type="number"] {
+  -webkit-appearance: textfield !important;
+  margin: 0;
+  -moz-appearance: textfield !important;
 }

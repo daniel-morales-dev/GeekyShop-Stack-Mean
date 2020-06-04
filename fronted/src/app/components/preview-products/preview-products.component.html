@@ -1,1 +1,131 @@
-<p>preview-products works!</p>
+<div class="row" *ngIf="!product; else mainContent">
+  <h1>Loading...</h1>
+</div>
+
+<ng-template #mainContent>
+  <div class="row">
+    <div class="container">
+      <div class="card">
+        <div class="card-header">
+          {{ product.name }}
+        </div>
+        <form
+          class="card-body container row"
+          [formGroup]="updateProductForm"
+          (ngSubmit)="updateProduct(product._id)"
+        >
+          <div class="col-md-5 card-photo">
+            <input
+              type="file"
+              class="form-control-file d-none position-static"
+              id="uploadImage"
+              name="image"
+              formControlName="inputImage"
+              (change)="onPhotoSelected($event)"
+              enctype="multipart/form-data"
+              #photoInput
+            />
+            <img
+              [src]="
+                photoSelected ||
+                'http://localhost:3000/public/' + product.imageName
+              "
+              class="img-fluid"
+              (click)="photoInput.click()"
+            />
+            <strong><p>Actualizar foto</p></strong>
+          </div>
+          <div class="col-md-7">
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Nombre del juego"
+                [value]="product.name"
+                formControlName="name"
+                required
+              />
+            </div>
+            <div
+              *ngIf="
+                updateProductForm.get('name').errors &&
+                updateProductForm.get('name').dirty
+              "
+            >
+              <p *ngIf="updateProductForm.get('name').hasError('required')">
+                Campo requerido
+              </p>
+            </div>
+            <div class="form-group">
+              <textarea
+                rows="3"
+                class="form-control"
+                placeholder="Ingrese la descripcion del juego"
+                formControlName="description"
+              >
+              </textarea>
+            </div>
+            <div
+              *ngIf="
+                updateProductForm.get('description').errors &&
+                updateProductForm.get('description').dirty
+              "
+            >
+              <p
+                *ngIf="
+                  updateProductForm.get('description').hasError('required')
+                "
+              >
+                Campo requerido
+              </p>
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Precio del juego: 4000, 50000"
+                [value]="product.price"
+                minlength="2"
+                maxlength="7"
+                formControlName="price"
+                [pattern]="pricePattern"
+                (keypress)="onPriceIntroduced($event)"
+              />
+            </div>
+            <div
+              *ngIf="
+                updateProductForm.get('price').errors &&
+                updateProductForm.get('price').dirty
+              "
+            >
+              <p *ngIf="updateProductForm.get('price').hasError('pattern')">
+                Ingrese un precio correcto: 4000, 44, 44.44
+              </p>
+              <p *ngIf="updateProductForm.get('price').hasError('required')">
+                Campo requerido
+              </p>
+              <p *ngIf="updateProductForm.get('price').hasError('minlength')">
+                El minimo de caracteres es de 2
+              </p>
+              <p *ngIf="updateProductForm.get('price').errors?.maxlength">
+                El maximo de caracteres es de 7
+              </p>
+            </div>
+            <button type="submit" class="btn btn-primary col-md-3">
+              Actualizar
+            </button>
+          </div>
+        </form>
+        <div class="col-md-5"></div>
+        <div class="col-md-7">
+          <button
+            class="btn btn-danger col-md-2"
+            (click)="deleteProduct(product._id)"
+          >
+            Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

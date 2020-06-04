@@ -45,6 +45,7 @@ productController.updateProduct = async (req, res, next) => {
       description: req.body.description,
       price: req.body.price,
       imagePath: req.file.path,
+      imageName: req.file.filename,
     };
     console.log(req.file);
     //BUSCAMOS PRIMERO EL PRODUCTO PARA ELIMINAR LA FOTO ANTERIOR Y LUEGO AGREGAR LA NUEVA
@@ -73,11 +74,12 @@ productController.updateProduct = async (req, res, next) => {
 
 productController.deleteProduct = async (req, res, next) => {
   try {
-    const product = await modelProduct.findByIdAndDelete(req.params.id);
-    if (product) {
-      //Si existe el producto a eliminar
-      if (path.resolve(product.imagePath)) {
-        fs.unlink(path.resolve(product.imagePath), (err) => {
+    const productPhoto = await modelProduct.findById(req.params.id);
+    //Si existe el producto a eliminar
+    if (productPhoto) {
+      console.log(path.resolve(productPhoto.imagePath));
+      if (path.resolve(productPhoto.imagePath)) {
+        fs.unlink(path.resolve(productPhoto.imagePath), (err) => {
           //Eliminamos la foto en la ruta que tenia guardado el producto
           if (err) {
             throw err;
@@ -87,6 +89,7 @@ productController.deleteProduct = async (req, res, next) => {
           });
         });
       }
+      const product = await modelProduct.findByIdAndDelete(req.params.id);
     }
     return res.json({
       status: 'Producto eliminado',

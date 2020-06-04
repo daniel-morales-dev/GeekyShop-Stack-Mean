@@ -30,4 +30,25 @@ export class ProductsService {
       .get<Product>(this.URL + '/products')
       .pipe(map((res) => res));
   }
+
+  getProduct(id: String) {
+    return this.http
+      .get<Product>(this.URL + '/products' + `/${id}`)
+      .pipe(map((res) => res));
+  }
+  deleteProduct(id: String) {
+    return this.http
+      .delete<Product>(this.URL + '/products' + `/${id}`)
+      .pipe(map((res) => res));
+  }
+  updateProduct(id: String, product, photo: File) {
+    const formData = new FormData();
+    formData.append('name', product.name);
+    formData.append('description', product.description);
+    formData.append('price', product.price);
+    formData.append('image', photo);
+    return this.http
+      .put<Product>(this.URL + '/products' + `/${id}`, formData)
+      .pipe(map((res) => res));
+  }
 }
