@@ -30,7 +30,7 @@ export class SignupComponent implements OnInit {
           icon: 'success',
           title: 'Registro Exitoso ' + res.datos.nombre_usuario,
           text: 'Tu Rol es: ' + res.datos.rol,
-          confirmButtonColor: "#6c5ce7", 
+          confirmButtonColor: '#6c5ce7',
         });
       },
       (err) => {

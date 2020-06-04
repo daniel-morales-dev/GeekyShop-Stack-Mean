@@ -3,51 +3,61 @@
     <div class="card">
       <div class="card-header">Gestion de productos</div>
       <div class="card-body">
-        <form>
+        <form (ngSubmit)="createProduct(productForm)" #productForm="ngForm">
           <div class="form-group">
-            <label for="nombreJuego">Nombre del producto</label>
             <input
               type="text"
               class="form-control"
-              id="nombreJuego"
+              [(ngModel)]="product.name"
               placeholder="Juego"
+              required
+              autofocus
+              name="name"
             />
           </div>
           <div class="form-group">
-            <label for="descripcionJuego">Descripcion</label>
             <textarea
               class="form-control"
-              id="descripcionJuego"
+              [(ngModel)]="product.description"
+              placeholder="Ingrese la descripcion del juego"
               rows="3"
+              required
+              name="description"
             ></textarea>
           </div>
           <div class="form-group">
-            <label for="precioProducto">Precio del producto</label>
             <input
-              type="number"
-              pattern="[0-9]"
+              type="text"
+              pattern="/([0-9])/"
               class="form-control"
-              id="precioProducto"
+              [(ngModel)]="product.price"
               placeholder="Precio"
+              required
+              name="price"
             />
           </div>
-          <div class="form-group">
-            <label for="exampleFormControlFile1">Example file input</label>
+          <div class="form-group inputFile">
             <input
               type="file"
-              class="form-control-file"
+              class="form-control-file d-none position-static"
               id="uploadImage"
               name="image"
-              (change)="onChange($event)"
+              (change)="onPhotoSelected($event)"
               enctype="multipart/form-data"
-              #fileInput
+              #photoInput
             />
+            <img
+              [src]="photoSelected || '../../../assets/imgs/uploadPic.svg'"
+              class="img-fluid position-static"
+              alt="No Image"
+              (click)="photoInput.click()"
+            />
+            <label for="uploadImage" class="inputFile">Subir Foto</label>
           </div>
           <button
             type="submit"
-            class="btn btn-primary"
-            style="margin-left: 2px;"
-            (click)="onUpload()"
+            class="btn btn-primary btn-block"
+            [disabled]="productForm.invalid"
           >
             Guardar
           </button>

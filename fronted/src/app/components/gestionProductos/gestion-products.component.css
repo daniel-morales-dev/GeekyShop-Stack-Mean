@@ -1,0 +1,7 @@
+img {
+    max-width: 70px;
+}
+
+.inputFile {
+    cursor: pointer;
+}

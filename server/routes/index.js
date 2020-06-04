@@ -10,18 +10,18 @@ router.get('/', (req, res) => res.send('Hello World'));
 
 //RUTAS IMAGENES productos
 router.post(
-  '/createProduct',
+  '/products',
   multer.single('image'),
   product_controller.createProduct
 );
 router.get('/products', product_controller.getAllProducts);
 router.get('/products/:id', product_controller.getProduct);
 router.put(
-  '/updateProduct/:id',
+  '/products/:id',
   multer.single('image'),
   product_controller.updateProduct
 );
-router.delete('/deleteProduct/:id', product_controller.deleteProduct);
+router.delete('/products/:id', product_controller.deleteProduct);
 
 //RUTAS EMPLEADOS//
 router.get(
@@ -57,7 +57,7 @@ router.delete(
 
 //RUTAS USUARIOS//
 router.get(
-  '/users',
+  '/user',
   auth.verifyToken,
   auth.verifyRole,
   user_controller.getUsers

@@ -9,6 +9,7 @@ productController.createProduct = async (req, res, next) => {
       description: req.body.description,
       price: req.body.price,
       imagePath: req.file.path,
+      imageName: req.file.filename,
     });
     const resultado = await Product.save();
     res.json({
@@ -86,15 +87,6 @@ productController.deleteProduct = async (req, res, next) => {
           });
         });
       }
-      /* fs.unlink(path.resolve(product.imagePath), (err) => {
-        //Eliminamos la foto en la ruta que tenia guardado el producto
-        if (err) {
-          throw err;
-        }
-        res.json({
-          status: 'File succesfully deleted',
-        });
-      }); */
     }
     return res.json({
       status: 'Producto eliminado',
