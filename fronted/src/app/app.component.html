@@ -38,7 +38,10 @@
             />
           </form>
         </li>
-        <li class="nav-item dropdown" *ngIf="authService.loggedIn()">
+        <li
+          class="nav-item dropdown"
+          *ngIf="authService.loggedIn() && authService.isEmployee()"
+        >
           <a
             class="nav-link dropdown-toggle nav-link"
             data-toggle="dropdown"
@@ -50,20 +53,24 @@
           <div class="dropdown-menu">
             <ng-container *ngIf="authService.loggedIn()">
               <li class="nav-item">
-                <a
-                  class="nav-link dropdown-item"
-                  routerLink="/private-games"
-                  routerLinkActive="active"
-                  >Juegos no publicados</a
-                >
+                <div *ngIf="authService.isEmployee()">
+                  <a
+                    class="nav-link dropdown-item"
+                    routerLink="/private-games"
+                    routerLinkActive="active"
+                    >Juegos no publicados</a
+                  >
+                </div>
               </li>
               <li class="nav-item">
-                <a
-                  class="nav-link dropdown-item"
-                  routerLink="/gestionProducts"
-                  routerLinkActive="active"
-                  >Gestion de juegos</a
-                >
+                <div *ngIf="authService.isEmployee()">
+                  <a
+                    class="nav-link dropdown-item"
+                    routerLink="/gestionProducts"
+                    routerLinkActive="active"
+                    >Gestion de juegos</a
+                  >
+                </div>
               </li>
               <li class="nav-item">
                 <div *ngIf="authService.isAdmin()">
@@ -102,7 +109,7 @@
             >
           </li>
         </ng-container>
-        <ng-template #loggedIn>
+        <ng-template #loggedIn >
           <li class="nav-item">
             <a
               class="nav-link"
@@ -111,7 +118,7 @@
               >{{ user.nombre_usuario }}</a
             >
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="authService.isEmployee()">
             <a class="nav-link">Rol: {{ user.rol }}</a>
           </li>
           <li class="nav-item">

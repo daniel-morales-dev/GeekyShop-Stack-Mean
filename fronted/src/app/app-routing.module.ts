@@ -15,6 +15,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { AuthBackToLoginGuard } from './guards/auth-back-to-login.guard';
 import { GestionProductsComponent } from './components/gestionProductos/gestion-products.component';
 import { PreviewProductsComponent } from './components/preview-products/preview-products.component';
+import { AuthRoleEmployeeGuard } from './guards/auth-role-employee.guard';
 
 const routes: Routes = [
   {
@@ -30,7 +31,7 @@ const routes: Routes = [
   {
     path: 'gestionProducts',
     component: GestionProductsComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, AuthRoleEmployeeGuard],
   },
   {
     path: 'games',

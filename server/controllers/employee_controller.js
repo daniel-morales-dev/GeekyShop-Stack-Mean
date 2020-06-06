@@ -38,13 +38,13 @@ employeController.editEmployee = async (req, res, next) => {
       officine: req.body.officine,
       salary: req.body.salary,
     };
-    const resultado = await model_employee.findOneAndUpdate(
+    const resultado = await model_employee.findByIdAndUpdate(
       id,
       { $set: employee },
       { new: true }
     );
     res.json({
-      resultado: resultado,
+      resultado,
       status: 'Employee update',
     });
   } catch (error) {

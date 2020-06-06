@@ -12,6 +12,8 @@ router.get('/', (req, res) => res.send('Hello World'));
 router.post(
   '/products',
   multer.single('image'),
+  auth.verifyToken,
+  auth.canManageProducts,
   product_controller.createProduct
 );
 router.get('/products', product_controller.getAllProducts);
@@ -19,39 +21,46 @@ router.get('/products/:id', product_controller.getProduct);
 router.put(
   '/products/:id',
   multer.single('image'),
+  auth.verifyToken,
+  auth.canManageProducts,
   product_controller.updateProduct
 );
-router.delete('/products/:id', product_controller.deleteProduct);
+router.delete(
+  '/products/:id',
+  auth.verifyToken,
+  auth.canManageProducts,
+  product_controller.deleteProduct
+);
 
 //RUTAS EMPLEADOS//
 router.get(
   '/employees',
   auth.verifyToken,
-  auth.verifyRole,
+  auth.canManageEmployees,
   employee_controller.getEmployees
 );
 router.post(
   '/employees',
   auth.verifyToken,
-  auth.verifyRole,
+  auth.canManageEmployees,
   employee_controller.createEmployee
 );
 router.get(
   '/employees/:id',
   auth.verifyToken,
-  auth.verifyRole,
+  auth.canManageEmployees,
   employee_controller.getEmployee
 );
 router.put(
   '/employees/:id',
   auth.verifyToken,
-  auth.verifyRole,
+  auth.canManageEmployees,
   employee_controller.editEmployee
 );
 router.delete(
   '/employees/:id',
   auth.verifyToken,
-  auth.verifyRole,
+  auth.canManageEmployees,
   employee_controller.deleteEmployee
 );
 
@@ -59,18 +68,18 @@ router.delete(
 router.get(
   '/user',
   auth.verifyToken,
-  auth.verifyRole,
+  auth.canManageEmployees,
   user_controller.getUsers
 );
 router.get(
   '/user/:id',
   auth.verifyToken,
-  auth.verifyRole,
+  auth.canManageEmployees,
   user_controller.getUser
 );
 router.post('/signup', user_controller.createUser);
 router.post('/signin', user_controller.logInUser);
-router.get('/profile', auth.verifyToken, user_controller.logInUser);
+router.get('/profile', auth.verifyToken);
 
 //RUTAS JUEGOS//
 router.get('/juegos', (req, res) => {

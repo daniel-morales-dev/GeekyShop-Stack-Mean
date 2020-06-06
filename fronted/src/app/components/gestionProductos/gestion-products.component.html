@@ -36,6 +36,7 @@
               placeholder="Ingrese la descripcion del juego"
               rows="3"
               required
+              maxlength="140"
               name="description"
             ></textarea>
           </div>
@@ -49,6 +50,11 @@
               *ngIf="createProductForm.get('description').hasError('required')"
             >
               Campo requerido
+            </p>
+            <p
+              *ngIf="createProductForm.get('description').hasError('maxlength')"
+            >
+              El maximo de caracteres es de 140
             </p>
           </div>
           <div class="form-group">
@@ -79,7 +85,7 @@
             <p *ngIf="createProductForm.get('price').hasError('minlength')">
               El minimo de caracteres es de 2
             </p>
-            <p *ngIf="createProductForm.get('price').errors?.maxlength">
+            <p *ngIf="createProductForm.get('price').hasError('maxlength')">
               El maximo de caracteres es de 7
             </p>
           </div>

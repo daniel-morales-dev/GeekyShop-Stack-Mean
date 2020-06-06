@@ -1,15 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductsService } from 'src/app/services/products.service';
 import { Product } from 'src/app/models/products';
 import Swal from 'sweetalert2';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormControl,
-} from '@angular/forms';
-import { FileDetector } from 'protractor';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
 }
@@ -30,7 +25,8 @@ export class PreviewProductsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private productService: ProductsService,
-    public fb: FormBuilder
+    public fb: FormBuilder,
+    public authService: AuthService
   ) {
     this.updateProductForm = this.fb.group({
       name: ['', [Validators.required]],

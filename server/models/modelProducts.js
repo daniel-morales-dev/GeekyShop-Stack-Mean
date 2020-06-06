@@ -11,6 +11,7 @@ const productSchema = new Schema(
     description: {
       type: String,
       required: true,
+      maxlength: 140,
     },
     price: {
       type: Number,

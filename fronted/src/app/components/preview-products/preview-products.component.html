@@ -34,101 +34,116 @@
               (click)="photoInput.click()"
             />
             <strong
-              ><p class="upload-label" (click)="photoInput.click()">
+              ><p
+                class="upload-label"
+                (click)="photoInput.click()"
+                *ngIf="authService.isEmployee()"
+              >
                 Actualizar foto
               </p></strong
             >
           </div>
           <div class="col-md-7">
-            <div class="form-group">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Nombre del juego"
-                [value]="product.name"
-                formControlName="name"
-                required
-              />
-            </div>
-            <div
-              *ngIf="
-                updateProductForm.get('name').errors &&
-                updateProductForm.get('name').dirty
-              "
-            >
-              <p *ngIf="updateProductForm.get('name').hasError('required')">
-                Campo requerido
-              </p>
-            </div>
-            <div class="form-group">
-              <textarea
-                rows="3"
-                class="form-control"
-                placeholder="Ingrese la descripcion del juego"
-                formControlName="description"
-              >
-              </textarea>
-            </div>
-            <div
-              *ngIf="
-                updateProductForm.get('description').errors &&
-                updateProductForm.get('description').dirty
-              "
-            >
-              <p
+            <ng-container *ngIf="authService.isEmployee(); else userCorriente">
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Nombre del juego"
+                  [value]="product.name"
+                  formControlName="name"
+                  required
+                />
+              </div>
+              <div
                 *ngIf="
-                  updateProductForm.get('description').hasError('required')
+                  updateProductForm.get('name').errors &&
+                  updateProductForm.get('name').dirty
                 "
               >
-                Campo requerido
-              </p>
-            </div>
-            <div class="form-group">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Precio del juego: 4000, 50000"
-                [value]="product.price"
-                minlength="2"
-                maxlength="7"
-                formControlName="price"
-                [pattern]="pricePattern"
-                (keypress)="onPriceIntroduced($event)"
-              />
-            </div>
-            <div
-              *ngIf="
-                updateProductForm.get('price').errors &&
-                updateProductForm.get('price').dirty
-              "
-            >
-              <p *ngIf="updateProductForm.get('price').hasError('pattern')">
-                Ingrese un precio correcto: 4000, 44, 44.44
-              </p>
-              <p *ngIf="updateProductForm.get('price').hasError('required')">
-                Campo requerido
-              </p>
-              <p *ngIf="updateProductForm.get('price').hasError('minlength')">
-                El minimo de caracteres es de 2
-              </p>
-              <p *ngIf="updateProductForm.get('price').errors?.maxlength">
-                El maximo de caracteres es de 7
-              </p>
-            </div>
-            <button type="submit" class="btn btn-primary col-md-3">
-              Actualizar
-            </button>
+                <p *ngIf="updateProductForm.get('name').hasError('required')">
+                  Campo requerido
+                </p>
+              </div>
+              <div class="form-group">
+                <textarea
+                  rows="4"
+                  class="form-control"
+                  placeholder="Ingrese la descripcion del juego"
+                  formControlName="description"
+                >
+                </textarea>
+              </div>
+              <div
+                *ngIf="
+                  updateProductForm.get('description').errors &&
+                  updateProductForm.get('description').dirty
+                "
+              >
+                <p
+                  *ngIf="
+                    updateProductForm.get('description').hasError('required')
+                  "
+                >
+                  Campo requerido
+                </p>
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Precio del juego: 4000, 50000"
+                  [value]="product.price"
+                  minlength="2"
+                  maxlength="7"
+                  formControlName="price"
+                  [pattern]="pricePattern"
+                  (keypress)="onPriceIntroduced($event)"
+                />
+              </div>
+              <div
+                *ngIf="
+                  updateProductForm.get('price').errors &&
+                  updateProductForm.get('price').dirty
+                "
+              >
+                <p *ngIf="updateProductForm.get('price').hasError('pattern')">
+                  Ingrese un precio correcto: 4000, 44, 44.44
+                </p>
+                <p *ngIf="updateProductForm.get('price').hasError('required')">
+                  Campo requerido
+                </p>
+                <p *ngIf="updateProductForm.get('price').hasError('minlength')">
+                  El minimo de caracteres es de 2
+                </p>
+                <p *ngIf="updateProductForm.get('price').errors?.maxlength">
+                  El maximo de caracteres es de 7
+                </p>
+              </div>
+              <button type="submit" class="btn btn-primary col-md-3">
+                Actualizar
+              </button>
+              <a
+                class="btn btn-danger col-md-3"
+                (click)="deleteProduct(product._id)"
+              >
+                Eliminar
+              </a>
+            </ng-container>
+            <ng-template #userCorriente>
+              <p class="tittle-game">{{ product.name }}</p>
+              <p class="description-game">{{ product.description }}</p>
+              <p class="price-game">${{ product.price }}</p>
+              <a
+                class="btn btn-primary col-md-5 btn-carrito"
+                (click)="deleteProduct(product._id)"
+              >
+                Añadir al carrito
+              </a>
+            </ng-template>
           </div>
         </form>
         <div class="col-md-5"></div>
-        <div class="col-md-7">
-          <button
-            class="btn btn-danger col-md-2"
-            (click)="deleteProduct(product._id)"
-          >
-            Eliminar
-          </button>
-        </div>
       </div>
     </div>
   </div>

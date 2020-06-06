@@ -59,25 +59,34 @@ productController.updateProduct = async (req, res, next) => {
         //Si existe el producto a eliminar
         if (productDeletePhoto.imageName !== 'no-image.svg') {
           //EVITAMOS BORRAR LA IMAGEN ESTANDAR POR SI NO HAY IMAGENES
-          await fs.unlink(path.resolve(productDeletePhoto.imagePath), (err) => {
-            //Eliminamos la foto en la ruta que tenia guardado el producto
-            if (err) throw err;
-            console.log('Successfully delete');
-          });
+          try {
+            await fs.unlink(
+              path.resolve(productDeletePhoto.imagePath),
+              (err) => {
+                //Eliminamos la foto en la ruta que tenia guardado el producto
+                if (err) {
+                  console.log('No se ha podido eliminar el archivo');
+                }
+                console.log('Archivo eliminado');
+              }
+            );
+          } catch (error) {
+            console.log(error);
+          }
         }
       }
     }
-    const resultado = await modelProduct.findOneAndUpdate(
+    const resultado = await modelProduct.findByIdAndUpdate(
       id,
       { $set: data },
       { new: true }
     );
     return res.json({
-      resultado: resultado,
+      resultado,
       status: 'producto actualizado',
     });
   } catch (error) {
-    next(error);
+    next();
   }
 };
 

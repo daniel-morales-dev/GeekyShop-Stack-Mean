@@ -19,6 +19,7 @@ export class GestionProductsComponent implements OnInit {
   createProductForm: FormGroup;
   photoSelected: string | ArrayBuffer;
   pricePattern = /[0-9]/;
+
   constructor(
     private router: Router,
     public productService: ProductsService,
@@ -26,7 +27,7 @@ export class GestionProductsComponent implements OnInit {
   ) {
     this.createProductForm = this.fb.group({
       name: ['', [Validators.required]],
-      description: ['', [Validators.required]],
+      description: ['', [Validators.required, Validators.maxLength(140)]],
       price: [
         '',
         [
@@ -79,7 +80,6 @@ export class GestionProductsComponent implements OnInit {
           this.router.navigate(['/home']);
         },
         (err) => {
-          console.log(err);
           Swal.fire({
             icon: 'error',
             title: 'Algo salio mal',

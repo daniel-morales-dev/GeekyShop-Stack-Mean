@@ -3,7 +3,7 @@ import { HttpClient, HttpInterceptor } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
-import * as jwt_decode from "jwt-decode";
+import * as jwt_decode from 'jwt-decode';
 @Injectable({
   providedIn: 'root',
 })
@@ -33,10 +33,22 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  isAdmin(){
-    const rol = this.decodeToken().rol;
-    if (rol != 'admin') {
-      return false
+  isAdmin() {
+    if (this.loggedIn) {
+      const rol = this.decodeToken().rol;
+      if (rol != 'admin') {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  isEmployee() {
+    if (this.loggedIn) {
+      const rol = this.decodeToken().rol;
+      if (rol != 'empleado' && rol != 'admin') {
+        return false;
+      }
     }
     return true;
   }
@@ -57,5 +69,4 @@ export class AuthService {
     let decode = jwt_decode(token); //LO DE CODIFICO
     return decode; // LO RETORNO, LO USO EN SIGNIN-SIGNUP, ETC.
   }
-
 }

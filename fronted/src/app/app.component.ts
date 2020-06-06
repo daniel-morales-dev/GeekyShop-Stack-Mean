@@ -22,7 +22,8 @@ export class AppComponent {
 
   traerDatos() {
     //CREO UNA FUNCION QUE ME VA GUARDAR LOS DATOS DEL USUARIO DECODIFICANDO EL TOKEN
-    if (this.authService.loggedIn()) {//SOLO DECODIFICA EL TOKEN SI ESTA LOGEADO
+    if (this.authService.loggedIn()) {
+      //SOLO DECODIFICA EL TOKEN SI ESTA LOGEADO
       this.user = {
         id: this.authService.decodeToken().id,
         email: this.authService.decodeToken().email,
