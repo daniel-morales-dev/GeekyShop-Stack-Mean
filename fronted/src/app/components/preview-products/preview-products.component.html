@@ -30,10 +30,14 @@
                 photoSelected ||
                 'http://localhost:3000/public/' + product.imageName
               "
-              class="img-fluid"
+              class="img-fluid img-card-top"
               (click)="photoInput.click()"
             />
-            <strong><p>Actualizar foto</p></strong>
+            <strong
+              ><p class="upload-label" (click)="photoInput.click()">
+                Actualizar foto
+              </p></strong
+            >
           </div>
           <div class="col-md-7">
             <div class="form-group">

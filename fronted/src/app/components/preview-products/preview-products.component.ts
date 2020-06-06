@@ -9,6 +9,7 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
+import { FileDetector } from 'protractor';
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
 }
@@ -21,11 +22,10 @@ interface HtmlInputEvent extends Event {
 export class PreviewProductsComponent implements OnInit {
   id: String;
   product: Product;
-  file: File;
   updateProductForm: FormGroup;
   photoSelected: string | ArrayBuffer;
   pricePattern = /[0-9]/;
-
+  file: File;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -68,16 +68,44 @@ export class PreviewProductsComponent implements OnInit {
   }
   //Eliminamos producto
   deleteProduct(id: String) {
-    console.log('SE PRESIONO ELIMINAR');
-    this.productService.deleteProduct(id).subscribe(
-      (res) => {
-        console.log(res);
-        this.router.navigate(['/home']);
-      },
-      (err) => {
-        console.log(err);
+    Swal.fire({
+      title: '¿Estas seguro de querer eliminar este registro?',
+      text: 'No podras revertir esto!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#6c5ce7',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Borralo',
+    }).then((res) => {
+      if (res.value) {
+        this.productService.deleteProduct(id).subscribe(
+          (res) => {
+            Swal.fire({
+              title: 'Eliminado',
+              text: 'Tu registro se ha eliminado con exito.',
+              icon: 'success',
+              confirmButtonColor: '#6c5ce7',
+            });
+            this.router.navigate(['/home']);
+          },
+          (err) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Algo salio mal',
+              text: 'No pudimos eliminar tu registro',
+              confirmButtonColor: '#6c5ce7',
+            });
+          }
+        );
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Algo salio mal',
+          text: 'No pudimos eliminar tu registro',
+          confirmButtonColor: '#6c5ce7',
+        });
       }
-    );
+    });
   }
   resetForm(form?: FormGroup) {
     if (form) {
@@ -103,10 +131,6 @@ export class PreviewProductsComponent implements OnInit {
   }
 
   updateProduct(id: String) {
-    console.log('SE PRESIONO actualizar');
-    console.log(this.file);
-    console.log(this.updateProductForm.value);
-    console.log(this.product);
     this.productService
       .updateProduct(id, this.updateProductForm.value, this.file)
       .subscribe(

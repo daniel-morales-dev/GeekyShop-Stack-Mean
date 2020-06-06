@@ -18,10 +18,11 @@ const productSchema = new Schema(
     },
     imagePath: {
       type: String,
-      default: `server/public/uploads/img/no-image.svg`,
+      default: 'server/public/uploads/img/no-image.svg',
     },
     imageName: {
       type: String,
+      default: 'no-image.svg',
     },
   },
   {
