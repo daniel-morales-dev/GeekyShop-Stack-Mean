@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
   products: any;
   constructor(
-    private authService: AuthService,
     private productService: ProductsService,
     private router: Router
   ) {}
@@ -18,7 +17,6 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.productService.getProducts().subscribe(
       (res) => {
-        console.log(res);
         this.products = res;
       },
       (err) => {

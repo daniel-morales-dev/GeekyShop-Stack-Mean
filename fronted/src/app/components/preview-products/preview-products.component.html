@@ -15,36 +15,51 @@
           (ngSubmit)="updateProduct(product._id)"
         >
           <div class="col-md-5 card-photo">
-            <input
-              type="file"
-              class="form-control-file d-none position-static"
-              id="uploadImage"
-              name="image"
-              formControlName="inputImage"
-              (change)="onPhotoSelected($event)"
-              enctype="multipart/form-data"
-              #photoInput
-            />
-            <img
-              [src]="
-                photoSelected ||
-                'http://localhost:3000/public/' + product.imageName
-              "
-              class="img-fluid img-card-top"
-              (click)="photoInput.click()"
-            />
-            <strong
-              ><p
-                class="upload-label"
-                (click)="photoInput.click()"
-                *ngIf="authService.isEmployee()"
-              >
-                Actualizar foto
-              </p></strong
+            <ng-container
+              *ngIf="productService.canManageProduct(); else notManaged"
             >
+              <input
+                type="file"
+                class="form-control-file d-none position-static"
+                id="uploadImage"
+                name="image"
+                formControlName="inputImage"
+                (change)="onPhotoSelected($event)"
+                enctype="multipart/form-data"
+                #photoInput
+              />
+              <img
+                [src]="
+                  photoSelected ||
+                  'http://localhost:3000/public/' + product.imageName
+                "
+                class="img-fluid img-card-top"
+                (click)="photoInput.click()"
+              />
+              <strong
+                ><p
+                  class="upload-label"
+                  (click)="photoInput.click()"
+                  *ngIf="productService.canManageProduct()"
+                >
+                  Actualizar foto
+                </p></strong
+              >
+            </ng-container>
+            <ng-template #notManaged>
+              <img
+                [src]="
+                  photoSelected ||
+                  'http://localhost:3000/public/' + product.imageName
+                "
+                class="img-fluid img-card-top"
+              />
+            </ng-template>
           </div>
           <div class="col-md-7">
-            <ng-container *ngIf="authService.isEmployee(); else userCorriente">
+            <ng-container
+              *ngIf="productService.canManageProduct(); else userCorriente"
+            >
               <div class="form-group">
                 <input
                   type="text"
@@ -130,20 +145,20 @@
                 Eliminar
               </a>
             </ng-container>
-            <ng-template #userCorriente>
-              <p class="tittle-game">{{ product.name }}</p>
-              <p class="description-game">{{ product.description }}</p>
-              <p class="price-game">${{ product.price }}</p>
-              <a
-                class="btn btn-primary col-md-5 btn-carrito"
-                (click)="deleteProduct(product._id)"
-              >
-                Añadir al carrito
-              </a>
-            </ng-template>
+            <p></p>
+            <a
+              class="btn btn-primary col-md-5 btn-carrito"
+              (click)="deleteProduct(product._id)"
+            >
+              Añadir al carrito
+            </a>
           </div>
         </form>
-        <div class="col-md-5"></div>
+        <ng-template #userCorriente>
+          <p class="tittle-game">{{ product.name }}</p>
+          <p class="description-game">{{ product.description }}</p>
+          <p class="price-game">${{ product.price }}</p>
+        </ng-template>
       </div>
     </div>
   </div>

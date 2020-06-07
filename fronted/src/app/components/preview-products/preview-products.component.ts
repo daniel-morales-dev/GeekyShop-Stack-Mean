@@ -24,9 +24,8 @@ export class PreviewProductsComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private productService: ProductsService,
-    public fb: FormBuilder,
-    public authService: AuthService
+    public productService: ProductsService,
+    public fb: FormBuilder
   ) {
     this.updateProductForm = this.fb.group({
       name: ['', [Validators.required]],

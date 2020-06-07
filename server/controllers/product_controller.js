@@ -8,7 +8,7 @@ productController.getAllProducts = async (req, res, next) => {
     const productos = await modelProduct.find();
     return res.json(productos);
   } catch (error) {
-    next(error);
+    console.log(error);
   }
 };
 productController.getProduct = async (req, res, next) => {
@@ -16,7 +16,7 @@ productController.getProduct = async (req, res, next) => {
     const producto = await modelProduct.findById(req.params.id);
     return res.json(producto);
   } catch (error) {
-    next(error);
+    console.log(error);
   }
 };
 
