@@ -1,5 +1,5 @@
 const mongoose = require('mongoose'); //Libreria de JS que me permite unir Node con MongoDb y crear los esquemas
-const { db } = require('./config');
+const { db } = require('./config'); //REQUIERO LAS CONFIGURACIONES DEL SERVIDOR
 
 const URI = `mongodb://${db.host}:${db.port}/${db.dbName}`; //Ruta de conexion a la BD
 mongoose

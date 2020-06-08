@@ -1,9 +1,13 @@
-const express = require('express');
-const router = express.Router();
+//ARCHIVO DE RUTAS DEL SERVIDOR
+const express = require('express'); //IMPORTO EXPRESS
+const router = express.Router(); //IMPORTO EL MANEJADOR DE SOLICITUDES
+//REQUIERO TODOS LOS CONTROLADORES DE MI PROYECTO
 const employee_controller = require('../controllers/employee_controller');
 const user_controller = require('../controllers/user_controller');
 const product_controller = require('../controllers/product_controller');
+//IMPORTO EL MIDDLEWARE AUTH, QUE SE ENCARGA DE AUTENTIFICAR LAS PETICIONES POR ROLES
 const auth = require('../middlewares/auth');
+//MULTER, MODULO QUE ME PERMITE GUARDAR IMAGENES EN EL SERVIDOR
 const multer = require('../middlewares/storage');
 
 router.get('/', (req, res) => res.send('Hello World'));
