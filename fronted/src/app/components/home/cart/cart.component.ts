@@ -43,33 +43,6 @@ export class CartComponent implements OnInit {
         price: product.price,
       });
     }
-    /* if (this.cartItems.length === 0) {
-      this.cartItems.push({
-        _id: product._id,
-        name: product.name,
-        price: product.price,
-      });
-    } else {
-      for (let i in this.cartItems) {
-        if (this.cartItems[i]._id === product._id) {
-          Swal.fire({
-            title: 'Ya tienes este producto en tu carrito',
-            showClass: {
-              popup: 'animate__animated animate__fadeInDown',
-            },
-            hideClass: {
-              popup: 'animate__animated animate__fadeOutUp',
-            },
-          });
-        } else {
-          this.cartItems.push({
-            _id: product._id,
-            name: product.name,
-            price: product.price,
-          });
-        }
-      }
-    } */
     this.cartTotal = 0;
     this.cartItems.forEach((product) => {
       this.cartTotal += product.price;
