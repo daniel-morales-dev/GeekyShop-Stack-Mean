@@ -3,6 +3,7 @@ import { ProductListComponent } from '../product-list.component';
 import { Router } from '@angular/router';
 import { Product } from 'src/app/models/products';
 import { MessengerService } from '../../../../services/messenger.service';
+import { ShopcartService } from '../../../../services/shopcart.service';
 
 @Component({
   selector: 'app-product-item',
@@ -11,7 +12,11 @@ import { MessengerService } from '../../../../services/messenger.service';
 })
 export class ProductItemComponent implements OnInit {
   @Input() product: Product;
-  constructor(private router: Router, private message: MessengerService) {}
+  constructor(
+    private router: Router,
+    private message: MessengerService,
+    private cartService: ShopcartService
+  ) {}
 
   ngOnInit(): void {}
   selectedCard(id: String) {
@@ -19,6 +24,8 @@ export class ProductItemComponent implements OnInit {
   }
 
   handleAddToCart() {
-    this.message.sendMessage(this.product);
+    this.cartService.addProductToCar(this.product).subscribe(() => {
+      this.message.sendMessage(this.product);
+    });
   }
 }

@@ -5,6 +5,7 @@ const router = express.Router(); //IMPORTO EL MANEJADOR DE SOLICITUDES
 const employee_controller = require('../controllers/employee_controller');
 const user_controller = require('../controllers/user_controller');
 const product_controller = require('../controllers/product_controller');
+const cart_controller = require('../controllers/cart_controller');
 //IMPORTO EL MIDDLEWARE AUTH, QUE SE ENCARGA DE AUTENTIFICAR LAS PETICIONES POR ROLES
 const auth = require('../middlewares/auth');
 //MULTER, MODULO QUE ME PERMITE GUARDAR IMAGENES EN EL SERVIDOR
@@ -81,6 +82,8 @@ router.get(
   auth.canManageEmployees,
   user_controller.getUser
 );
+
+//SESIONES Y USUARIO
 router.post('/signup', user_controller.createUser);
 router.post('/signin', user_controller.logInUser);
 router.get('/profile', auth.verifyToken);
@@ -108,6 +111,10 @@ router.get('/juegos', (req, res) => {
     },
   ]);
 });
+
+router.get('/cart', cart_controller.getAllCarts);
+router.get('/cart/:id', cart_controller.getCart);
+router.post('/cart', cart_controller.addToCart);
 
 router.get('/private-games', auth.verifyToken, (req, res) => {
   res.json([

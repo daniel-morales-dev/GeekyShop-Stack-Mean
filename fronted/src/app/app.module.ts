@@ -1,9 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-
 import { AppComponent } from './app.component';
 import { EmployeesComponent } from './components/employees/employees.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -15,7 +13,6 @@ import { HomeComponent } from './components/home/home.component';
 import { ConsolasComponent } from './components/consolas/consolas.component';
 import { PrivateGamesComponent } from './components/private-games/private-games.component';
 import { UsersComponent } from './components/users/users.component';
-
 import { AuthGuard } from './guards/auth.guard';
 import { AuthBackToLoginGuard } from './guards/auth-back-to-login.guard';
 import { AuthRoleAdminGuard } from './guards/auth-role-admin.guard';

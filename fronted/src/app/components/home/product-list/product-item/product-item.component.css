@@ -11,10 +11,12 @@
   box-shadow: 0 0 0 0.2rem rgba(97, 1, 253, 0.25);
   border: 1px solid #6c5ce7;
 }
+
 .btn-card-product {
   border-color: #6c5ce7;
   color: black;
 }
+
 .btn-card-product:hover {
   background-color: #6c5ce7;
   box-shadow: 0 0 0 0.2rem rgba(97, 1, 253, 0.25);
@@ -31,4 +33,9 @@
   box-shadow: 0 0 0 0.2rem rgba(98, 0, 255, 0.3);
   background-color: #4a3f9b;
   color: white;
+}
+
+.fa-heart {
+  color: palevioletred;
+  cursor: pointer;
 }

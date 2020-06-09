@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Product } from '../models/products';
 import * as jwt_decode from 'jwt-decode';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -25,7 +26,7 @@ export class ProductsService {
       .pipe(map((res) => res));
   }
 
-  getProducts() {
+  getProducts(): Observable<Product> {
     return this.http
       .get<Product>(this.URL + '/products')
       .pipe(map((res) => res));
