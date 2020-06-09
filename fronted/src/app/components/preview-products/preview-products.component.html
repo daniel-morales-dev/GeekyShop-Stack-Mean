@@ -146,10 +146,7 @@
               </a>
             </ng-container>
             <p></p>
-            <a
-              class="btn btn-primary col-md-5 btn-carrito"
-              (click)="deleteProduct(product._id)"
-            >
+            <a class="btn btn-primary col-md-5 btn-carrito">
               Añadir al carrito
             </a>
           </div>
@@ -157,7 +154,7 @@
         <ng-template #userCorriente>
           <p class="tittle-game">{{ product.name }}</p>
           <p class="description-game">{{ product.description }}</p>
-          <p class="price-game">${{ product.price }}</p>
+          <p class="price-game">{{ product.price | currency: "USD" }}</p>
         </ng-template>
       </div>
     </div>

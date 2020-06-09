@@ -1,0 +1,33 @@
+<div class="card mb-4 shadow-sm">
+  <div class="card-photo" (click)="selectedCard(product._id)">
+    <img
+      [src]="'http://localhost:3000/public/' + product.imageName"
+      class="img-card-top w-100"
+    />
+  </div>
+  <div class="card-body">
+    <p class="card-text">
+      <strong>{{ product.name }}</strong>
+      <br />
+      Precio: <strong> {{ product.price | currency: "USD" }} </strong>
+    </p>
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="btn-group">
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-secondary btn-card-add"
+          (click)="handleAddToCart()"
+        >
+          Añadir al carrito
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-secondary btn-card-product"
+          (click)="selectedCard(product._id)"
+        >
+          Ver detalles
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

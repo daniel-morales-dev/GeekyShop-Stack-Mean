@@ -1,0 +1,9 @@
+.total {
+  background-color: #6c5ce7;
+  color: white;
+}
+.alert-info {
+  background-color: #9183f8;
+  border-color: #6c5ce7;
+  color: #2a245a;
+}

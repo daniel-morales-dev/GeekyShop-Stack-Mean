@@ -16,6 +16,7 @@ import { AuthBackToLoginGuard } from './guards/auth-back-to-login.guard';
 import { GestionProductsComponent } from './components/gestionProductos/gestion-products.component';
 import { PreviewProductsComponent } from './components/preview-products/preview-products.component';
 import { AuthRoleEmployeeGuard } from './guards/auth-role-employee.guard';
+import { ShopcartComponent } from './components/shopcart/shopcart.component';
 
 const routes: Routes = [
   {
@@ -72,6 +73,10 @@ const routes: Routes = [
   {
     path: 'users',
     component: UsersComponent,
+  },
+  {
+    path: 'shopcart',
+    component: ShopcartComponent,
   },
 ];
 

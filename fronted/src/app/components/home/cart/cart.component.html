@@ -1,0 +1,11 @@
+<div class="alert alert-info" *ngIf="cartItems.length === 0">
+  Tu carrito esta vacio.
+</div>
+<ul *ngIf="cartItems.length > 0" class="list-group">
+  <li class="list-group-item" *ngFor="let item of cartItems">
+    <app-cart-item [cartItem]="item"></app-cart-item>
+  </li>
+  <li class="list-group-item total">
+    Total: <strong>{{ cartTotal | currency: "USD" }}</strong>
+  </li>
+</ul>

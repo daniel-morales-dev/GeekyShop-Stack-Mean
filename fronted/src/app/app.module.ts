@@ -23,6 +23,13 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
 import { GestionProductsComponent } from './components/gestionProductos/gestion-products.component';
 import { PreviewProductsComponent } from './components/preview-products/preview-products.component';
 import { ShopcartComponent } from './components/shopcart/shopcart.component';
+import { NgxStripeModule } from 'ngx-stripe';
+import { FooterComponent } from './components/footer/footer.component';
+import { CartComponent } from './components/home/cart/cart.component';
+import { FilterComponent } from './components/home/filter/filter.component';
+import { CartItemComponent } from './components/home/cart/cart-item/cart-item.component';
+import { ProductListComponent } from './components/home/product-list/product-list.component';
+import { ProductItemComponent } from './components/home/product-list/product-item/product-item.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +46,12 @@ import { ShopcartComponent } from './components/shopcart/shopcart.component';
     GestionProductsComponent,
     PreviewProductsComponent,
     ShopcartComponent,
+    FooterComponent,
+    CartComponent,
+    FilterComponent,
+    CartItemComponent,
+    ProductListComponent,
+    ProductItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +59,9 @@ import { ShopcartComponent } from './components/shopcart/shopcart.component';
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    NgxStripeModule.forRoot(
+      'pk_test_51GroRcKyansmXTTK5mtz1lB0iKylTVjbMN3oqFAdtueKrZqH8aDg7Dp5u8tfXaiw4d4rlydzmXqMIIJeDtK8kax100UphCx2rI'
+    ),
   ],
   providers: [
     AuthGuard,

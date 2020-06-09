@@ -1,25 +1,5 @@
 <div class="row">
-  <div class="cold-md4 p-4" *ngFor="let product of products">
-    <div
-      class="card card-photo"
-      (click)="selectedCard(product._id)"
-      style="width: 18rem;"
-    >
-      <div class="card-header">
-        {{ product.name }}
-      </div>
-      <img
-        [src]="'http://localhost:3000/public/' + product.imageName"
-        class="img-card-top w-100"
-      />
-      <div class="card-body">
-        <p>
-          {{ product.description }}
-          <br />
-          <strong>Price: </strong>${{ product.price }}
-        </p>
-        <a href="#" class="btn btn-primary">Añadir al carro</a>
-      </div>
-    </div>
-  </div>
+  <div class="col-md-2"><app-filter></app-filter></div>
+  <div class="col-md-8"><app-product-list></app-product-list></div>
+  <div class="col-md-2"><app-cart></app-cart></div>
 </div>

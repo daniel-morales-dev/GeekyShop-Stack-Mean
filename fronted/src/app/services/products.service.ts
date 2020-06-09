@@ -2,14 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Product } from '../models/products';
-import { AuthService } from './auth.service';
 import * as jwt_decode from 'jwt-decode';
 @Injectable({
   providedIn: 'root',
 })
 export class ProductsService {
   private URL = 'http://localhost:3000';
-  constructor(private http: HttpClient, public authService: AuthService) {}
+  selectedProduct: Product;
+  products: Product[];
+  constructor(private http: HttpClient) {
+    this.selectedProduct = new Product();
+  }
 
   createProduct(product, photo: File) {
     const formData = new FormData();

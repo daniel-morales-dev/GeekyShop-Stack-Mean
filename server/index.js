@@ -14,7 +14,7 @@ const port = serverConfig.port;
 //Middlewares
 app.use(morgan('dev')); //USO LA LIBRERIA MORGAN CUANDO EJECUTO NPM RUN DEV, ESTO ME SIRVE PARA VER EL ESTADO DE LAS PETICIONES
 app.use(express.json()); //Ser capaz de convertir los datos que recibe el servidor a JSON
-app.use(express.urlencoded({ extended: false })); //https://expressjs.com/es/api.html#express.urlencoded
+app.use(express.urlencoded({ extended: false })); //Permite establecer los datos que se suben a travez de un formulario
 app.use(cors({ origin: 'http://localhost:4200' })); //Uno el backend con el fronted
 app.use('/public', express.static(`${__dirname}/public/uploads/img`)); //ESTA ES LA RUTA PARA LAS IMAGENES, ES UNA RUTA ESTATICA, POR LO CUAL LE DIGO QUE PUBLIC, SERIA LA RUTA DEL SERVIDOR/PUBLIC/UPLOADS/IMG
 //Routes
