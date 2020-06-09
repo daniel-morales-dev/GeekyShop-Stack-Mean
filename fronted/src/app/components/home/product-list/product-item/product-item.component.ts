@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Product } from 'src/app/models/products';
 import { MessengerService } from '../../../../services/messenger.service';
 import { ShopcartService } from '../../../../services/shopcart.service';
+import { WishlistService } from 'src/app/services/wishlist.service';
 
 @Component({
   selector: 'app-product-item',
@@ -12,10 +13,13 @@ import { ShopcartService } from '../../../../services/shopcart.service';
 })
 export class ProductItemComponent implements OnInit {
   @Input() product: Product;
+  //Corazon del html
+  @Input() addedToWishList: boolean;
   constructor(
     private router: Router,
     private message: MessengerService,
-    private cartService: ShopcartService
+    private cartService: ShopcartService,
+    private wishList: WishlistService
   ) {}
 
   ngOnInit(): void {}
@@ -26,6 +30,17 @@ export class ProductItemComponent implements OnInit {
   handleAddToCart() {
     this.cartService.addProductToCar(this.product).subscribe(() => {
       this.message.sendMessage(this.product);
+    });
+  }
+
+  handleAddToWishList() {
+    this.wishList.addToWishList(this.product).subscribe(() => {
+      this.addedToWishList = true;
+    });
+  }
+  removeFromWishList() {
+    this.wishList.removeFromWishList(this.product._id).subscribe(() => {
+      this.addedToWishList = false;
     });
   }
 }

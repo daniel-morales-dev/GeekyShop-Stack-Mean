@@ -6,6 +6,7 @@ const employee_controller = require('../controllers/employee_controller');
 const user_controller = require('../controllers/user_controller');
 const product_controller = require('../controllers/product_controller');
 const cart_controller = require('../controllers/cart_controller');
+const wishList_controller = require('../controllers/wishList_controller');
 //IMPORTO EL MIDDLEWARE AUTH, QUE SE ENCARGA DE AUTENTIFICAR LAS PETICIONES POR ROLES
 const auth = require('../middlewares/auth');
 //MULTER, MODULO QUE ME PERMITE GUARDAR IMAGENES EN EL SERVIDOR
@@ -112,9 +113,15 @@ router.get('/juegos', (req, res) => {
   ]);
 });
 
+//CARRITO DE COMPRAS
 router.get('/cart', cart_controller.getAllCarts);
 router.get('/cart/:id', cart_controller.getCart);
 router.post('/cart', cart_controller.addToCart);
+
+//LISTA DE DESEOS
+router.post('/wishlist', wishList_controller.addToWishList);
+router.get('/wishlist', wishList_controller.getWishList);
+router.delete('/wishlist/:id', wishList_controller.deleteFromWishList);
 
 router.get('/private-games', auth.verifyToken, (req, res) => {
   res.json([

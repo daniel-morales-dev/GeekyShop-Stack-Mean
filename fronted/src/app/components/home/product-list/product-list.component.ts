@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../../../services/products.service';
+import { WishlistService } from 'src/app/services/wishlist.service';
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -7,9 +8,18 @@ import { ProductsService } from '../../../services/products.service';
 })
 export class ProductListComponent implements OnInit {
   products: any;
-  constructor(private productService: ProductsService) {}
+  wishList: any[] = [];
+  constructor(
+    private productService: ProductsService,
+    private wishListService: WishlistService
+  ) {}
 
   ngOnInit(): void {
+    this.loadProducts();
+    this.loadWishList();
+  }
+
+  loadProducts() {
     this.productService.getProducts().subscribe(
       (res) => {
         this.products = res;
@@ -18,5 +28,11 @@ export class ProductListComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  loadWishList() {
+    this.wishListService.getWishList().subscribe((res) => {
+      this.wishList = res;
+    });
   }
 }
