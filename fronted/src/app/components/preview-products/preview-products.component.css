@@ -14,6 +14,14 @@ img:hover {
   height: 250px;
 }
 
+uploadl-label {
+  color: black !important;
+}
+
+.invalid-p {
+  color: #da2424;
+}
+
 .upload-label:hover {
   cursor: pointer;
 }
@@ -33,6 +41,7 @@ img:hover {
   font-weight: bold;
   color: white;
 }
+
 .btn-carrito:hover {
   box-shadow: 0 0 0 0.2rem rgba(98, 0, 255, 0.3);
   background-color: #4a3f9b;

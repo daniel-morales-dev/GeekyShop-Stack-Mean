@@ -67,6 +67,11 @@
                   placeholder="Nombre del juego"
                   [value]="product.name"
                   formControlName="name"
+                  [ngClass]="{
+                    'is-invalid':
+                      updateProductForm.get('name').errors &&
+                      updateProductForm.get('name').dirty
+                  }"
                   required
                 />
               </div>
@@ -76,7 +81,10 @@
                   updateProductForm.get('name').dirty
                 "
               >
-                <p *ngIf="updateProductForm.get('name').hasError('required')">
+                <p
+                  *ngIf="updateProductForm.get('name').hasError('required')"
+                  class="invalid-p"
+                >
                   Campo requerido
                 </p>
               </div>
@@ -86,6 +94,11 @@
                   class="form-control"
                   placeholder="Ingrese la descripcion del juego"
                   formControlName="description"
+                  [ngClass]="{
+                    'is-invalid':
+                      updateProductForm.get('description').errors &&
+                      updateProductForm.get('description').dirty
+                  }"
                 >
                 </textarea>
               </div>
@@ -99,6 +112,7 @@
                   *ngIf="
                     updateProductForm.get('description').hasError('required')
                   "
+                  class="invalid-p"
                 >
                   Campo requerido
                 </p>
@@ -114,6 +128,11 @@
                   formControlName="price"
                   [pattern]="pricePattern"
                   (keypress)="onPriceIntroduced($event)"
+                  [ngClass]="{
+                    'is-invalid':
+                      updateProductForm.get('price').errors &&
+                      updateProductForm.get('price').dirty
+                  }"
                 />
               </div>
               <div
@@ -122,20 +141,36 @@
                   updateProductForm.get('price').dirty
                 "
               >
-                <p *ngIf="updateProductForm.get('price').hasError('pattern')">
+                <p
+                  *ngIf="updateProductForm.get('price').hasError('pattern')"
+                  class="invalid-p"
+                >
                   Ingrese un precio correcto: 4000, 44, 44.44
                 </p>
-                <p *ngIf="updateProductForm.get('price').hasError('required')">
+                <p
+                  *ngIf="updateProductForm.get('price').hasError('required')"
+                  class="invalid-p"
+                >
                   Campo requerido
                 </p>
-                <p *ngIf="updateProductForm.get('price').hasError('minlength')">
+                <p
+                  *ngIf="updateProductForm.get('price').hasError('minlength')"
+                  class="invalid-p"
+                >
                   El minimo de caracteres es de 2
                 </p>
-                <p *ngIf="updateProductForm.get('price').errors?.maxlength">
+                <p
+                  *ngIf="updateProductForm.get('price').errors?.maxlength"
+                  class="invalid-p"
+                >
                   El maximo de caracteres es de 7
                 </p>
               </div>
-              <button type="submit" class="btn btn-primary col-md-3">
+              <button
+                type="submit"
+                class="btn btn-primary col-md-3"
+                [disabled]="updateProductForm.invalid"
+              >
                 Actualizar
               </button>
               <a

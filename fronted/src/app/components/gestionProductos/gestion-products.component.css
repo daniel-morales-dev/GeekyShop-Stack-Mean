@@ -5,3 +5,7 @@ img {
 .inputFile {
     cursor: pointer;
 }
+
+p {
+    color: #da2424;
+}

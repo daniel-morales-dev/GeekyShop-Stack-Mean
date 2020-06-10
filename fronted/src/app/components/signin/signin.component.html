@@ -5,17 +5,57 @@
         Iniciar Sesion
       </div>
       <div class="card-body">
-        <form (submit)="signIn()">
+        <form [formGroup]="loginForm" (ngSubmit)="signIn()">
           <div class="form-group">
-            <input type="email" [(ngModel)]="user.email" name="email" 
-            [pattern]="emailPattern"
-            class="form-control" placeholder="Ingresa tu email" required>
+            <input
+              type="email"
+              class="form-control"
+              formControlName="email"
+              placeholder="Ingresa tu email"
+              [ngClass]="{
+                'is-invalid':
+                  loginForm.get('email').errors && loginForm.get('email').dirty
+              }"
+              required
+              autofocus
+              [pattern]="emailPattern"
+            />
+          </div>
+          <div
+            *ngIf="
+              loginForm.get('email').errors && loginForm.get('email').dirty
+            "
+          >
+            <p *ngIf="loginForm.get('email').hasError('required')">
+              Campo requerido
+            </p>
+            <p *ngIf="loginForm.get('email').hasError('pattern')">
+              Ingrese un email valido
+            </p>
           </div>
           <div class="form-group">
-            <input type="password" [(ngModel)]="user.password" name="password" class="form-control" placeholder="Ingresa tu contraseña" required>
+            <input
+              type="password"
+              class="form-control"
+              formControlName="password"
+              [ngClass]="{
+                'is-invalid':
+                  loginForm.get('password').errors &&
+                  loginForm.get('password').dirty
+              }"
+              placeholder="Ingresa tu contraseña"
+              required
+            />
           </div>
-          <button class="btn btn-primary btn-block">Iniciar Sesion</button>
-          <small id="registerText" class="form-text text-muted">¿Nuevo en GeekyShop?
+          <button
+            type="submit"
+            class="btn btn-primary btn-block"
+            [disabled]="loginForm.invalid"
+          >
+            Iniciar Sesion
+          </button>
+          <small id="registerText" class="form-text text-muted"
+            >¿Nuevo en GeekyShop?
             <a routerLink="/signup">Registrate</a>
           </small>
         </form>

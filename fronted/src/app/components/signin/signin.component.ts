@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AppComponent } from 'src/app/app.component';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-signin',
@@ -11,14 +12,24 @@ import { AppComponent } from 'src/app/app.component';
 })
 export class SigninComponent implements OnInit {
   user = { email: '', password: '' };
+  loginForm: FormGroup;
   emailPattern =
     "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$";
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private fb: FormBuilder
+  ) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
+      password: ['', [Validators.required, Validators.maxLength(140)]],
+    });
+  }
 
   ngOnInit() {}
 
   signIn() {
-    this.authService.signIn(this.user).subscribe(
+    this.authService.signIn(this.loginForm.value).subscribe(
       (res) => {
         this.authService.setToken(res.token);
         this.authService.decodeToken(); //USO EL DECODE TOKEN
@@ -37,10 +48,9 @@ export class SigninComponent implements OnInit {
             Swal.fire({
               icon: 'error',
               title: 'Error',
-              text: 'Esta cuenta no existe, registrate primero',
+              text: 'Cuenta inexistente',
               confirmButtonColor: '#6c5ce7',
             });
-            this.router.navigate(['/signup']);
             break;
           case 'password_wrong':
             Swal.fire({

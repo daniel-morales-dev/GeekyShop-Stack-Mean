@@ -1,0 +1,23 @@
+* {
+    letter-spacing: 3px;
+}
+
+.page-footer {
+    background-color: #6c5ce7;
+}
+
+a {
+    color: white;
+}
+
+.text-uppercase {
+    color: white;
+}
+
+p {
+    color: white;
+}
+
+.footer-copyright {
+    color: white;
+}

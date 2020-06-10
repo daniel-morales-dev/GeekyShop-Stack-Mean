@@ -17,6 +17,7 @@ import { GestionProductsComponent } from './components/gestionProductos/gestion-
 import { PreviewProductsComponent } from './components/preview-products/preview-products.component';
 import { AuthRoleEmployeeGuard } from './guards/auth-role-employee.guard';
 import { ShopcartComponent } from './components/shopcart/shopcart.component';
+import { Page404Component } from './components/public/page404/page404.component';
 
 const routes: Routes = [
   {
@@ -77,6 +78,10 @@ const routes: Routes = [
   {
     path: 'shopcart',
     component: ShopcartComponent,
+  },
+  {
+    path: '**', //Si no encuentra una pagina, muestra la 404
+    component: Page404Component,
   },
 ];
 

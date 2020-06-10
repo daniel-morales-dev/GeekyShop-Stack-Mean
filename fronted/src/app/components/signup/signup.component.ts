@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import Swal from 'sweetalert2';
 import { AppComponent } from 'src/app/app.component';
@@ -13,14 +13,25 @@ import { AppComponent } from 'src/app/app.component';
 })
 export class SignupComponent implements OnInit {
   user = { name: '', email: '', password: '' };
+  registerForm: FormGroup;
   emailPattern =
     "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$";
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private fb: FormBuilder
+  ) {
+    this.registerForm = this.fb.group({
+      name: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
+      password: ['', [Validators.required, Validators.minLength(4)]],
+    });
+  }
 
   ngOnInit() {}
 
-  signUp(form: NgForm) {
-    this.authService.signUp(this.user).subscribe(
+  signUp() {
+    this.authService.signUp(this.registerForm.value).subscribe(
       (res) => {
         this.authService.setToken(res.token);
         this.authService.decodeToken();

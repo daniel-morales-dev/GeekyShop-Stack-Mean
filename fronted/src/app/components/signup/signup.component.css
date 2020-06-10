@@ -1,4 +1,8 @@
 button:disabled {
-    background-color: #6c5ce7;
-    border-color: #6c5ce7;
-  }
+  background-color: #6c5ce7;
+  border-color: #6c5ce7;
+}
+
+.invalid-p {
+  color: #da2424;
+}

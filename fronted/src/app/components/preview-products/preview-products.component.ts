@@ -39,7 +39,7 @@ export class PreviewProductsComponent implements OnInit {
           Validators.pattern(this.pricePattern),
         ],
       ],
-      inputImage: ['', [Validators.required]],
+      inputImage: ['', []],
     });
   }
 

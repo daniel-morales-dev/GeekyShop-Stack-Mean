@@ -5,44 +5,106 @@
         Registrate
       </div>
       <div class="card-body">
-        <form (ngSubmit)="signUp(registerForm)" #registerForm="ngForm">
+        <form [formGroup]="registerForm" (ngSubmit)="signUp()">
           <div class="form-group">
             <input
               type="text"
-              [(ngModel)]="user.name"
-              name="name"
               class="form-control"
               placeholder="Ingresa tu nombre"
+              formControlName="name"
+              [ngClass]="{
+                'is-invalid':
+                  registerForm.get('name').errors &&
+                  registerForm.get('name').dirty
+              }"
               required
               autofocus
             />
           </div>
+          <div
+            *ngIf="
+              registerForm.get('name').errors && registerForm.get('name').dirty
+            "
+          >
+            <p
+              *ngIf="registerForm.get('name').hasError('required')"
+              class="invalid-p"
+            >
+              Campo requerido
+            </p>
+          </div>
           <div class="form-group">
             <input
               type="email"
-              [(ngModel)]="user.email"
-              name="email"
               class="form-control"
               placeholder="Ingresa tu email"
+              formControlName="email"
+              [ngClass]="{
+                'is-invalid':
+                  registerForm.get('email').errors &&
+                  registerForm.get('email').dirty
+              }"
               [pattern]="emailPattern"
               required
             />
           </div>
+          <div
+            *ngIf="
+              registerForm.get('email').errors &&
+              registerForm.get('email').dirty
+            "
+          >
+            <p
+              *ngIf="registerForm.get('email').hasError('required')"
+              class="invalid-p"
+            >
+              Campo requerido
+            </p>
+            <p
+              *ngIf="registerForm.get('email').hasError('pattern')"
+              class="invalid-p"
+            >
+              Ingrese un email valido
+            </p>
+          </div>
           <div class="form-group">
             <input
               type="password"
-              [(ngModel)]="user.password"
-              name="password"
               class="form-control"
+              formControlName="password"
               placeholder="Ingresa tu contraseña"
+              [ngClass]="{
+                'is-invalid':
+                  registerForm.get('password').errors &&
+                  registerForm.get('password').dirty
+              }"
               required
               minlength="4"
             />
-            <small id="registerText" class="form-text text-muted"
-              >¿Ya tienes una cuenta?
-              <a routerLink="/signin">Inicia sesion</a>
-            </small>
           </div>
+          <div
+            *ngIf="
+              registerForm.get('password').errors &&
+              registerForm.get('password').dirty
+            "
+          >
+            <p
+              *ngIf="registerForm.get('password').hasError('required')"
+              class="invalid-p"
+            >
+              Campo requerido
+            </p>
+            <p
+              *ngIf="registerForm.get('password').hasError('minlength')"
+              class="invalid-p"
+            >
+              El minimo de caracteres es de 4
+            </p>
+          </div>
+          <small id="registerText" class="form-text text-muted"
+            >¿Ya tienes una cuenta?
+            <a routerLink="/signin">Inicia sesion</a>
+          </small>
           <button
             type="submit"
             class="btn btn-primary btn-block"

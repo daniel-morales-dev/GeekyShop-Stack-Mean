@@ -50,6 +50,16 @@ productController.updateProduct = async (req, res, next) => {
       description: req.body.description,
       price: req.body.price,
     };
+    if (
+      req.body.name === '' ||
+      req.body.description === '' ||
+      req.body.price === 0 ||
+      req.body.price === ''
+    ) {
+      return res.status(409).json({
+        status: 'No se puede actualizar el producto',
+      });
+    }
     if (req.file !== undefined) {
       data.imagePath = req.file.path;
       data.imageName = req.file.filename;
