@@ -6,7 +6,6 @@ const cors = require('cors'); //Libreria con la que uno el backend con el fronte
 const morgan = require('morgan'); //Me permite ver las peticiones al servidor
 const moongose = require('./database'); //PIDO MONGOOSE, LIBRERIA PARA MANEJAR LA BD, MONGODB
 const { serverConfig } = require('./config'); //REQUIERO LA CONFIGURACION DEL SERVER
-
 //Settings
 const port = serverConfig.port;
 //Asigno el puerto que me proporciona por defecto la maquina o en su caso el 3000

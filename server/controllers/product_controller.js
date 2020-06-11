@@ -27,9 +27,25 @@ productController.createProduct = async (req, res, next) => {
       description: req.body.description,
       price: req.body.price,
     };
+
+    if (
+      !req.body.name ||
+      !req.body.description ||
+      !req.body.price ||
+      !req.body.price
+    ) {
+      return res.status(409).json({
+        status: 'No se puede añadir el producto',
+      });
+    }
     if (req.file !== undefined) {
       data.imagePath = req.file.path;
       data.imageName = req.file.filename;
+    }
+    if (!req.body.price.match(/[0-9]/)) {
+      res.status(409).json({
+        status: 'No se ha podido añadir el producto, el precio es erroneo',
+      });
     }
     const product = new modelProduct(data);
     const resultado = await product.save();
@@ -50,16 +66,22 @@ productController.updateProduct = async (req, res, next) => {
       description: req.body.description,
       price: req.body.price,
     };
+    if (!req.body.price.match(/[0-9]/)) {
+      res.status(409).json({
+        status: 'No se ha podido añadir el producto, el precio es erroneo',
+      });
+    }
     if (
-      req.body.name === '' ||
-      req.body.description === '' ||
-      req.body.price === 0 ||
-      req.body.price === ''
+      !req.body.name ||
+      !req.body.description ||
+      !req.body.price ||
+      !req.body.price
     ) {
       return res.status(409).json({
         status: 'No se puede actualizar el producto',
       });
     }
+
     if (req.file !== undefined) {
       data.imagePath = req.file.path;
       data.imageName = req.file.filename;

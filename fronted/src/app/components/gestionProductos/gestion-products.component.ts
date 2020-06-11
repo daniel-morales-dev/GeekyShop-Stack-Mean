@@ -56,7 +56,7 @@ export class GestionProductsComponent implements OnInit {
     }
   }
   onPhotoSelected(event: HtmlInputEvent): void {
-    if (event.target.files && event.target.files) {
+    if (event.target.files && event.target.files[0]) {
       this.file = <File>event.target.files[0];
       //Image Preview
       const reader = new FileReader();

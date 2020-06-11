@@ -1,4 +1,5 @@
 const model_cart = require('../models/model_cart');
+const model_product = require('../models/modelProducts');
 const cartController = {};
 
 cartController.getCart = async (req, res, next) => {
@@ -24,6 +25,12 @@ cartController.addToCart = async (req, res, next) => {
       name: req.body.name,
       price: req.body.price,
     });
+    const productExits = await model_product.findById(req.body._id);
+    if (!productExits) {
+      res.status(409).json({
+        status: 'No se puede añadir al carrito porque el producto no existe',
+      });
+    }
     const resultado = await data.save();
     res.json({
       resultado: resultado,

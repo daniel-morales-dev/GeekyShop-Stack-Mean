@@ -11,17 +11,25 @@ const wishList_controller = require('../controllers/wishList_controller');
 const auth = require('../middlewares/auth');
 //MULTER, MODULO QUE ME PERMITE GUARDAR IMAGENES EN EL SERVIDOR
 const multer = require('../middlewares/storage');
+//VALIDATOR
+const {
+  userValidationRules,
+  validate,
+  validarProduct,
+} = require('../middlewares/validator');
 
 router.get('/', (req, res) => res.send('Hello World'));
 
 //RUTAS IMAGENES productos
 router.post(
   '/products',
+  validarProduct,
   multer.single('image'),
   auth.verifyToken,
   auth.canManageProducts,
   product_controller.createProduct
 );
+
 router.get('/products', product_controller.getAllProducts);
 router.get('/products/:id', product_controller.getProduct);
 router.put(
