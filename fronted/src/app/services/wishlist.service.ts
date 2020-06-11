@@ -28,7 +28,7 @@ export class WishlistService {
       .pipe(map((res) => res));
   }
 
-  removeFromWishList(productId: String) {
+  removeFromWishList(productId) {
     return this.http
       .delete(this.URL + '/wishlist' + `/${productId}`)
       .pipe(map((res) => res));

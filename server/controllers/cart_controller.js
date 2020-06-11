@@ -1,18 +1,12 @@
 const model_cart = require('../models/model_cart');
 const model_product = require('../models/modelProducts');
+const model_user = require('../models/model_user');
 const cartController = {};
 
-cartController.getCart = async (req, res, next) => {
-  try {
-    const cart = await model_cart.findById(req.params.id);
-    return res.json(cart);
-  } catch (err) {
-    next(err);
-  }
-};
 cartController.getAllCarts = async (req, res, next) => {
   try {
-    const carts = await model_cart.find();
+    const userId = await model_user.findById(req.params.id);
+    const carts = await model_cart.find({ userId: userId._id });
     return res.json(carts);
   } catch (err) {
     next(err);
@@ -20,22 +14,25 @@ cartController.getAllCarts = async (req, res, next) => {
 };
 cartController.addToCart = async (req, res, next) => {
   try {
-    const data = new model_cart({
-      productId: req.body._id,
+    const data = {
+      productId: req.body.productId,
       name: req.body.name,
       price: req.body.price,
-    });
-    const productExits = await model_product.findById(req.body._id);
+      userId: req.body.userId,
+    };
+    const productExits = await model_product.findById(req.body.productId);
     if (!productExits) {
-      res.status(409).json({
-        status: 'No se puede añadir al carrito porque el producto no existe',
+      return res.status(409).json({
+        status: 'No se puede añadir al carrito ',
+      });
+    } else {
+      const product = new model_cart(data);
+      const resultado = await product.save();
+      res.status(200).json({
+        resultado,
+        status: 'Carrito Añadido',
       });
     }
-    const resultado = await data.save();
-    res.json({
-      resultado: resultado,
-      status: 'cart add',
-    });
   } catch (err) {
     next(err);
   }

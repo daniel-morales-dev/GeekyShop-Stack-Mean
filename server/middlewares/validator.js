@@ -25,7 +25,7 @@ const validateProduct = (req, rex, next) => {};
 module.exports = {
   userValidationRules,
   validate,
-  validarProduct: async function validarProduct(req, res, bext) {
+  validarProduct: function validarProduct(req, res, bext) {
     try {
       if (!req.body.name || !req.body.price || !req.body.description) {
         return res.status(409).json({

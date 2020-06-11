@@ -23,7 +23,6 @@ router.get('/', (req, res) => res.send('Hello World'));
 //RUTAS IMAGENES productos
 router.post(
   '/products',
-  validarProduct,
   multer.single('image'),
   auth.verifyToken,
   auth.canManageProducts,
@@ -122,9 +121,8 @@ router.get('/juegos', (req, res) => {
 });
 
 //CARRITO DE COMPRAS
-router.get('/cart', cart_controller.getAllCarts);
-router.get('/cart/:id', cart_controller.getCart);
-router.post('/cart', cart_controller.addToCart);
+router.get('/cart/:id', auth.verifyToken, cart_controller.getAllCarts);
+router.post('/cart', auth.verifyToken, cart_controller.addToCart);
 
 //LISTA DE DESEOS
 router.post('/wishlist', wishList_controller.addToWishList);

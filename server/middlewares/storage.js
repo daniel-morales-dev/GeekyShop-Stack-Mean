@@ -2,14 +2,14 @@ const multer = require('multer');
 const { v4: uuidv4 } = require('uuid'); //GENERA UN ID ALEATORIO
 const path = require('path');
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'server/public/uploads/img');
+  destination: async function (req, file, cb) {
+    await cb(null, 'server/public/uploads/img');
   },
-  filename: function (req, file, cb) {
-    cb(null, uuidv4() + path.extname(file.originalname));
+  filename: async function (req, file, cb) {
+    await cb(null, uuidv4() + path.extname(file.originalname));
   },
 });
-const uploadFilter = function (req, file, cb) {
+const uploadFilter = async function (req, file, cb) {
   var ext = path.extname(file.originalname);
   if (
     ext !== '.png' &&
@@ -20,7 +20,7 @@ const uploadFilter = function (req, file, cb) {
   ) {
     return cb('Error: Debe subir solo imagenes');
   }
-  cb(null, true);
+  await cb(null, true);
 };
 
 const upload = multer({

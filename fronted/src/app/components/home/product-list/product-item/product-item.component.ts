@@ -5,6 +5,8 @@ import { Product } from 'src/app/models/products';
 import { MessengerService } from '../../../../services/messenger.service';
 import { ShopcartService } from '../../../../services/shopcart.service';
 import { WishlistService } from 'src/app/services/wishlist.service';
+import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-product-item',
@@ -19,7 +21,8 @@ export class ProductItemComponent implements OnInit {
     private router: Router,
     private message: MessengerService,
     private cartService: ShopcartService,
-    private wishList: WishlistService
+    private wishList: WishlistService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {}
@@ -28,9 +31,24 @@ export class ProductItemComponent implements OnInit {
   }
 
   handleAddToCart() {
-    this.cartService.addProductToCar(this.product).subscribe(() => {
-      this.message.sendMessage(this.product);
-    });
+    const canAddtoCart = this.authService.loggedIn();
+    if (canAddtoCart) {
+      this.cartService
+        .addProductToCar(this.product, this.cartService.getUserId())
+        .subscribe(() => {
+          this.message.sendMessage(this.product);
+        });
+    } else {
+      Swal.fire({
+        title: 'Hola, gracias por visitarnos!',
+        text: 'Antes de añadir un producto, por favor inicia sesion.',
+        imageUrl: '../../../../../assets/imgs/welcome.svg',
+        imageWidth: 400,
+        imageHeight: 200,
+        imageAlt: 'Custom image',
+        confirmButtonColor: '#6c5ce7',
+      });
+    }
   }
 
   handleAddToWishList() {

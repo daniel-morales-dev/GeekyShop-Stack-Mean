@@ -25,16 +25,17 @@ export class CartComponent implements OnInit {
 
   handleSubscription() {
     this.message.getMessage().subscribe((product: Product) => {
-      //this.addProductToCar(product);
       this.loadCartItems();
     });
   }
 
   loadCartItems() {
-    this.cartService.getCartItems().subscribe((items: CartItem[]) => {
-      this.cartItems = items;
-      this.calculeCartTotal();
-    });
+    this.cartService
+      .getCartItems(this.cartService.getUserId())
+      .subscribe((items: CartItem[]) => {
+        this.cartItems = items;
+        this.calculeCartTotal();
+      });
   }
 
   calculeCartTotal() {

@@ -19,7 +19,6 @@ import { AuthRoleAdminGuard } from './guards/auth-role-admin.guard';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { GestionProductsComponent } from './components/gestionProductos/gestion-products.component';
 import { PreviewProductsComponent } from './components/preview-products/preview-products.component';
-import { ShopcartComponent } from './components/shopcart/shopcart.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CartComponent } from './components/home/cart/cart.component';
 import { FilterComponent } from './components/home/filter/filter.component';
@@ -42,7 +41,6 @@ import { Page404Component } from './components/public/page404/page404.component'
     UsersComponent,
     GestionProductsComponent,
     PreviewProductsComponent,
-    ShopcartComponent,
     FooterComponent,
     CartComponent,
     FilterComponent,

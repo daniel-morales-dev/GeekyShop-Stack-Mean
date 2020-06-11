@@ -42,8 +42,8 @@ productController.createProduct = async (req, res, next) => {
       data.imagePath = req.file.path;
       data.imageName = req.file.filename;
     }
-    if (!req.body.price.match(/[0-9]/)) {
-      res.status(409).json({
+    if (!req.body.price.toString().match(/[0-9]/)) {
+      return res.status(409).json({
         status: 'No se ha podido añadir el producto, el precio es erroneo',
       });
     }
@@ -66,19 +66,9 @@ productController.updateProduct = async (req, res, next) => {
       description: req.body.description,
       price: req.body.price,
     };
-    if (!req.body.price.match(/[0-9]/)) {
-      res.status(409).json({
-        status: 'No se ha podido añadir el producto, el precio es erroneo',
-      });
-    }
-    if (
-      !req.body.name ||
-      !req.body.description ||
-      !req.body.price ||
-      !req.body.price
-    ) {
+    if (!req.body.price.toString().match(/[0-9]/)) {
       return res.status(409).json({
-        status: 'No se puede actualizar el producto',
+        status: 'No se ha podido añadir el producto, el precio es erroneo',
       });
     }
 
