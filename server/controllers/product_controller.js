@@ -1,4 +1,5 @@
 const modelProduct = require('../models/modelProducts');
+const modelCart = require('../models/model_cart');
 const productController = {};
 const path = require('path'); //Manejamos directorios
 const fs = require('fs').promises; //Manejador de archivos de node
@@ -126,6 +127,21 @@ productController.deleteProduct = async (req, res, next) => {
         }
       }
     }
+    const carritoPorModificar = await modelCart.find({
+      productId: { $all: id },
+    });
+    const cantidadProductosEnCarrito = carritoPorModificar[0].productId.length;
+    if (cantidadProductosEnCarrito < 2) {
+      const carritoPorEliminar = await modelCart.findOneAndDelete({
+        productId: id,
+      });
+    }
+    const carritosModificadosPorEliminacion = await modelCart.updateMany(
+      {
+        productId: id,
+      },
+      { $pull: { productId: id } }
+    );
     return res.json({ status: 'Product Deleted' });
   } catch (error) {
     next(error);

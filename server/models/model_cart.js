@@ -5,15 +5,7 @@ const { serverConfig } = require('../config');
 const cartSchema = new Schema(
   {
     productId: {
-      type: String,
-      required: true,
-    },
-    name: {
-      type: String,
-      required: true,
-    },
-    price: {
-      type: Number,
+      type: Array,
       required: true,
     },
     userId: {

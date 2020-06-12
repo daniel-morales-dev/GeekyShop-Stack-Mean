@@ -16,30 +16,12 @@ export class ShopcartService {
 
   getCartItems(idUser): Observable<CartItem[]> {
     return this.http.get<CartItem[]>(this.URL + '/cart' + `/${idUser}`).pipe(
-      map((result: any[]) => {
+      map((result: any) => {
         let cartItems: CartItem[] = [];
-        for (let item of result) {
-          let productExits = false;
-          for (let i in cartItems) {
-            if (cartItems[i]._id === item.productId) {
-              Swal.fire({
-                title: 'Ya tienes este producto en tu carrito',
-                showClass: {
-                  popup: 'animate__headShake',
-                },
-                hideClass: {
-                  popup: 'animate__backOutUp',
-                },
-              });
-              productExits = true;
-              break;
-            }
-          }
-          if (!productExits) {
-            cartItems.push(new CartItem(item._id, item, item.userId));
-          }
+        for (let item of result.carts) {
+          cartItems.push(new CartItem(item._id, item.productId, item.userId));
         }
-        return cartItems;
+        return result.producto;
       })
     );
   }
@@ -47,19 +29,12 @@ export class ShopcartService {
   addProductToCar(product, userId) {
     const data = {
       productId: product._id,
-      name: product.name,
-      price: product.price,
       userId: userId,
     };
     return this.http
       .post<CartItem>(this.URL + '/cart', data)
       .pipe(map((res) => res));
   }
-
-  getCartToSend() {
-    this.getUserId();
-  }
-
   getUserId() {
     const userId = this.decodeToken().id;
     return userId;

@@ -125,7 +125,7 @@ router.get('/cart/:id', auth.verifyToken, cart_controller.getAllCarts);
 router.post('/cart', auth.verifyToken, cart_controller.addToCart);
 
 //LISTA DE DESEOS
-router.post('/wishlist', wishList_controller.addToWishList);
+router.put('/wishlist', wishList_controller.addToWishList);
 router.get('/wishlist', wishList_controller.getWishList);
 router.delete('/wishlist/:id', wishList_controller.deleteFromWishList);
 

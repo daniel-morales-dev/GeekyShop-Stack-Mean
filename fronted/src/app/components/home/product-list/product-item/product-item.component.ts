@@ -35,9 +35,24 @@ export class ProductItemComponent implements OnInit {
     if (canAddtoCart) {
       this.cartService
         .addProductToCar(this.product, this.cartService.getUserId())
-        .subscribe(() => {
-          this.message.sendMessage(this.product);
-        });
+        .subscribe(
+          () => {
+            this.message.sendMessage(this.product);
+          },
+          (err) => {
+            if (err.error.code_error === 'product_exist') {
+              Swal.fire({
+                title: 'Ya tienes un producto similar en tu carrito',
+                text: 'Disculpa las molestias',
+                imageUrl: '../../../../../assets/imgs/welcome.svg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'Custom image',
+                confirmButtonColor: '#6c5ce7',
+              });
+            }
+          }
+        );
     } else {
       Swal.fire({
         title: 'Hola, gracias por visitarnos!',
