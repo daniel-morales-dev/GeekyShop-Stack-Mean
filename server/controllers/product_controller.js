@@ -131,6 +131,7 @@ productController.deleteProduct = async (req, res, next) => {
       productId: { $all: id },
     });
     const cantidadProductosEnCarrito = carritoPorModificar[0].productId.length;
+    console.log(cantidadProductosEnCarrito);
     if (cantidadProductosEnCarrito === 1) {
       const carritoPorEliminar = await modelCart.findOneAndDelete({
         productId: id,
