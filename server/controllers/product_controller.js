@@ -131,17 +131,18 @@ productController.deleteProduct = async (req, res, next) => {
       productId: { $all: id },
     });
     const cantidadProductosEnCarrito = carritoPorModificar[0].productId.length;
-    if (cantidadProductosEnCarrito < 2) {
+    if (cantidadProductosEnCarrito === 1) {
       const carritoPorEliminar = await modelCart.findOneAndDelete({
         productId: id,
       });
+    } else {
+      const carritosModificadosPorEliminacion = await modelCart.updateMany(
+        {
+          productId: id,
+        },
+        { $pull: { productId: id } }
+      );
     }
-    const carritosModificadosPorEliminacion = await modelCart.updateMany(
-      {
-        productId: id,
-      },
-      { $pull: { productId: id } }
-    );
     return res.json({ status: 'Product Deleted' });
   } catch (error) {
     next(error);

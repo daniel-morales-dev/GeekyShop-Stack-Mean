@@ -34,14 +34,10 @@ cartController.addToCart = async (req, res, next) => {
         status: 'No se puede añadir al carrito ',
       });
     } else if (cartExits.length > 0) {
-      const userRequest = await model_cart.findOne({
-        userId: data.userId,
-      });
       const verifyProductInCart = await model_cart.findOne({
         productId: data.productId,
+        userId: data.userId,
       });
-      if (userRequest.userId === verifyProductInCart.userId) {
-      }
       if (!verifyProductInCart) {
         const resultado = await model_cart.findOneAndUpdate(
           { userId: req.body.userId },
@@ -74,4 +70,5 @@ cartController.addToCart = async (req, res, next) => {
     next(err);
   }
 };
+
 module.exports = cartController;
