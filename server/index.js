@@ -4,7 +4,7 @@ const express = require('express'); //LIBRERIA PARA EL SERVIDOR
 const app = express(); //Express, libreria de JS que permite la creacion de servidores
 const cors = require('cors'); //Libreria con la que uno el backend con el fronted
 const morgan = require('morgan'); //Me permite ver las peticiones al servidor
-const moongose = require('./database'); //PIDO MONGOOSE, LIBRERIA PARA MANEJAR LA BD, MONGODB
+require('./database'); //PIDO MONGOOSE, LIBRERIA PARA MANEJAR LA BD, MONGODB
 const { serverConfig } = require('./config'); //REQUIERO LA CONFIGURACION DEL SERVER
 //Settings
 const port = serverConfig.port;
