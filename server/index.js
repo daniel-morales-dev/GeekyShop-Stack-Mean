@@ -9,7 +9,7 @@ const { serverConfig } = require('./config'); //REQUIERO LA CONFIGURACION DEL SE
 //Settings
 const port = serverConfig.port;
 //Asigno el puerto que me proporciona por defecto la maquina o en su caso el 3000
-
+//Probando commit y push desde WebStorm
 //Middlewares
 app.use(morgan('dev')); //USO LA LIBRERIA MORGAN CUANDO EJECUTO NPM RUN DEV, ESTO ME SIRVE PARA VER EL ESTADO DE LAS PETICIONES
 app.use(express.json()); //Ser capaz de convertir los datos que recibe el servidor a JSON
