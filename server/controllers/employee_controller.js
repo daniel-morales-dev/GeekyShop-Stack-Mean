@@ -21,18 +21,19 @@ employeController.getEmployee = async (req, res, next) => {
 
 employeController.createEmployee = async (req, res, next) => {
   try {
-    const Employee = new model_employee({
+    const data = {
       name: req.body.name,
       position: req.body.position,
       officine: req.body.officine,
       salary: req.body.salary,
-    });
-    if (!req.body.salary.toString().match(/[0-9]/)) {
+    };
+    /* if (!req.body.salary.toString().match(/[0-9]/)) {
       return res.status(409).json({
         status: 'No se ha podido añadir el empleado, el salario es erroneo',
       });
-    }
-    const resultado = await Employee.save();
+    } */
+    const employee = new model_employee(data);
+    const resultado = await employee.save();
     res.json({
       resultado: resultado,
       status: 'Employee save',
@@ -51,11 +52,11 @@ employeController.editEmployee = async (req, res, next) => {
       officine: req.body.officine,
       salary: req.body.salary,
     };
-    if (!req.body.salary.toString().match(/[0-9]/)) {
+    /* if (!req.body.salary.toString().match(/[0-9]/)) {
       return res.status(409).json({
         status: 'No se ha podido añadir el empleado, el salario es erroneo',
       });
-    }
+    } */
     const resultado = await model_employee.findByIdAndUpdate(
       id,
       { $set: employee },

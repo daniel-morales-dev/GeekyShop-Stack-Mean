@@ -1,10 +1,15 @@
-a{
+a {
     cursor: pointer;
 }
-.btn{
-    margin:5px;
+
+.btn {
+    margin: 5px;
 }
 
-.icons{
+.icons {
     color: #6c5ce7;
+}
+
+.invalid-p {
+    color: #da2424;
 }

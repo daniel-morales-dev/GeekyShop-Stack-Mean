@@ -121,13 +121,38 @@ router.get('/juegos', (req, res) => {
 });
 
 //CARRITO DE COMPRAS
-router.get('/cart/:id', auth.verifyToken, cart_controller.getAllCarts);
-router.post('/cart', auth.verifyToken, cart_controller.addToCart);
+router.get(
+  '/cart/:id',
+  auth.verifyToken,
+  auth.canViewCartAndWishList,
+  cart_controller.getAllCarts
+);
+router.post(
+  '/cart',
+  auth.verifyToken,
+  auth.canViewCartAndWishList,
+  cart_controller.addToCart
+);
 
 //LISTA DE DESEOS
-router.put('/wishlist', wishList_controller.addToWishList);
-router.get('/wishlist', wishList_controller.getWishList);
-router.delete('/wishlist/:id', wishList_controller.deleteFromWishList);
+router.post(
+  '/wishlist',
+  auth.verifyToken,
+  auth.canViewCartAndWishList,
+  wishList_controller.addToWishList
+);
+router.get(
+  '/wishlist/:id',
+  auth.verifyToken,
+  auth.canViewCartAndWishList,
+  wishList_controller.getWishList
+);
+router.put(
+  '/wishlist/:id',
+  auth.verifyToken,
+  auth.canViewCartAndWishList,
+  wishList_controller.deleteFromWishList
+);
 
 router.get('/private-games', auth.verifyToken, (req, res) => {
   res.json([

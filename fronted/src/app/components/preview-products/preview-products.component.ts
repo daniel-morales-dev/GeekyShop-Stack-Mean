@@ -5,6 +5,8 @@ import { Product } from 'src/app/models/products';
 import Swal from 'sweetalert2';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { ShopcartService } from 'src/app/services/shopcart.service';
+import { MessengerService } from 'src/app/services/messenger.service';
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
 }
@@ -25,7 +27,10 @@ export class PreviewProductsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     public productService: ProductsService,
-    public fb: FormBuilder
+    public fb: FormBuilder,
+    public cartService: ShopcartService,
+    private message: MessengerService,
+    private authService: AuthService
   ) {
     this.updateProductForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -60,6 +65,55 @@ export class PreviewProductsComponent implements OnInit {
         }
       );
     });
+  }
+
+  addToCar() {
+    const canAddtoCart = this.authService.loggedIn();
+    if (canAddtoCart) {
+      this.cartService
+        .addProductToCar(this.product, this.cartService.getUserId())
+        .subscribe(
+          () => {
+            this.message.sendMessage(this.product);
+            Swal.fire({
+              title: 'El producto ha sido añadido a tu carrito',
+              text: 'Gracias por preferirnos',
+              imageUrl: '../../../../../assets/imgs/sucessfullProduct.svg',
+              imageWidth: 400,
+              imageHeight: 200,
+              imageAlt: 'Custom image',
+              confirmButtonColor: '#6c5ce7',
+            }).then((result) => {
+              if (result.value) {
+                this.router.navigate(['/home']);
+              }
+            });
+          },
+          (err) => {
+            if (err.error.code_error === 'product_exist') {
+              Swal.fire({
+                title: 'Ya tienes un producto similar en tu carrito',
+                text: 'Disculpa las molestias',
+                imageUrl: '../../../../../assets/imgs/welcome.svg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'Custom image',
+                confirmButtonColor: '#6c5ce7',
+              });
+            }
+          }
+        );
+    } else {
+      Swal.fire({
+        title: 'Hola, gracias por visitarnos!',
+        text: 'Antes de añadir un producto, por favor inicia sesion.',
+        imageUrl: '../../../../../assets/imgs/welcome.svg',
+        imageWidth: 400,
+        imageHeight: 200,
+        imageAlt: 'Custom image',
+        confirmButtonColor: '#6c5ce7',
+      });
+    }
   }
   //Eliminamos producto
   deleteProduct(id: String) {

@@ -38,6 +38,39 @@ module.exports = {
       return res.status(401).send('Peticion no autorizada');
     }
   },
+  canViewCartAndWishList: async function canViewCartAndWishList(
+    req,
+    res,
+    next
+  ) {
+    try {
+      const token = req.headers.authorization.split(' ')[1];
+      const payload = await jwt.verify(token, secretKey, function (
+        err,
+        decoded
+      ) {
+        console.log(decoded);
+        console.log(req.body);
+        console.log(Object.entries(req.params).length === 0);
+        if (Object.entries(req.params).length > 0) {
+          if (decoded.id != req.params.id) {
+            return res.status(401).json({
+              err:
+                'Peticion no autorizada, no eres el dueño del carrito/WishList',
+            });
+          }
+        } else if (decoded.id != req.body.userId) {
+          return res.status(401).json({
+            err:
+              'Peticion no autorizada, no eres el dueño del carrito/WishList, PUT - POST',
+          });
+        }
+        next();
+      });
+    } catch (err) {
+      return res.status(401).send('Peticion no autorizada, en try catch');
+    }
+  },
   canManageProducts: async function canManageProducts(req, res, next) {
     try {
       const token = req.headers.authorization.split(' ')[1];

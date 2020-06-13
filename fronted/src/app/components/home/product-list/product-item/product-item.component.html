@@ -18,7 +18,7 @@
         (click)="removeFromWishList()"
       ></i>
       <i
-        *ngIf="!addedToWishList"
+        *ngIf="!addedToWishList && authService.loggedIn()"
         class="far fa-heart float-right"
         (click)="handleAddToWishList()"
       ></i>

@@ -22,7 +22,7 @@ export class ProductItemComponent implements OnInit {
     private message: MessengerService,
     private cartService: ShopcartService,
     private wishList: WishlistService,
-    private authService: AuthService
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {}
@@ -67,13 +67,17 @@ export class ProductItemComponent implements OnInit {
   }
 
   handleAddToWishList() {
-    this.wishList.addToWishList(this.product).subscribe(() => {
-      this.addedToWishList = true;
-    });
+    this.wishList
+      .addToWishList(this.product, this.cartService.getUserId())
+      .subscribe(() => {
+        this.addedToWishList = true;
+      });
   }
   removeFromWishList() {
-    this.wishList.removeFromWishList(this.product._id).subscribe(() => {
-      this.addedToWishList = false;
-    });
+    this.wishList
+      .removeFromWishList(this.cartService.getUserId(), this.product)
+      .subscribe(() => {
+        this.addedToWishList = false;
+      });
   }
 }

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 import { EmployeeService } from '../../services/employee.service';
-import { NgForm } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Employee } from 'src/app/models/employee';
 
 import Swal from 'sweetalert2';
+import { on } from 'process';
 
 @Component({
   selector: 'app-employees',
@@ -13,57 +14,93 @@ import Swal from 'sweetalert2';
   providers: [EmployeeService],
 })
 export class EmployeesComponent implements OnInit {
-  constructor(public employeeService: EmployeeService) {}
+  id: String;
+  employee = { name: '', position: '', officine: '', salary: 0 };
+  onEditEmployee: boolean;
+  createEmployeeForm: FormGroup;
+  salaryPattern = /[0-9]/;
+  constructor(public employeeService: EmployeeService, public fb: FormBuilder) {
+    this.createEmployeeForm = this.fb.group({
+      name: ['', [Validators.required]],
+      position: ['', [Validators.required]],
+      officine: ['', [Validators.required]],
+      salary: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(7),
+          Validators.pattern(this.salaryPattern),
+        ],
+      ],
+    });
+  }
 
   ngOnInit() {
     this.getEmployees();
+    this.onEditEmployee = false;
   }
 
-  resetForm(form?: NgForm) {
+  resetForm(form?: FormGroup) {
     if (form) {
-      form.resetForm()
+      form.reset();
       this.employeeService.selectedEmployee = new Employee();
     }
   }
 
-  addEmployee(form: NgForm) {
-    if (form.value._id) {
-      this.employeeService.putEmployee(form.value).subscribe(
-        (res) => {
-          this.resetForm(form);
-          this.getEmployees();
-          Swal.fire({
-            title: 'Actualizacion exitosa!',
-            text: 'Empleado actualizado correctamente',
-            icon: 'success',
-            confirmButtonColor: '#6c5ce7',
-          });
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
-    } else if (!form.value._id) {
-      this.employeeService.postEmployee(form.value).subscribe(
-        (res) => {
-          this.resetForm(form);
-          this.getEmployees();
-          Swal.fire({
-            title: 'Registro exitoso',
-            text: 'Empleado registrado exitosamente',
-            icon: 'success',
-            confirmButtonColor: '#6c5ce7',
-          });
-        },
-        (err) => {
-          console.log(err)
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'No se pudo guardar el registro',
-          });
-        }
-      );
+  onSalaryIntroduced(event: KeyboardEvent) {
+    const inputChar = String.fromCharCode(event.charCode);
+    if (!this.salaryPattern.test(inputChar)) {
+      // invalid character, prevent input
+      event.preventDefault();
+    }
+  }
+
+  addEmployee() {
+    if (this.onEditEmployee == false) {
+      this.employeeService
+        .postEmployee(this.createEmployeeForm.value)
+        .subscribe(
+          (res) => {
+            this.resetForm(this.createEmployeeForm);
+            this.getEmployees();
+            Swal.fire({
+              title: 'Registro exitoso',
+              text: 'Empleado registrado exitosamente',
+              icon: 'success',
+              confirmButtonColor: '#6c5ce7',
+            });
+          },
+          (err) => {
+            console.log(err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'No se pudo guardar el registro',
+            });
+          }
+        );
+    } else if (this.onEditEmployee == true) {
+      console.log('Trato de editar');
+      console.log();
+      this.employeeService
+        .putEmployee(this.id, this.createEmployeeForm.value)
+        .subscribe(
+          (res) => {
+            this.resetForm(this.createEmployeeForm);
+            this.resetForm(this.createEmployeeForm);
+            this.getEmployees();
+            Swal.fire({
+              title: 'Actualizacion exitosa!',
+              text: 'Empleado actualizado correctamente',
+              icon: 'success',
+              confirmButtonColor: '#6c5ce7',
+            });
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
     }
   }
 
@@ -73,8 +110,14 @@ export class EmployeesComponent implements OnInit {
     });
   }
 
-  editEmployee(employee: Employee) {
+  editEmployee(employee) {
+    this.id = employee._id;
     this.employeeService.selectedEmployee = employee;
+    this.createEmployeeForm.controls['name'].setValue(employee.name);
+    this.createEmployeeForm.controls['officine'].setValue(employee.officine);
+    this.createEmployeeForm.controls['position'].setValue(employee.position);
+    this.createEmployeeForm.controls['salary'].setValue(employee.salary);
+    this.onEditEmployee = true;
   }
   deleteEmployee(_id: string) {
     Swal.fire({
@@ -101,7 +144,7 @@ export class EmployeesComponent implements OnInit {
           icon: 'error',
           title: 'Algo salio mal',
           text: 'No pudimos eliminar tu registro',
-          confirmButtonColor: "#6c5ce7", 
+          confirmButtonColor: '#6c5ce7',
         });
       }
     });

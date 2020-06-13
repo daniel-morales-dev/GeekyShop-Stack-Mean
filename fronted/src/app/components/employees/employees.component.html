@@ -1,65 +1,197 @@
-  <div class="row">
-    <div class="container col-5">
-      <div class="card">
-        <div class="card-header">
-          Gestion de empleados
-        </div>
-        <div class="card-body">
-          <form #employeeForm="ngForm" (ngSubmit)="addEmployee(employeeForm)">
+<div class="row">
+  <div class="container col-5">
+    <div class="card">
+      <div class="card-header">
+        Gestion de empleados
+      </div>
+      <div class="card-body">
+        <form [formGroup]="createEmployeeForm" (ngSubmit)="addEmployee()">
+          <div class="form-group">
             <div class="form-group">
-              <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="employeeService.selectedEmployee._id">
-              <div class="form-group">
-                <label for="nombre">Nombre del empleado</label>
-                <input type="text" class="form-control" name="name" #name="ngModel"
-                  [(ngModel)]="employeeService.selectedEmployee.name" placeholder="Enter your name" required>
-              </div>
-              <div class="form-group">
-                <label for="puesto">Puesto del empleado</label>
-                <input type="text" name="position" class="form-control" #position="ngModel"
-                  [(ngModel)]="employeeService.selectedEmployee.position" placeholder="Enter your position" required>
-              </div>
-              <div class="form-group">
-                <label for="oficina">Oficina del empleado</label>
-                <input type="text" name="officine" class="form-control" #officine="ngModel"
-                  [(ngModel)]="employeeService.selectedEmployee.officine" placeholder="Enter your officine" required>
-              </div>
-              <div class="form-group">
-                <label for="puesto">Salario del empleado</label>
-                <input type="text" name="salary" class="form-control" #salary="ngModel"
-                  [(ngModel)]="employeeService.selectedEmployee.salary" placeholder="Enter your salary" required>
-              </div>
-              <button type="submit" class="btn btn-primary" style="margin-left: 2px">Guardar</button>
-              <button type="button" class="btn btn-primary" (click)="resetForm(employeeForm)">Limpiar</button>
+              <label for="nombre">Nombre del empleado</label>
+              <input
+                type="text"
+                class="form-control"
+                name="name"
+                formControlName="name"
+                [value]="employeeService.selectedEmployee.name"
+                [ngClass]="{
+                  'is-invalid':
+                    createEmployeeForm.get('name').errors &&
+                    createEmployeeForm.get('name').dirty
+                }"
+                placeholder="Enter your name"
+                required
+              />
             </div>
-          </form>
-        </div>
+            <div
+              *ngIf="
+                createEmployeeForm.get('name').errors &&
+                createEmployeeForm.get('name').dirty
+              "
+            >
+              <p
+                *ngIf="createEmployeeForm.get('name').hasError('required')"
+                class="invalid-p"
+              >
+                Campo requerido
+              </p>
+            </div>
+            <div class="form-group">
+              <label for="puesto">Puesto del empleado</label>
+              <input
+                type="text"
+                name="position"
+                class="form-control"
+                formControlName="position"
+                [ngClass]="{
+                  'is-invalid':
+                    createEmployeeForm.get('position').errors &&
+                    createEmployeeForm.get('position').dirty
+                }"
+                [value]="employeeService.selectedEmployee.position"
+                placeholder="Enter your position"
+                required
+              />
+            </div>
+            <div
+              *ngIf="
+                createEmployeeForm.get('position').errors &&
+                createEmployeeForm.get('position').dirty
+              "
+            >
+              <p
+                *ngIf="createEmployeeForm.get('position').hasError('required')"
+                class="invalid-p"
+              >
+                Campo requerido
+              </p>
+            </div>
+            <div class="form-group">
+              <label for="oficina">Oficina del empleado</label>
+              <input
+                type="text"
+                name="officine"
+                class="form-control"
+                formControlName="officine"
+                [value]="employeeService.selectedEmployee.officine"
+                [ngClass]="{
+                  'is-invalid':
+                    createEmployeeForm.get('officine').errors &&
+                    createEmployeeForm.get('officine').dirty
+                }"
+                placeholder="Enter your officine"
+                required
+              />
+            </div>
+            <div
+              *ngIf="
+                createEmployeeForm.get('officine').errors &&
+                createEmployeeForm.get('officine').dirty
+              "
+            >
+              <p
+                *ngIf="createEmployeeForm.get('name').hasError('required')"
+                class="invalid-p"
+              >
+                Campo requerido
+              </p>
+            </div>
+            <div class="form-group">
+              <label for="puesto">Salario del empleado</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter your salary"
+                [value]="employeeService.selectedEmployee.salary"
+                minlength="2"
+                maxlength="7"
+                formControlName="salary"
+                [pattern]="salaryPattern"
+                (keypress)="onSalaryIntroduced($event)"
+                [ngClass]="{
+                  'is-invalid':
+                    createEmployeeForm.get('salary').errors &&
+                    createEmployeeForm.get('salary').dirty
+                }"
+                required
+              />
+            </div>
+            <div
+              *ngIf="
+                createEmployeeForm.get('salary').errors &&
+                createEmployeeForm.get('salary').dirty
+              "
+            >
+              <p
+                *ngIf="createEmployeeForm.get('salary').hasError('pattern')"
+                class="invalid-p"
+              >
+                Ingrese un precio correcto: 4000, 44, 44.44
+              </p>
+              <p
+                *ngIf="createEmployeeForm.get('salary').hasError('required')"
+                class="invalid-p"
+              >
+                Campo requerido
+              </p>
+              <p
+                *ngIf="createEmployeeForm.get('salary').hasError('minlength')"
+                class="invalid-p"
+              >
+                El minimo de caracteres es de 2
+              </p>
+              <p
+                *ngIf="createEmployeeForm.get('salary').errors?.maxlength"
+                class="invalid-p"
+              >
+                El maximo de caracteres es de 7
+              </p>
+            </div>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              style="margin-left: 2px;"
+            >
+              Guardar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="resetForm(createEmployeeForm)"
+            >
+              Limpiar
+            </button>
+          </div>
+        </form>
       </div>
     </div>
-    <div class="container table-employee col-6">
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Officine</th>
-            <th>Operations</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let employee of employeeService.employees">
-            <td>{{employee.name}}</td>
-            <td>{{employee.position}}</td>
-            <td>{{employee.officine}}</td>
-            <td class="icons">
-              <a (click)="editEmployee(employee)">
-                <i class="material-icons">edit</i>
-              </a>
-              <a (click)="deleteEmployee(employee._id)">
-                <i class="material-icons" style="margin-left: 40px;">delete</i>
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
   </div>
+  <div class="container table-employee col-6">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Position</th>
+          <th>Officine</th>
+          <th>Operations</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employee of employeeService.employees">
+          <td>{{ employee.name }}</td>
+          <td>{{ employee.position }}</td>
+          <td>{{ employee.officine }}</td>
+          <td class="icons">
+            <a (click)="editEmployee(employee)">
+              <i class="material-icons">edit</i>
+            </a>
+            <a (click)="deleteEmployee(employee._id)">
+              <i class="material-icons" style="margin-left: 40px;">delete</i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

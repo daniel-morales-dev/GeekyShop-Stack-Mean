@@ -1,4 +1,4 @@
-export class CartItem {
+export class WishList {
   constructor(_id: '', productId, userId) {
     this._id = _id;
     this.productId = productId;

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { WishList } from '../models/wishlist';
 
 @Injectable({
   providedIn: 'root',
@@ -10,27 +11,31 @@ export class WishlistService {
   private URL = 'http://localhost:3000';
   constructor(private http: HttpClient) {}
 
-  getWishList() {
-    return this.http.get(this.URL + '/wishlist').pipe(
-      map((result: any[]) => {
+  getWishList(idUser) {
+    return this.http.get(this.URL + '/wishlist' + `/${idUser}`).pipe(
+      map((result: any) => {
         let productIds = [];
-        result.forEach((item) => {
-          productIds.push(item.productId);
-        });
+        for (let item of result.products) {
+          productIds.push(item._id);
+        }
         return productIds;
       })
     );
   }
 
-  addToWishList(productId): Observable<any> {
+  addToWishList(product, userId): Observable<any> {
+    const data = {
+      productId: product._id,
+      userId: userId,
+    };
     return this.http
-      .post(this.URL + '/wishlist', productId)
+      .post<WishList>(this.URL + '/wishlist', data)
       .pipe(map((res) => res));
   }
 
-  removeFromWishList(productId) {
+  removeFromWishList(userId, productId) {
     return this.http
-      .delete(this.URL + '/wishlist' + `/${productId}`)
+      .put(this.URL + '/wishlist' + `/${userId}`, productId)
       .pipe(map((res) => res));
   }
 }

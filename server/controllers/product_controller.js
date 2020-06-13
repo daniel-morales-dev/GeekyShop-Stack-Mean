@@ -1,7 +1,9 @@
 const modelProduct = require('../models/modelProducts');
+const modelWishList = require('../models/model_wishlist');
 const modelCart = require('../models/model_cart');
 const productController = {};
 const path = require('path'); //Manejamos directorios
+const { model } = require('../models/model_cart');
 const fs = require('fs').promises; //Manejador de archivos de node
 
 productController.getAllProducts = async (req, res, next) => {
@@ -28,15 +30,9 @@ productController.createProduct = async (req, res, next) => {
       description: req.body.description,
       price: req.body.price,
     };
-
-    if (
-      !req.body.name ||
-      !req.body.description ||
-      !req.body.price ||
-      !req.body.price
-    ) {
+    if (!req.body.name || !req.body.description || !req.body.price) {
       return res.status(409).json({
-        status: 'No se puede añadir el producto',
+        status: 'No se puede añadir el producto, aqui',
       });
     }
     if (req.file !== undefined) {
@@ -130,19 +126,40 @@ productController.deleteProduct = async (req, res, next) => {
     const carritoPorModificar = await modelCart.find({
       productId: { $all: id },
     });
-    const cantidadProductosEnCarrito = carritoPorModificar[0].productId.length;
-    console.log(cantidadProductosEnCarrito);
-    if (cantidadProductosEnCarrito === 1) {
-      const carritoPorEliminar = await modelCart.findOneAndDelete({
-        productId: id,
-      });
-    } else {
-      const carritosModificadosPorEliminacion = await modelCart.updateMany(
-        {
+    if (carritoPorModificar.length > 0) {
+      const cantidadProductosEnCarrito =
+        carritoPorModificar[0].productId.length;
+      if (cantidadProductosEnCarrito === 1) {
+        const carritoPorEliminar = await modelCart.findOneAndDelete({
           productId: id,
-        },
-        { $pull: { productId: id } }
-      );
+        });
+      } else {
+        const carritosModificadosPorEliminacion = await modelCart.updateMany(
+          {
+            productId: id,
+          },
+          { $pull: { productId: id } }
+        );
+      }
+    }
+    const wishListPorModificar = await modelWishList.find({
+      productId: { $all: id },
+    });
+    if (wishListPorModificar.length > 0) {
+      const cantidadProductosEnWishList =
+        wishListPorModificar[0].productId.length;
+      if (cantidadProductosEnWishList === 1) {
+        const wishListPorEliminar = await modelWishList.findOneAndDelete({
+          productId: id,
+        });
+      } else {
+        const listasModificadasPorEliminacion = await modelWishList.updateMany(
+          { productId: id },
+          {
+            $pull: { productId: id },
+          }
+        );
+      }
     }
     return res.json({ status: 'Product Deleted' });
   } catch (error) {

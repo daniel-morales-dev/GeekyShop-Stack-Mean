@@ -4,6 +4,7 @@ const model_user = require('../models/model_user');
 const cartController = {};
 const errors_http = {
   product_exist: 'product_exist',
+  producto_not_available: 'product_not_available',
 };
 
 cartController.getAllCarts = async (req, res, next) => {
@@ -31,7 +32,8 @@ cartController.addToCart = async (req, res, next) => {
     const productExits = await model_product.findById(data.productId);
     if (!productExits) {
       return res.status(409).json({
-        status: 'No se puede añadir al carrito ',
+        code_error: errors_http.producto_not_available,
+        status: 'No se puede añadir al carrito',
       });
     } else if (cartExits.length > 0) {
       const verifyProductInCart = await model_cart.findOne({
