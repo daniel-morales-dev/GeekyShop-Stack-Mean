@@ -104,6 +104,12 @@ router.post(
   auth.canViewCartAndWishList,
   cart_controller.addToCart
 );
+router.put(
+  '/cart/:id',
+  auth.verifyToken,
+  auth.canViewCartAndWishList,
+  cart_controller.deleteProductOfCart
+);
 
 //LISTA DE DESEOS
 router.post(

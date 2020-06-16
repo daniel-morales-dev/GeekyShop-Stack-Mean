@@ -78,5 +78,28 @@ cartController.addToCart = async (req, res, next) => {
     next(err);
   }
 };
-
+cartController.deleteProductOfCart = async (req, res) => {
+  try {
+    const idProduct = req.body.productId;
+    const userId = await model_user.findById(req.params.id);
+    const carritosModificadosPorEliminacion = await model_cart.updateOne(
+      {
+        userId: userId._id,
+      },
+      { $pull: { productId: idProduct } }
+    );
+    if (!req.body.userId || !req.body.productId) {
+      return res.status(409).json({
+        status: 'Error',
+        message: 'Faltan campos',
+      });
+    }
+    return res.status(200).json({
+      status: 'success',
+      message: 'Producto eliminado de tu carrito',
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 module.exports = cartController;

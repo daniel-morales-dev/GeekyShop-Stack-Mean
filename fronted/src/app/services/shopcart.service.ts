@@ -43,6 +43,13 @@ export class ShopcartService {
       .post<CartItem>(this.URL + '/cart', data)
       .pipe(map((res) => res));
   }
+  deleteProductFromCar(product, userId) {
+    const data = {
+      productId: product._id,
+      userId: userId,
+    };
+    return this.http.put<CartItem>(this.URL + `/cart/${userId}`, data);
+  }
   getUserId() {
     const userId = this.decodeToken().id;
     return userId;
