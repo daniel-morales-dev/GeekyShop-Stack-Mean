@@ -1,0 +1,9 @@
+.totalNum {
+    font-size: 30px;
+    color: red;
+}
+
+.total {
+    display: flex;
+    justify-content: space-between;
+}

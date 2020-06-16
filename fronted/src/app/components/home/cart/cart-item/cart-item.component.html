@@ -1,4 +1,9 @@
-<div class="cart-item">
+<div class="cart-text">
   <span>{{ cartItem.name }}</span>
-  <strong> {{ cartItem.price | currency: "USD" }} </strong>
+  <div class="iconDelete">
+    <a (click)="deleteProductOfCart(cartItem._id)">
+      <i class="material-icons">delete</i>
+    </a>
+  </div>
 </div>
+<strong> {{ cartItem.price | currency: "USD" }} </strong>

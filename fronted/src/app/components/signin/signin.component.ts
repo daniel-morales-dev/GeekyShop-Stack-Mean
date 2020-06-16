@@ -14,7 +14,7 @@ export class SigninComponent implements OnInit {
   user = { email: '', password: '' };
   loginForm: FormGroup;
   emailPattern =
-    "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$";
+    '^[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$';
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -32,7 +32,7 @@ export class SigninComponent implements OnInit {
     this.authService.signIn(this.loginForm.value).subscribe(
       (res) => {
         this.authService.setToken(res.token);
-        this.authService.decodeToken(); //USO EL DECODE TOKEN
+        this.authService.decodeToken(); // USO EL DECODE TOKEN
         AppComponent.updateUserStatus.next(true);
         this.router.navigate(['/home']);
         Swal.fire({
@@ -58,7 +58,7 @@ export class SigninComponent implements OnInit {
               title: 'Error',
               text: 'Contraseña incorrecta, intentelo de nuevo',
               confirmButtonColor: '#6c5ce7',
-            });
+            })
             break;
           default:
             Swal.fire({

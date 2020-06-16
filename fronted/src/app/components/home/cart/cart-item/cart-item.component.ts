@@ -10,4 +10,7 @@ export class CartItemComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+  deleteProductOfCart(id) {
+    console.log(id);
+  }
 }

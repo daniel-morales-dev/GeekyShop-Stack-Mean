@@ -1,3 +1,16 @@
 .cart-item {
   font-size: small;
 }
+
+.cart-text {
+  display: flex;
+  justify-content: space-between;
+}
+
+.iconDelete {
+  color: #6c5ce7;
+}
+
+a {
+  cursor: pointer;
+}

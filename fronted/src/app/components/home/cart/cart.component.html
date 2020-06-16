@@ -8,4 +8,13 @@
   <li class="list-group-item total">
     Total: <strong>{{ cartTotal | currency: "USD" }}</strong>
   </li>
+  <li class="list-group-item pagar">
+    <button
+      type="button"
+      class="btn btn-primary btn-block"
+      (click)="loadCartUser()"
+    >
+      Pagar
+    </button>
+  </li>
 </ul>

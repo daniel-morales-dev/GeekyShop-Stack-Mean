@@ -3,8 +3,7 @@ const modelWishList = require('../models/model_wishlist');
 const modelCart = require('../models/model_cart');
 const productController = {};
 const path = require('path'); //Manejamos directorios
-const { model } = require('../models/model_cart');
-const fs = require('fs').promises; //Manejador de archivos de node
+const fs = require('fs').promises; //Manejador de archivos de node, LE AGREGO PROMISES PORQUE MANEJAREMOS FUNCIONES ASINCRONAS
 
 productController.getAllProducts = async (req, res, next) => {
   try {
@@ -29,22 +28,26 @@ productController.createProduct = async (req, res, next) => {
       name: req.body.name,
       description: req.body.description,
       price: req.body.price,
-    };
+    }; //DATA SON LOS DATOS DEL PRODUCTO QUE SE ALMACENARAN
     if (!req.body.name || !req.body.description || !req.body.price) {
+      //SI EL NOMBRE,DESCRIPCION Y PRECIO ESTAN VACIOS, NO SE GUARDA UN PRODUCTO, PERO TENGO UN BUG, QUE SI LE PONGO UN IMAGEN, GUARDA LA IMAGEN IGUAL, NO SE COMO RESOLVER ESTE ERROR
       return res.status(409).json({
         status: 'No se puede añadir el producto, aqui',
       });
     }
     if (req.file !== undefined) {
+      //si el req.FILE ES UNDEFINED, O SEA, LA PETICION PARA GUARDAR LA IMAGEN, ESTA VACIA, ES PORQUE A LO MEJOR YA EXISTE EL PRODUCTO CON SU IMAGEN Y NO SE QUIERE ACTUALIZAR, POR LO TANTO SE LE ASIGNA LA MISMA RUTA Y EL MISMO NOMBRE
       data.imagePath = req.file.path;
       data.imageName = req.file.filename;
+      //SE AGREGAN ESTOS DATOS AL OBJETO
     }
     if (!req.body.price.toString().match(/[0-9]/)) {
+      //SI EL PRECIO NO CUADRA CON EL PATRON, QUE SON NUMEROS POSITIVOS ENTRE 0 Y 9 NO SE GUARDARA EL PRODUCTO
       return res.status(409).json({
         status: 'No se ha podido añadir el producto, el precio es erroneo',
       });
     }
-    const product = new modelProduct(data);
+    const product = new modelProduct(data); //CREO EL PRODUCTO CON LOS DATOS
     const resultado = await product.save();
     return res.json({
       resultado: resultado,

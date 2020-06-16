@@ -26,6 +26,14 @@ export class ShopcartService {
     );
   }
 
+  getCartUser(idUser) {
+    return this.http.get(this.URL + `/cart/${idUser}`).pipe(
+      map((result: any) => {
+        return result.carts;
+      })
+    );
+  }
+
   addProductToCar(product, userId) {
     const data = {
       productId: product._id,

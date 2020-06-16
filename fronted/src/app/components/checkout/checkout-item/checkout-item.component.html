@@ -1,0 +1,29 @@
+<div class="row" *ngIf="!product; else mainContent">
+  <h1>Loading...</h1>
+</div>
+
+<ng-template #mainContent>
+  <div class="row">
+    <div class="container">
+      <div class="card">
+        <div class="card-photo">
+          <img
+            [src]="'http://localhost:3000/public/' + product.imageName"
+            class="img-card-top"
+            height="100px"
+            width="70px"
+          />
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+            <strong>{{ product.name }}</strong>
+            <br />
+            {{ product.description | slice: 0:50 }}...
+            <br />
+            Precio: <strong> {{ product.price | currency: "USD" }} </strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

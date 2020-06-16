@@ -5,6 +5,7 @@ const { serverConfig } = require('../config');
 const cartSchema = new Schema(
   {
     productId: {
+      //VA SER UN ARRAY, QUE CONTIENE SOLO EL ID DE LOS PRODUCTOS
       type: Array,
       required: true,
     },

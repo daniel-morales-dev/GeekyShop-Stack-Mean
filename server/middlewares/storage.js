@@ -1,4 +1,4 @@
-const multer = require('multer');
+const multer = require('multer'); //MULTER ES LA LIBRERIA QUE ME PERMITE GUARDAR IMAGENES
 const { v4: uuidv4 } = require('uuid'); //GENERA UN ID ALEATORIO
 const path = require('path');
 const storage = multer.diskStorage({

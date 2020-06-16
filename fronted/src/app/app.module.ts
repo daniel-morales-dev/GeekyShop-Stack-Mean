@@ -26,6 +26,8 @@ import { CartItemComponent } from './components/home/cart/cart-item/cart-item.co
 import { ProductListComponent } from './components/home/product-list/product-list.component';
 import { ProductItemComponent } from './components/home/product-list/product-item/product-item.component';
 import { Page404Component } from './components/public/page404/page404.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { CheckoutItemComponent } from './components/checkout/checkout-item/checkout-item.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import { Page404Component } from './components/public/page404/page404.component'
     ProductListComponent,
     ProductItemComponent,
     Page404Component,
+    CheckoutComponent,
+    CheckoutItemComponent,
   ],
   imports: [
     BrowserModule,
