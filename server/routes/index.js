@@ -85,9 +85,10 @@ router.get(
   auth.canManageEmployees,
   user_controller.getUser
 );
+router.put('/user/:id', auth.verifyToken, user_controller.updateUser);
 
 //SESIONES Y USUARIO
-router.post('/signup', user_controller.createUser);
+router.post('/signup', auth.verifyUser, user_controller.createUser);
 router.post('/signin', user_controller.logInUser);
 router.get('/profile', auth.verifyToken);
 
@@ -109,6 +110,12 @@ router.put(
   auth.verifyToken,
   auth.canViewCartAndWishList,
   cart_controller.deleteProductOfCart
+);
+router.delete(
+  '/cart/:id',
+  auth.verifyToken,
+  auth.canViewCartAndWishList,
+  cart_controller.cleanCart
 );
 
 //LISTA DE DESEOS

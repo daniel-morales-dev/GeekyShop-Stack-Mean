@@ -1,3 +1,64 @@
-<p>
-  profile works!
-</p>
+<div class="row">
+  <div class="container col-md-7">
+    <div class="card-header"><h3>Mis datos personales</h3></div>
+    <form
+      class="card-body container row"
+      [formGroup]="profileForm"
+      (ngSubmit)="guardarCambios(user._id)"
+    >
+      <div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              formControlName="email"
+              [ngClass]="{
+                'is-invalid':
+                  profileForm.get('email').errors &&
+                  profileForm.get('email').dirty
+              }"
+              placeholder="email@email.com"
+              [pattern]="emailPattern"
+              required
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              formControlName="password"
+              placeholder="Ingresa tu contraseña"
+              [ngClass]="{
+                'is-invalid':
+                  profileForm.get('password').errors &&
+                  profileForm.get('password').dirty
+              }"
+              required
+              minlength="4"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="name">Nombre</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Ingresa tu nombre"
+            formControlName="name"
+            [ngClass]="{
+              'is-invalid':
+                profileForm.get('name').errors && profileForm.get('name').dirty
+            }"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary btn-guardar">
+          Guardar cambios
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

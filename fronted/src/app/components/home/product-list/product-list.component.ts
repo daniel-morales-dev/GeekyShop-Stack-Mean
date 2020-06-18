@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ProductsService } from '../../../services/products.service';
 import { WishlistService } from 'src/app/services/wishlist.service';
 import { ShopcartService } from 'src/app/services/shopcart.service';
 import Swal from 'sweetalert2';
 import { AuthService } from 'src/app/services/auth.service';
+import { FilterComponent } from '../filter/filter.component';
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css'],
 })
 export class ProductListComponent implements OnInit {
-  products: any;
+  products: any = [];
   wishList: any[] = [];
+  @Input() filtroValor: string;
   constructor(
     private productService: ProductsService,
     private wishListService: WishlistService,
@@ -22,7 +24,6 @@ export class ProductListComponent implements OnInit {
     this.loadProducts();
     this.loadWishList();
   }
-
   loadProducts() {
     this.productService.getProducts().subscribe(
       (res) => {

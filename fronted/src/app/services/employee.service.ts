@@ -26,8 +26,6 @@ export class EmployeeService {
   }
 
   putEmployee(id: String, Employee) {
-    console.log(id);
-    console.log(Employee);
     return this.http
       .put<Employee>(this.URL_API + `/${id}`, Employee)
       .pipe(map((res) => res));

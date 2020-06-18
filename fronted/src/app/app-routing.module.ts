@@ -7,7 +7,6 @@ import { SigninComponent } from './components/signin/signin.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { HomeComponent } from './components/home/home.component';
-import { ConsolasComponent } from './components/consolas/consolas.component';
 import { PrivateGamesComponent } from './components/private-games/private-games.component';
 import { UsersComponent } from './components/users/users.component';
 import { AuthRoleAdminGuard } from './guards/auth-role-admin.guard';
@@ -63,10 +62,6 @@ const routes: Routes = [
     component: HomeComponent,
   },
   {
-    path: 'consolas',
-    component: ConsolasComponent,
-  },
-  {
     path: 'private-games',
     component: PrivateGamesComponent,
     canActivate: [AuthGuard],
@@ -78,6 +73,7 @@ const routes: Routes = [
   {
     path: 'checkout/:id',
     component: CheckoutComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: '**', //Si no encuentra una pagina, muestra la 404

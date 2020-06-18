@@ -10,7 +10,6 @@ import { SigninComponent } from './components/signin/signin.component';
 import { GamesComponent } from './components/games/games.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { HomeComponent } from './components/home/home.component';
-import { ConsolasComponent } from './components/consolas/consolas.component';
 import { PrivateGamesComponent } from './components/private-games/private-games.component';
 import { UsersComponent } from './components/users/users.component';
 import { AuthGuard } from './guards/auth.guard';
@@ -28,6 +27,7 @@ import { ProductItemComponent } from './components/home/product-list/product-ite
 import { Page404Component } from './components/public/page404/page404.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { CheckoutItemComponent } from './components/checkout/checkout-item/checkout-item.component';
+import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -38,7 +38,6 @@ import { CheckoutItemComponent } from './components/checkout/checkout-item/check
     GamesComponent,
     ProfileComponent,
     HomeComponent,
-    ConsolasComponent,
     PrivateGamesComponent,
     UsersComponent,
     GestionProductsComponent,
@@ -52,6 +51,7 @@ import { CheckoutItemComponent } from './components/checkout/checkout-item/check
     Page404Component,
     CheckoutComponent,
     CheckoutItemComponent,
+    FilterPipe,
   ],
   imports: [
     BrowserModule,

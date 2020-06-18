@@ -1,0 +1,33 @@
+img:hover {
+    box-shadow: 0 0 0 0.2rem rgba(97, 1, 253, 0.25);
+    border: 1px solid #6c5ce7;
+    cursor: pointer;
+}
+
+.img-card-top {
+    width: 250px;
+    height: 250px;
+}
+
+.uploadl-label {
+    color: black !important;
+}
+
+.invalid-p {
+    color: #da2424;
+}
+
+.upload-label:hover {
+    cursor: pointer;
+}
+
+.price-game {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.btn-guardar:hover {
+    box-shadow: 0 0 0 0.2rem rgba(98, 0, 255, 0.3);
+    background-color: #4a3f9b;
+    color: white;
+}

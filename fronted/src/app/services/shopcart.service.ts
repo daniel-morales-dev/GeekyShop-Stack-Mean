@@ -50,6 +50,9 @@ export class ShopcartService {
     };
     return this.http.put<CartItem>(this.URL + `/cart/${userId}`, data);
   }
+  cleanCart(userId) {
+    return this.http.delete<CartItem>(this.URL + `/cart/${userId}`);
+  }
   getUserId() {
     const userId = this.decodeToken().id;
     return userId;

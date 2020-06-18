@@ -102,4 +102,25 @@ cartController.deleteProductOfCart = async (req, res) => {
     next(error);
   }
 };
+cartController.cleanCart = async (req, res, next) => {
+  try {
+    const userId = await model_user.findById(req.params.id);
+    const cartExits = await model_cart.find({ userId: userId._id });
+    console.log(cartExits[0]._id);
+    if (!cartExits) {
+      return res.status(409).json({
+        status: 'Error',
+        message: 'El carrito no existe',
+      });
+    } else {
+      const deleteCart = await model_cart.findByIdAndDelete(cartExits[0]._id);
+      return res.status(200).json({
+        status: 'Success',
+        message: 'Carrito vaciado',
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
 module.exports = cartController;

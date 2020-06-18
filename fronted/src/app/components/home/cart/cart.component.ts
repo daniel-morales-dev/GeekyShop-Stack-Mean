@@ -42,6 +42,42 @@ export class CartComponent implements OnInit {
         });
     }
   }
+  cleanCart() {
+    this.cartService.cleanCart(this.cartService.getUserId()).subscribe(
+      (res) => {
+        Swal.fire({
+          title: 'Tu carrito se ha vaciado',
+          imageUrl: '../../../../../assets/imgs/buy.svg',
+          imageWidth: 400,
+          imageHeight: 200,
+          imageAlt: 'Custom image',
+          confirmButtonColor: '#6c5ce7',
+        }).then((result) => {
+          if (result.value) {
+            this.router
+              .navigateByUrl('/RefreshComponent', {
+                skipLocationChange: true,
+              })
+              .then(() => {
+                this.router.navigate(['/home']);
+              });
+          }
+        });
+      },
+      (err) => {
+        Swal.fire({
+          title: 'Hola, lo sentimos',
+          text:
+            'Hubo un error tratando de limpiar tu carrito, vuelve a intentar',
+          imageUrl: '../../../../../assets/imgs/stress.svg',
+          imageWidth: 400,
+          imageHeight: 200,
+          imageAlt: 'Custom image',
+          confirmButtonColor: '#6c5ce7',
+        });
+      }
+    );
+  }
 
   loadCartItems() {
     this.cartService

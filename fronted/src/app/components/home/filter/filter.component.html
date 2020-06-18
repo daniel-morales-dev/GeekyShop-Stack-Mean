@@ -5,14 +5,16 @@
   <div class="card-body">
     <form>
       <div class="form-group">
-        <label for="from">Desde</label>
-        <input type="number" id="from" name="from" class="form-control" />
+        <label for="name">Nombre</label>
+        <input
+          type="text"
+          id="name"
+          name="filterPost"
+          [formControl]="filter"
+          class="form-control"
+        />
       </div>
-      <div class="form-group">
-        <label for="to">Hasta</label>
-        <input type="number" id="to" name="from" class="form-control" />
-      </div>
-      <button class="btn btn-primary btn-block">Filtrar por precio</button>
+      <button class="btn btn-primary btn-block">Filtrar</button>
     </form>
   </div>
 </div>

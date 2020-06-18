@@ -1,6 +1,10 @@
 <div class="row">
-  <div class="col-md-2"><app-filter></app-filter></div>
-  <div class="col-md-8"><app-product-list></app-product-list></div>
+  <div class="col-md-2">
+    <app-filter (filter)="handleSearch($event)"></app-filter>
+  </div>
+  <div class="col-md-8">
+    <app-product-list [filtroValor]="filtroValor"></app-product-list>
+  </div>
   <div class="col-md-2" *ngIf="authService.loggedIn()">
     <app-cart></app-cart>
   </div>

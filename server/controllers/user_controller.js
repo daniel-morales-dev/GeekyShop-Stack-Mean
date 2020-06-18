@@ -2,6 +2,7 @@ const model_user = require('../models/model_user');
 const jwt = require('jsonwebtoken');
 const secretKey = 'secretKey';
 const bcrypt = require('bcryptjs');
+const BCRYPT_SALT_ROUNDS = 12;
 const userController = {};
 
 const errors_http = {
@@ -11,17 +12,54 @@ const errors_http = {
   noexits_acc: 'account_noexists',
   password_wrong: 'password_wrong',
 };
-
 //TRAER USUARIOS
 userController.getUsers = async (req, res) => {
-  const users = await model_user.find();
-  res.json(users);
+  try {
+    const users = await model_user.find();
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
 };
-
 //TRAER USUARIO
 userController.getUser = async (req, res) => {
-  const user = await model_employee.findById(req.params.id);
-  res.json(user);
+  try {
+    const user = await model_user.findById(req.params.id);
+    res.json(user);
+  } catch (error) {
+    next(error);
+  }
+};
+
+userController.updateUser = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const user = await model_user.findById(id);
+    const data = {
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+    };
+    if (!user) {
+      return res.status(409).json({
+        status: 'Error',
+        message: 'No existe el usuario',
+      });
+    }
+    const passwordHash = await bcrypt.hash(data.password, BCRYPT_SALT_ROUNDS);
+    data.password = passwordHash;
+    const resultado = await model_user.findByIdAndUpdate(
+      id,
+      { $set: data },
+      { $new: true }
+    );
+    res.status(200).json({
+      resultado,
+      status: 'Usuario actualizado',
+    });
+  } catch (err) {
+    next(err);
+  }
 };
 
 //REGISTER USUARIOS
@@ -32,27 +70,6 @@ userController.createUser = async (req, res) => {
     email: req.body.email,
     password: req.body.password,
   });
-  const busqueda = await model_user.findOne({ email });
-  if (busqueda) {
-    return res.status(409).json({
-      code_error: errors_http.email_existent, //Retorna que ya existe una cuenta asociada al email
-    });
-  }
-  if (req.body.password.length < 4) {
-    const error_clave_corta = res.status(409).json({
-      code_error: errors_http.password_invalid,
-    });
-    return error_clave_corta;
-  }
-  if (
-    !req.body.email.match(
-      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
-    ) //EXPRESION REGULAR PARA VALIDAR EMAILS
-  ) {
-    return res.status(409).json({
-      code_error: errors_http.email_err,
-    });
-  }
   newUser.password = await newUser.encryptPassword(password);
   await newUser.save();
   const datos = {
