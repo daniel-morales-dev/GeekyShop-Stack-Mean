@@ -81,13 +81,10 @@ export class EmployeesComponent implements OnInit {
           }
         );
     } else if (this.onEditEmployee == true) {
-      console.log('Trato de editar');
-      console.log();
       this.employeeService
         .putEmployee(this.id, this.createEmployeeForm.value)
         .subscribe(
           (res) => {
-            this.resetForm(this.createEmployeeForm);
             this.resetForm(this.createEmployeeForm);
             this.getEmployees();
             Swal.fire({

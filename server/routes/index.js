@@ -8,6 +8,7 @@ const product_controller = require('../controllers/product_controller');
 const cart_controller = require('../controllers/cart_controller');
 const wishList_controller = require('../controllers/wishList_controller');
 const paypal_controller = require('../controllers/paypal_controller');
+const rol_controller = require('../controllers/rol_controller');
 //IMPORTO EL MIDDLEWARE AUTH, QUE SE ENCARGA DE AUTENTIFICAR LAS PETICIONES POR ROLES
 const auth = require('../middlewares/auth');
 //MULTER, MODULO QUE ME PERMITE GUARDAR IMAGENES EN EL SERVIDOR
@@ -76,21 +77,34 @@ router.delete(
 router.get(
   '/user',
   auth.verifyToken,
-  auth.canManageEmployees,
+  auth.canManageProducts,
   user_controller.getUsers
 );
 router.get(
   '/user/:id',
   auth.verifyToken,
-  auth.canManageEmployees,
+  auth.canUpdateProfileUser,
   user_controller.getUser
 );
-router.put('/user/:id', auth.verifyToken, user_controller.updateUser);
+router.put(
+  '/user/:id',
+  auth.verifyToken,
+  auth.verifiyUserUpdateProfile,
+  auth.canUpdateProfileUser,
+  user_controller.updateUser
+);
+router.post(
+  //ELIMINAMOS CON METODO POST PARA PODER PASAR UN CUERPO EN LA PETICION, ESTE CUERPO NOS PERMITE VERIFICAR QUE EL USUARIO QUE ESTAMOS BORRANDO NO SEA EL MISMO QUE ESTE HACIENDO LA PETICION
+  '/user/:id',
+  auth.verifyToken,
+  auth.canManageEmployees,
+  auth.verifyDeleteUser,
+  user_controller.deleteUser
+);
 
 //SESIONES Y USUARIO
-router.post('/signup', auth.verifyUser, user_controller.createUser);
+router.post('/signup', auth.verifyUserRegister, user_controller.createUser);
 router.post('/signin', user_controller.logInUser);
-router.get('/profile', auth.verifyToken);
 
 //CARRITO DE COMPRAS
 router.get(
@@ -136,6 +150,20 @@ router.put(
   auth.verifyToken,
   auth.canViewCartAndWishList,
   wishList_controller.deleteFromWishList
+);
+
+//ROLES
+router.get(
+  '/rol',
+  auth.verifyToken,
+  auth.canManageProducts,
+  rol_controller.getRoles
+);
+router.post(
+  '/rol',
+  auth.verifyToken,
+  auth.canManageEmployees,
+  rol_controller.createRol
 );
 
 router.get('/paypal-token', paypal_controller.getTokenPaypal);

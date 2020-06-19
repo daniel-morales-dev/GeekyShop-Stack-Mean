@@ -1,3 +1,128 @@
-<p>
-  users works!
-</p>
+<div class="row">
+  <div class="container col-5">
+    <div class="card">
+      <div class="card-header">
+        Gestion de usuarios
+      </div>
+      <div class="card-body">
+        <form [formGroup]="createUserForm" (ngSubmit)="addUser()">
+          <div class="form-group">
+            <div class="form-group">
+              <label for="nombre">Nombre del usuario</label>
+              <input
+                type="text"
+                class="form-control"
+                name="name"
+                formControlName="name"
+                [ngClass]="{
+                  'is-invalid':
+                    createUserForm.get('name').errors &&
+                    createUserForm.get('name').dirty
+                }"
+                placeholder="Ingresa el nuevo nombre"
+                required
+              />
+            </div>
+            <div
+              *ngIf="
+                createUserForm.get('name').errors &&
+                createUserForm.get('name').dirty
+              "
+            >
+              <p
+                *ngIf="createUserForm.get('name').hasError('required')"
+                class="invalid-p"
+              >
+                Campo requerido
+              </p>
+            </div>
+            <div class="form-group">
+              <label for="email">Email del usuario</label>
+              <input
+                type="email"
+                class="form-control"
+                placeholder="Ingresa el nuevo email"
+                formControlName="email"
+                [ngClass]="{
+                  'is-invalid':
+                    createUserForm.get('email').errors &&
+                    createUserForm.get('email').dirty
+                }"
+                [pattern]="emailPattern"
+              />
+            </div>
+            <div
+              *ngIf="
+                createUserForm.get('email').errors &&
+                createUserForm.get('email').dirty
+              "
+            >
+              <p
+                *ngIf="createUserForm.get('email').hasError('required')"
+                class="invalid-p"
+              >
+                Campo requerido
+              </p>
+              <p
+                *ngIf="createUserForm.get('email').hasError('pattern')"
+                class="invalid-p"
+              >
+                Ingrese un email valido
+              </p>
+            </div>
+            <div class="form-group" *ngIf="authService.isAdmin()">
+              <label for="rol">Rol del empleado</label>
+              <select formControlName="rol">
+                <option [value]="rol" *ngFor="let rol of roles">{{
+                  rol
+                }}</option>
+              </select>
+            </div>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              style="margin-left: 2px;"
+              [disabled]="createUserForm.invalid"
+            >
+              Guardar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="resetForm(createUserForm)"
+            >
+              Limpiar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="container table-employee col-6">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Rol</th>
+          <th>Operaciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of userService.users">
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.rol }}</td>
+          <td class="icons">
+            <a (click)="editUser(user)">
+              <i class="material-icons">edit</i>
+            </a>
+            <a (click)="deleteUser(user._id)" *ngIf="authService.isAdmin()">
+              <i class="material-icons" style="margin-left: 40px;">delete</i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

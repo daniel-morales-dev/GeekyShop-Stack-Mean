@@ -31,23 +31,43 @@ userController.getUser = async (req, res) => {
   }
 };
 
+userController.deleteUser = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const resultado = await model_user.findByIdAndDelete(id);
+    return res.status(200).json({
+      status: 'success',
+      message: 'Eliminacion exitosa',
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 userController.updateUser = async (req, res, next) => {
   try {
+    console.log(req.body);
     const id = req.params.id;
     const user = await model_user.findById(id);
     const data = {
       name: req.body.name,
       email: req.body.email,
-      password: req.body.password,
     };
-    if (!user) {
-      return res.status(409).json({
-        status: 'Error',
-        message: 'No existe el usuario',
-      });
+    if (req.body.rol != undefined) {
+      data.rol = req.body.rol;
     }
-    const passwordHash = await bcrypt.hash(data.password, BCRYPT_SALT_ROUNDS);
-    data.password = passwordHash;
+    if (
+      (req.body.passwordActual == undefined &&
+        req.body.passwordNueva == undefined) ||
+      (req.body.passwordActual == '' && req.body.passwordNueva == '')
+    ) {
+      data.password = user.password;
+    } else {
+      data.password = req.body.passwordNueva;
+      const passwordHash = await bcrypt.hash(data.password, BCRYPT_SALT_ROUNDS);
+      data.password = passwordHash;
+    }
+
     const resultado = await model_user.findByIdAndUpdate(
       id,
       { $set: data },
@@ -70,7 +90,8 @@ userController.createUser = async (req, res) => {
     email: req.body.email,
     password: req.body.password,
   });
-  newUser.password = await newUser.encryptPassword(password);
+  const passwordHash = await bcrypt.hash(newUser.password, BCRYPT_SALT_ROUNDS);
+  newUser.password = passwordHash;
   await newUser.save();
   const datos = {
     id: newUser._id,

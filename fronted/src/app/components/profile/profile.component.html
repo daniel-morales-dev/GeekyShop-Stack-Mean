@@ -23,24 +23,57 @@
               [pattern]="emailPattern"
               required
             />
+            <div
+              *ngIf="
+                profileForm.get('email').errors &&
+                profileForm.get('email').dirty
+              "
+            >
+              <p
+                *ngIf="profileForm.get('email').hasError('required')"
+                class="invalid-p"
+              >
+                Campo requerido
+              </p>
+              <p
+                *ngIf="profileForm.get('email').hasError('pattern')"
+                class="invalid-p"
+              >
+                Ingrese un email valido
+              </p>
+            </div>
           </div>
+
           <div class="form-group col-md-6">
-            <label for="password">Password</label>
+            <label for="passwordActual">Contraseña actual</label>
             <input
               type="password"
               class="form-control"
-              formControlName="password"
+              formControlName="passwordActual"
               placeholder="Ingresa tu contraseña"
               [ngClass]="{
                 'is-invalid':
-                  profileForm.get('password').errors &&
-                  profileForm.get('password').dirty
+                  profileForm.get('passwordActual').errors &&
+                  profileForm.get('passwordActual').dirty
               }"
-              required
-              minlength="4"
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="passwordNueva">Nueva contraseña</label>
+            <input
+              type="password"
+              class="form-control"
+              formControlName="passwordNueva"
+              placeholder="Ingresa tu nueva contraseña"
+              [ngClass]="{
+                'is-invalid':
+                  profileForm.get('passwordNueva').errors &&
+                  profileForm.get('passwordNueva').dirty
+              }"
             />
           </div>
         </div>
+
         <div class="form-group">
           <label for="name">Nombre</label>
           <input
@@ -55,7 +88,23 @@
             required
           />
         </div>
-        <button type="submit" class="btn btn-primary btn-guardar">
+        <div
+          *ngIf="
+            profileForm.get('name').errors && profileForm.get('name').dirty
+          "
+        >
+          <p
+            *ngIf="profileForm.get('name').hasError('required')"
+            class="invalid-p"
+          >
+            Campo requerido
+          </p>
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary btn-guardar"
+          [disabled]="profileForm.invalid"
+        >
           Guardar cambios
         </button>
       </div>

@@ -53,7 +53,7 @@ const routes: Routes = [
     canActivate: [AuthBackToLoginGuard],
   },
   {
-    path: 'profile',
+    path: 'profile/:id',
     component: ProfileComponent,
     canActivate: [AuthGuard],
   },
@@ -67,8 +67,9 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'users',
+    path: 'usuarios',
     component: UsersComponent,
+    canActivate: [AuthGuard, AuthRoleEmployeeGuard],
   },
   {
     path: 'checkout/:id',

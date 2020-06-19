@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const secretKey = 'secretKey';
 const ROL = require('../data');
 const model_user = require('../models/model_user');
+const bcrypt = require('bcryptjs');
 const errors_http = {
   password_invalid: 'password_invalid',
   email_existent: 'email_existent',
@@ -57,9 +58,6 @@ module.exports = {
         err,
         decoded
       ) {
-        console.log(decoded);
-        console.log(req.body);
-        console.log(Object.entries(req.params).length === 0);
         if (Object.entries(req.params).length > 0) {
           if (decoded.id != req.params.id) {
             return res.status(401).json({
@@ -79,19 +77,74 @@ module.exports = {
       return res.status(401).send('Peticion no autorizada, en try catch');
     }
   },
-  verifyUser: async function verificarUsuario(req, res, next) {
-    const { email, password } = req.body;
-    const busqueda = await model_user.findOne({ email });
+  verifiyUserUpdateProfile: async function verificarUsuario(req, res, next) {
+    try {
+      const id = req.params.id;
+      const user = await model_user.findById(id);
+      const busqueda = await model_user.findOne({ email: req.body.email });
+      if (user.email != req.body.email) {
+        if (busqueda) {
+          return res.status(409).json({
+            code_error: errors_http.email_existent, //Retorna que ya existe una cuenta asociada al email
+          });
+        }
+      }
+      if (
+        (!req.body.passwordActual || req.body.passwordActual === '') &&
+        req.body.passwordNueva
+      ) {
+        return res.status(409).json({
+          status: 'error',
+          message: 'Por favor, ingrese su contraseña actual',
+        });
+      }
+      if (req.body.passwordActual) {
+        const match = await bcrypt.compare(
+          req.body.passwordActual,
+          user.password
+        );
+        if (!match) {
+          return res.status(409).json({
+            status: 'Error',
+            message: 'Su contraseña actual esta incorrecta',
+          });
+        }
+        if (req.body.passwordNueva.length < 4) {
+          return res.status(409).json({
+            status: 'Error',
+            code_error: errors_http.password_invalid,
+          });
+        }
+      }
+      if (
+        !req.body.email.match(
+          /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+        ) //EXPRESION REGULAR PARA VALIDAR EMAILS
+      ) {
+        return res.status(409).json({
+          code_error: errors_http.email_err,
+        });
+      }
+      if (!user) {
+        return res.status(409).json({
+          status: 'Error',
+          message: 'No existe el usuario',
+        });
+      }
+      next();
+    } catch (error) {
+      return res.status(409).json({
+        status: 'Error',
+        message: 'No puede terminarse su solictud',
+      });
+    }
+  },
+  verifyUserRegister: async function verificarUsuario(req, res, next) {
+    const busqueda = await model_user.findOne({ email: req.body.email });
     if (busqueda) {
       return res.status(409).json({
         code_error: errors_http.email_existent, //Retorna que ya existe una cuenta asociada al email
       });
-    }
-    if (req.body.password.length < 4) {
-      const error_clave_corta = res.status(409).json({
-        code_error: errors_http.password_invalid,
-      });
-      return error_clave_corta;
     }
     if (
       !req.body.email.match(
@@ -102,6 +155,7 @@ module.exports = {
         code_error: errors_http.email_err,
       });
     }
+    next();
   },
   canManageProducts: async function canManageProducts(req, res, next) {
     try {
@@ -129,10 +183,45 @@ module.exports = {
       ) {
         if (decoded.rol == ROL.ADMIN || decoded.rol == ROL.EMPLEADO) {
           next();
+        } else if (decoded.id == req.params.id) {
+          next();
+        } else {
+          return res.status(401).json({
+            status: 'Error',
+            message: 'No puedes hacer cambios que no sean a tu perfil',
+          });
         }
       });
     } catch (error) {
       return res.status(401).send('Peticion no autorizada');
+    }
+  },
+
+  verifyDeleteUser: async function deleteUser(req, res, next) {
+    try {
+      const id = req.params.id;
+      const idUserModificador = req.body._id;
+      const userPorEliminar = await model_user.findById(id);
+      if (!userPorEliminar) {
+        return res.status(409).json({
+          status: 'Error',
+          message: 'No existe dicho usuario',
+        });
+      }
+      if (idUserModificador === id) {
+        return res.status(409).json({
+          status: 'Error',
+          message: 'No puedes eliminar tu propia cuenta',
+        });
+      } else {
+        next();
+      }
+    } catch (error) {
+      console.log(error);
+      return res.status(409).json({
+        status: 'Error',
+        message: 'No puedes eliminar tu propia cuenta',
+      });
     }
   },
 };

@@ -91,7 +91,7 @@
               "
             >
               <p
-                *ngIf="createEmployeeForm.get('name').hasError('required')"
+                *ngIf="createEmployeeForm.get('officine').hasError('required')"
                 class="invalid-p"
               >
                 Campo requerido
@@ -152,6 +152,7 @@
               type="submit"
               class="btn btn-primary"
               style="margin-left: 2px;"
+              [disabled]="createEmployeeForm.invalid"
             >
               Guardar
             </button>

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UsersService } from 'src/app/services/users.service';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -19,13 +21,14 @@ export class ProfileComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private fb: FormBuilder,
-    public userService: UsersService
+    public userService: UsersService,
+    private router: Router
   ) {
     this.profileForm = this.fb.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
-      password: ['', [Validators.required, Validators.minLength(4)]],
-      inputImage: [''],
+      passwordActual: [''],
+      passwordNueva: [''],
     });
   }
 
@@ -39,15 +42,51 @@ export class ProfileComponent implements OnInit {
       this.user = res;
       this.profileForm.controls['email'].setValue(res.email);
       this.profileForm.controls['name'].setValue(res.name);
-      this.profileForm.controls['password'].setValue(res.password);
     });
   }
   guardarCambios(id) {
     this.userService.updateProfile(id, this.profileForm.value).subscribe(
       (res) => {
-        console.log(res);
+        Swal.fire({
+          title: 'Perfil actualizado',
+          imageUrl: '../../../assets/imgs/people.svg',
+          imageWidth: 400,
+          imageHeight: 200,
+          imageAlt: 'Custom image',
+          confirmButtonColor: '#6c5ce7',
+        }).then((result) => {
+          if (result.value) {
+            this.router
+              .navigateByUrl('/RefreshComponent', {
+                skipLocationChange: true,
+              })
+              .then(() => {
+                this.router.navigate([`/profile/${id}`]);
+              });
+          }
+        });
       },
-      (err) => console.log(err)
+      (err) => {
+        Swal.fire({
+          title: 'Parece que hubo un error actualizando tu perfil',
+          text: 'Comunicate con el administrador del sistema',
+          imageUrl: '../../../assets/imgs/stress.svg',
+          imageWidth: 400,
+          imageHeight: 200,
+          imageAlt: 'Custom image',
+          confirmButtonColor: '#6c5ce7',
+        }).then((result) => {
+          if (result.value) {
+            this.router
+              .navigateByUrl('/RefreshComponent', {
+                skipLocationChange: true,
+              })
+              .then(() => {
+                this.router.navigate([`/profile/${id}`]);
+              });
+          }
+        });
+      }
     );
   }
 }

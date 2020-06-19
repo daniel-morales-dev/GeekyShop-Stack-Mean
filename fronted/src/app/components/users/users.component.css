@@ -1,0 +1,19 @@
+a {
+    cursor: pointer;
+}
+
+.btn {
+    margin: 5px;
+}
+
+.icons {
+    color: #6c5ce7;
+}
+
+.invalid-p {
+    color: #da2424;
+}
+
+select {
+    margin: 5px;
+}

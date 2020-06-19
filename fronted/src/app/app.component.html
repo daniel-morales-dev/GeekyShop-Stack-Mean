@@ -79,6 +79,16 @@
                   >
                 </div>
               </li>
+              <li class="nav-item">
+                <div *ngIf="authService.isEmployee()">
+                  <a
+                    class="nav-link dropdown-item"
+                    routerLink="/usuarios"
+                    routerLinkActive="active"
+                    >Usuarios</a
+                  >
+                </div>
+              </li>
             </ng-container>
           </div>
         </li>
@@ -110,7 +120,7 @@
           <li class="nav-item">
             <a
               class="nav-link"
-              routerLink="/profile"
+              (click)="goToProfile(user.id)"
               routerLinkActive="active"
               >{{ user.nombre_usuario }}</a
             >
