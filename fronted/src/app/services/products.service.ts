@@ -22,22 +22,23 @@ export class ProductsService {
     formData.append('price', product.price);
     formData.append('image', photo);
     return this.http
-      .post<Product>('/products', formData)
+      .post<Product>(this.URL + '/products', formData)
       .pipe(map((res) => res));
   }
-
   getProducts(): Observable<Product> {
-    return this.http.get<Product>('/products').pipe(map((res) => res));
+    return this.http
+      .get<Product>(this.URL + '/products')
+      .pipe(map((res) => res));
   }
 
   getProduct(id: String) {
     return this.http
-      .get<Product>('/products' + `/${id}`)
+      .get<Product>(this.URL + '/products' + `/${id}`)
       .pipe(map((res) => res));
   }
   deleteProduct(id: String) {
     return this.http
-      .delete<Product>('/products' + `/${id}`)
+      .delete<Product>(this.URL + '/products' + `/${id}`)
       .pipe(map((res) => res));
   }
   updateProduct(id: String, product, photo: File) {
@@ -47,7 +48,7 @@ export class ProductsService {
     formData.append('price', product.price);
     formData.append('image', photo);
     return this.http
-      .put<Product>('/products' + `/${id}`, formData)
+      .put<Product>(this.URL + '/products' + `/${id}`, formData)
       .pipe(map((res) => res));
   }
 
