@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 export class EmployeeService {
   selectedEmployee: Employee;
   employees: Employee[];
-  readonly URL_API = 'http://localhost:3000/employees';
+  readonly URL_API = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {
     this.selectedEmployee = new Employee();
@@ -17,21 +17,21 @@ export class EmployeeService {
 
   postEmployee(Employee) {
     return this.http
-      .post<Employee>(this.URL_API, Employee)
+      .post<Employee>('/employees', Employee)
       .pipe(map((res) => res));
   }
 
   getEmployees() {
-    return this.http.get(this.URL_API);
+    return this.http.get('/employees');
   }
 
   putEmployee(id: String, Employee) {
     return this.http
-      .put<Employee>(this.URL_API + `/${id}`, Employee)
+      .put<Employee>('/employees' + `/${id}`, Employee)
       .pipe(map((res) => res));
   }
 
   deleteEmployee(_id: string) {
-    return this.http.delete(this.URL_API + `/${_id}`);
+    return this.http.delete('/employees' + `/${_id}`);
   }
 }

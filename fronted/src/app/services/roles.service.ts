@@ -10,6 +10,6 @@ export class RolesService {
   constructor(private http: HttpClient) {}
 
   getRoles() {
-    return this.http.get(this.URL + `/rol`).pipe(map((res) => res));
+    return this.http.get(`/rol`).pipe(map((res) => res));
   }
 }

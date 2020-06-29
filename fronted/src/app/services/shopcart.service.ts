@@ -15,7 +15,7 @@ export class ShopcartService {
   constructor(private http: HttpClient) {}
 
   getCartItems(idUser): Observable<CartItem[]> {
-    return this.http.get<CartItem[]>(this.URL + '/cart' + `/${idUser}`).pipe(
+    return this.http.get<CartItem[]>('/cart' + `/${idUser}`).pipe(
       map((result: any) => {
         let cartItems: CartItem[] = [];
         for (let item of result.carts) {
@@ -27,7 +27,7 @@ export class ShopcartService {
   }
 
   getCartUser(idUser) {
-    return this.http.get(this.URL + `/cart/${idUser}`).pipe(
+    return this.http.get(`/cart/${idUser}`).pipe(
       map((result: any) => {
         return result.carts;
       })
@@ -39,19 +39,17 @@ export class ShopcartService {
       productId: product._id,
       userId: userId,
     };
-    return this.http
-      .post<CartItem>(this.URL + '/cart', data)
-      .pipe(map((res) => res));
+    return this.http.post<CartItem>('/cart', data).pipe(map((res) => res));
   }
   deleteProductFromCar(product, userId) {
     const data = {
       productId: product._id,
       userId: userId,
     };
-    return this.http.put<CartItem>(this.URL + `/cart/${userId}`, data);
+    return this.http.put<CartItem>(`/cart/${userId}`, data);
   }
   cleanCart(userId) {
-    return this.http.delete<CartItem>(this.URL + `/cart/${userId}`);
+    return this.http.delete<CartItem>(`/cart/${userId}`);
   }
   getUserId() {
     const userId = this.decodeToken().id;
