@@ -7,7 +7,6 @@ const user_controller = require('../controllers/user_controller');
 const product_controller = require('../controllers/product_controller');
 const cart_controller = require('../controllers/cart_controller');
 const wishList_controller = require('../controllers/wishList_controller');
-const paypal_controller = require('../controllers/paypal_controller');
 const rol_controller = require('../controllers/rol_controller');
 //IMPORTO EL MIDDLEWARE AUTH, QUE SE ENCARGA DE AUTENTIFICAR LAS PETICIONES POR ROLES
 const auth = require('../middlewares/auth');
@@ -165,9 +164,6 @@ router.post(
   auth.canManageEmployees,
   rol_controller.createRol
 );
-
-router.get('/paypal-token', paypal_controller.getTokenPaypal);
-router.post('/paypal-token', paypal_controller.generatePayOut);
 
 router.get('/private-games', auth.verifyToken, (req, res) => {
   //RUTA QUEMADA PARA PROBAR LOS JUEGOS PRIVADOS
