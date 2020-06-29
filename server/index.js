@@ -19,6 +19,6 @@ app.use('/public', express.static(`${__dirname}/public/uploads/img`)); //ESTA ES
 app.use(require('./routes/index')); //Importo las rutas que manejara el servidor
 
 //Starting server
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   console.log('Server on port ', port);
 }); //Empiezo el servidor
