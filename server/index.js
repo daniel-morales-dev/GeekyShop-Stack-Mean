@@ -18,6 +18,10 @@ app.use('/public', express.static(`${__dirname}/public/uploads/img`)); //ESTA ES
 //Routes
 app.use(require('./routes/index')); //Importo las rutas que manejara el servidor
 
+app.get('*', (req, res) => {
+  res.sendFile(`${__dirname}/public/dist/index.html`);
+});
+
 //Starting server
 app.listen(process.env.PORT || port, () => {
   console.log('Server on port ', port);
