@@ -1,9 +1,6 @@
 <div class="card mb-4 shadow-sm">
   <div class="card-photo" (click)="selectedCard(product._id)">
-    <img
-      [src]="'public/uploads/img' + product.imageName"
-      class="img-card-top w-100"
-    />
+    <img [src]="'public/' + product.imageName" class="img-card-top w-100" />
   </div>
   <div class="card-body">
     <p class="card-text">
