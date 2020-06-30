@@ -25,7 +25,8 @@ app.use(require('./routes/index')); //Importo las rutas que manejara el servidor
 app.use('/public', express.static(__dirname + '/public/uploads/img'));
 app.use(express.static(__dirname + '/dist/fronted'));
 app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname + '/dist/fronted/index.html'));
+  const index = path.join(__dirname, 'dist', 'fronted', 'index.html');
+  res.sendFile(index);
 });
 
 //Starting server
