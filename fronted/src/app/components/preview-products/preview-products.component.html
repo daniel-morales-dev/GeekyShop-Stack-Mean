@@ -30,8 +30,7 @@
               />
               <img
                 [src]="
-                  photoSelected ||
-                  'http://localhost:3000/public/' + product.imageName
+                  photoSelected || 'public/uploads/img' + product.imageName
                 "
                 class="img-fluid img-card-top"
                 (click)="photoInput.click()"

@@ -12,7 +12,7 @@ export class WishlistService {
   constructor(private http: HttpClient) {}
 
   getWishList(idUser) {
-    return this.http.get(this.URL + '/wishlist' + `/${idUser}`).pipe(
+    return this.http.get('/wishlist' + `/${idUser}`).pipe(
       map((result: any) => {
         let productIds = [];
         for (let item of result.products) {
@@ -28,14 +28,12 @@ export class WishlistService {
       productId: product._id,
       userId: userId,
     };
-    return this.http
-      .post<WishList>(this.URL + '/wishlist', data)
-      .pipe(map((res) => res));
+    return this.http.post<WishList>('/wishlist', data).pipe(map((res) => res));
   }
 
   removeFromWishList(userId, productId) {
     return this.http
-      .put(this.URL + '/wishlist' + `/${userId}`, productId)
+      .put('/wishlist' + `/${userId}`, productId)
       .pipe(map((res) => res));
   }
 }

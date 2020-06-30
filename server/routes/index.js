@@ -13,8 +13,6 @@ const auth = require('../middlewares/auth');
 //MULTER, MODULO QUE ME PERMITE GUARDAR IMAGENES EN EL SERVIDOR
 const multer = require('../middlewares/storage');
 
-router.get('/', (req, res) => res.send('Hello World'));
-
 //RUTAS IMAGENES productos
 router.post(
   '/products',

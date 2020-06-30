@@ -17,21 +17,21 @@ export class EmployeeService {
 
   postEmployee(Employee) {
     return this.http
-      .post<Employee>(this.URL + '/employees', Employee)
+      .post<Employee>('/employees', Employee)
       .pipe(map((res) => res));
   }
 
   getEmployees() {
-    return this.http.get(this.URL + '/employees');
+    return this.http.get('/employees');
   }
 
   putEmployee(id: String, Employee) {
     return this.http
-      .put<Employee>(this.URL + '/employees' + `/${id}`, Employee)
+      .put<Employee>('/employees' + `/${id}`, Employee)
       .pipe(map((res) => res));
   }
 
   deleteEmployee(_id: string) {
-    return this.http.delete(this.URL + '/employees' + `/${_id}`);
+    return this.http.delete('/employees' + `/${_id}`);
   }
 }
