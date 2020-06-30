@@ -23,12 +23,12 @@ app.use(cors({ origin: 'http://localhost:4200' })); //Uno el backend con el fron
 //Routes
 app.use(require('./routes/index')); //Importo las rutas que manejara el servidor
 app.use('/public', express.static(__dirname + '/public/uploads/img'));
-app.use(express.static(__dirname + '/public/dist/fronted'));
+app.use(express.static(__dirname + 'dist/fronted'));
 app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname + '/public/dist/fronted/index.html'));
+  res.sendFile(path.join(__dirname + 'dist/fronted/index.html'));
 });
 
 //Starting server
 app.listen(process.env.PORT || port, () => {
-  console.log('Server on port ', port);
+  console.log('Servidor en puerto ', port);
 }); //Empiezo el servidor
