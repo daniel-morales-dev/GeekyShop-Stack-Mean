@@ -45,10 +45,7 @@
             </ng-container>
             <ng-template #notManaged>
               <img
-                [src]="
-                  photoSelected ||
-                  'http://localhost:3000/public/' + product.imageName
-                "
+                [src]="photoSelected || 'public/' + product.imageName"
                 class="img-fluid img-card-top"
               />
             </ng-template>
