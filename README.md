@@ -1,5 +1,6 @@
 # GeekyShopStackMean
 https://geekyshop.herokuapp.com/home
+
 GeekyShop is a basic e-shop, developed with stack mean technologies. This is a personal project
 
 - Currently, while developing this project, I'm learning about the MEAN stack technologies.
