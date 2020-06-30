@@ -29,9 +29,7 @@
                 #photoInput
               />
               <img
-                [src]="
-                  photoSelected || 'public/uploads/img' + product.imageName
-                "
+                [src]="photoSelected || 'public/' + product.imageName"
                 class="img-fluid img-card-top"
                 (click)="photoInput.click()"
               />
