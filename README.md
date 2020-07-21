@@ -17,3 +17,7 @@ HOW TON RUN
 npm install
 
 npm start or npm run dev
+
+## GeekyShop
+
+![THIS IS GEEKYSHOP](https://github.com/Se1juro/GeekyShop-Stack-Mean/blob/angular9/Screenshot_1.png?raw=true)
