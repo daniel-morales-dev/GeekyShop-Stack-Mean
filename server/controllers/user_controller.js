@@ -46,7 +46,6 @@ userController.deleteUser = async (req, res, next) => {
 
 userController.updateUser = async (req, res, next) => {
   try {
-    console.log(req.body);
     const id = req.params.id;
     const user = await model_user.findById(id);
     const data = {
