@@ -12,11 +12,18 @@ GeekyShop is a basic e-shop, developed with stack mean technologies. This is a p
 ![Alt text](https://www.growthengineering.co.uk/wp-content/uploads/2019/08/partners-page-01-1-300x300.png) 
 
 
-HOW TON RUN
+## HOW TON RUN
 
 npm install
 
 npm start or npm run dev
+
+Env File contains
+
+APP_PORT
+APP_HOST
+
+Create it and assign it the value you want
 
 ## GeekyShop
 
